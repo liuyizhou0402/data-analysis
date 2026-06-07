@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英澳留学 AI 顾问</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+.container{width:100%;max-width:780px;display:flex;flex-direction:column;height:92vh}
+.header{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px 20px 0 0;padding:18px 24px;display:flex;align-items:center;gap:14px}
+.avatar-wrap{width:48px;height:48px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.header-text h1{color:#fff;font-size:18px;font-weight:700}
+.header-text p{color:rgba(255,255,255,.55);font-size:12px;margin-top:2px}
+.status-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 6px #4ade80;margin-left:auto;flex-shrink:0}
+.restart-btn{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);border-radius:999px;padding:5px 14px;font-size:12px;cursor:pointer;transition:all .15s;margin-left:8px}
+.restart-btn:hover{border-color:#f87171;color:#f87171}
+.progress-wrap{background:rgba(255,255,255,.06);border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1);padding:10px 24px}
+.progress-label{display:flex;justify-content:space-between;color:rgba(255,255,255,.45);font-size:11px;margin-bottom:6px}
+.progress-bar-bg{background:rgba(255,255,255,.1);border-radius:999px;height:4px}
+.progress-bar-fill{background:linear-gradient(90deg,#667eea,#764ba2);border-radius:999px;height:4px;transition:width .5s ease;width:0%}
+.messages{flex:1;overflow-y:auto;padding:20px 20px 8px;background:rgba(255,255,255,.03);border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.messages::-webkit-scrollbar{width:4px}
+.messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.msg{display:flex;gap:10px;align-items:flex-end}
+.msg.user{flex-direction:row-reverse}
+.bubble-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px}
+.msg.bot .bubble-avatar{background:linear-gradient(135deg,#667eea,#764ba2)}
+.msg.user .bubble-avatar{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.bubble{max-width:75%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.msg.bot .bubble{background:rgba(255,255,255,.09);color:#e8eaf6;border-bottom-left-radius:4px;border:1px solid rgba(255,255,255,.08)}
+.msg.user .bubble{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-bottom-right-radius:4px}
+.result-card{max-width:92%;background:rgba(255,255,255,.06);border:1px solid rgba(102,126,234,.3);border-radius:14px;padding:16px;font-size:13px;color:#c5cae9;line-height:1.7;white-space:pre-wrap;overflow-x:auto}
+.typing{display:none}
+.typing.show{display:flex}
+.typing .bubble{display:flex;align-items:center;gap:5px;padding:12px 18px}
+.dot{width:7px;height:7px;background:rgba(255,255,255,.5);border-radius:50%;animation:bounce 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 20px 12px;background:rgba(255,255,255,.03);border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1)}
+.chip{background:rgba(102,126,234,.18);border:1px solid rgba(102,126,234,.35);color:#a5b4fc;border-radius:999px;padding:5px 13px;font-size:12px;cursor:pointer;transition:background .15s}
+.chip:hover{background:rgba(102,126,234,.35)}
+.input-area{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-top:none;border-radius:0 0 20px 20px;padding:14px 16px;display:flex;gap:10px;align-items:flex-end}
+#userInput{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 14px;color:#fff;font-size:14px;resize:none;outline:none;max-height:120px;line-height:1.5;font-family:inherit;transition:border-color .2s}
+#userInput::placeholder{color:rgba(255,255,255,.3)}
+#userInput:focus{border-color:rgba(102,126,234,.6)}
+#sendBtn{width:44px;height:44px;background:linear-gradient(135deg,#667eea,#764ba2);border:none;border-radius:12px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,opacity .15s;flex-shrink:0}
+#sendBtn:hover:not(:disabled){transform:scale(1.06)}
+#sendBtn:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:520px){.bubble{max-width:88%}.header-text h1{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="avatar-wrap">🎓</div>
+    <div class="header-text">
+      <h1>英澳留学 AI 顾问</h1>
+      <p>专注英国 · 澳大利亚 · 研究生申请</p>
+    </div>
+    <div class="status-dot"></div>
+    <button class="restart-btn" onclick="restart()">↺ 重新开始</button>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span id="stepLabel">准备中</span><span id="stepCount">0 / 10</span></div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+  <div class="messages" id="messages"></div>
+  <div class="chips" id="chips"></div>
+  <div class="input-area">
+    <textarea id="userInput" rows="1" placeholder="输入您的回答…" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button id="sendBtn" onclick="send()">➤</button>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  大学数据库
+// ════════════════════════════════════════════════════════════
+const UK_UNIS = [
+  {name:"University of Oxford",city:"Oxford",qs:3,programs:{
+    "Computer Science":{gpa:3.7,ielts:7.5,work:0,fee:"£37,510/年",rate:0.10},
+    "Data Science":{gpa:3.7,ielts:7.5,work:0,fee:"£35,675/年",rate:0.12},
+    "Finance":{gpa:3.7,ielts:7.5,work:0,fee:"£33,705/年",rate:0.14},
+    "Business":{gpa:3.7,ielts:7.5,work:3,fee:"£54,765/年",rate:0.12},
+    "Law":{gpa:3.7,ielts:7.5,work:0,fee:"£32,635/年",rate:0.15},
+    "Economics":{gpa:3.7,ielts:7.5,work:0,fee:"£33,705/年",rate:0.14}}},
+  {name:"University of Cambridge",city:"Cambridge",qs:2,programs:{
+    "Computer Science":{gpa:3.7,ielts:7.5,work:0,fee:"£36,609/年",rate:0.11},
+    "Economics":{gpa:3.7,ielts:7.0,work:0,fee:"£33,600/年",rate:0.16},
+    "Business":{gpa:3.7,ielts:7.5,work:3,fee:"£57,594/年",rate:0.15},
+    "Law":{gpa:3.7,ielts:7.5,work:0,fee:"£29,697/年",rate:0.18},
+    "Engineering":{gpa:3.7,ielts:7.0,work:0,fee:"£37,455/年",rate:0.13}}},
+  {name:"Imperial College London",city:"London",qs:8,programs:{
+    "Computer Science":{gpa:3.6,ielts:7.0,work:0,fee:"£38,250/年",rate:0.18},
+    "Data Science":{gpa:3.6,ielts:7.0,work:0,fee:"£38,250/年",rate:0.20},
+    "Finance":{gpa:3.6,ielts:7.0,work:1,fee:"£42,500/年",rate:0.22},
+    "Engineering":{gpa:3.5,ielts:6.5,work:0,fee:"£37,400/年",rate:0.25},
+    "Business":{gpa:3.5,ielts:7.0,work:3,fee:"£53,800/年",rate:0.28}}},
+  {name:"University College London",city:"London",qs:9,programs:{
+    "Computer Science":{gpa:3.5,ielts:6.5,work:0,fee:"£35,000/年",rate:0.22},
+    "Data Science":{gpa:3.5,ielts:6.5,work:0,fee:"£35,000/年",rate:0.23},
+    "Business":{gpa:3.4,ielts:7.0,work:3,fee:"£44,500/年",rate:0.30},
+    "Law":{gpa:3.5,ielts:7.0,work:0,fee:"£31,400/年",rate:0.28},
+    "Architecture":{gpa:3.3,ielts:6.5,work:0,fee:"£32,500/年",rate:0.35}}},
+  {name:"London School of Economics",city:"London",qs:45,programs:{
+    "Finance":{gpa:3.6,ielts:7.0,work:1,fee:"£33,936/年",rate:0.18},
+    "Economics":{gpa:3.7,ielts:7.0,work:0,fee:"£28,248/年",rate:0.14},
+    "Business":{gpa:3.5,ielts:7.0,work:2,fee:"£35,136/年",rate:0.22},
+    "Law":{gpa:3.6,ielts:7.5,work:0,fee:"£26,568/年",rate:0.20},
+    "Data Science":{gpa:3.5,ielts:7.0,work:0,fee:"£28,248/年",rate:0.25}}},
+  {name:"University of Edinburgh",city:"Edinburgh",qs:22,programs:{
+    "Computer Science":{gpa:3.4,ielts:6.5,work:0,fee:"£30,900/年",rate:0.28},
+    "Data Science":{gpa:3.4,ielts:6.5,work:0,fee:"£29,900/年",rate:0.30},
+    "Business":{gpa:3.3,ielts:7.0,work:3,fee:"£40,500/年",rate:0.35},
+    "Finance":{gpa:3.4,ielts:6.5,work:0,fee:"£27,450/年",rate:0.32},
+    "Law":{gpa:3.3,ielts:7.0,work:0,fee:"£24,500/年",rate:0.38}}},
+  {name:"University of Manchester",city:"Manchester",qs:34,programs:{
+    "Computer Science":{gpa:3.3,ielts:6.5,work:0,fee:"£27,000/年",rate:0.32},
+    "Data Science":{gpa:3.3,ielts:6.5,work:0,fee:"£26,500/年",rate:0.33},
+    "Business":{gpa:3.2,ielts:6.5,work:3,fee:"£38,500/年",rate:0.38},
+    "Finance":{gpa:3.3,ielts:6.5,work:0,fee:"£25,500/年",rate:0.35}}},
+  {name:"University of Warwick",city:"Coventry",qs:69,programs:{
+    "Computer Science":{gpa:3.3,ielts:6.5,work:0,fee:"£28,300/年",rate:0.33},
+    "Finance":{gpa:3.4,ielts:6.5,work:0,fee:"£29,600/年",rate:0.28},
+    "Economics":{gpa:3.4,ielts:6.5,work:0,fee:"£27,000/年",rate:0.30},
+    "Business":{gpa:3.2,ielts:7.0,work:3,fee:"£47,900/年",rate:0.30}}},
+  {name:"King's College London",city:"London",qs:40,programs:{
+    "Law":{gpa:3.5,ielts:7.0,work:0,fee:"£26,280/年",rate:0.28},
+    "Data Science":{gpa:3.4,ielts:6.5,work:0,fee:"£30,600/年",rate:0.30},
+    "Business":{gpa:3.3,ielts:7.0,work:3,fee:"£38,500/年",rate:0.35},
+    "Neuroscience":{gpa:3.4,ielts:7.0,work:0,fee:"£28,200/年",rate:0.32}}},
+  {name:"University of Southampton",city:"Southampton",qs:81,programs:{
+    "Computer Science":{gpa:3.1,ielts:6.5,work:0,fee:"£24,000/年",rate:0.40},
+    "Data Science":{gpa:3.1,ielts:6.5,work:0,fee:"£23,600/年",rate:0.42},
+    "Finance":{gpa:3.1,ielts:6.5,work:0,fee:"£22,500/年",rate:0.43},
+    "Engineering":{gpa:3.0,ielts:6.0,work:0,fee:"£22,800/年",rate:0.45}}},
+  {name:"University of Sheffield",city:"Sheffield",qs:101,programs:{
+    "Computer Science":{gpa:3.0,ielts:6.5,work:0,fee:"£23,500/年",rate:0.42},
+    "Data Science":{gpa:3.0,ielts:6.5,work:0,fee:"£23,000/年",rate:0.44},
+    "Law":{gpa:3.0,ielts:6.5,work:0,fee:"£20,500/年",rate:0.50},
+    "Architecture":{gpa:2.9,ielts:6.5,work:0,fee:"£22,000/年",rate:0.55}}},
+  {name:"University of Glasgow",city:"Glasgow",qs:76,programs:{
+    "Computer Science":{gpa:3.2,ielts:6.5,work:0,fee:"£22,600/年",rate:0.38},
+    "Data Science":{gpa:3.2,ielts:6.5,work:0,fee:"£22,000/年",rate:0.40},
+    "Finance":{gpa:3.2,ielts:6.5,work:0,fee:"£21,500/年",rate:0.42}}},
+  {name:"University of Birmingham",city:"Birmingham",qs:91,programs:{
+    "Computer Science":{gpa:3.1,ielts:6.5,work:0,fee:"£23,400/年",rate:0.40},
+    "Data Science":{gpa:3.1,ielts:6.5,work:0,fee:"£23,000/年",rate:0.41},
+    "Finance":{gpa:3.1,ielts:6.5,work:0,fee:"£22,000/年",rate:0.42},
+    "Law":{gpa:3.0,ielts:6.5,work:0,fee:"£20,000/年",rate:0.48}}},
+];
+
+const AU_UNIS = [
+  {name:"University of Melbourne",city:"Melbourne",qs:14,programs:{
+    "Business":{gpa:3.5,ielts:7.0,work:3,fee:"AUD 96,000/年",rate:0.20},
+    "Computer Science":{gpa:3.4,ielts:6.5,work:0,fee:"AUD 50,496/年",rate:0.25},
+    "Data Science":{gpa:3.4,ielts:6.5,work:0,fee:"AUD 50,880/年",rate:0.26},
+    "Finance":{gpa:3.4,ielts:6.5,work:1,fee:"AUD 49,920/年",rate:0.28},
+    "Law":{gpa:3.5,ielts:7.0,work:0,fee:"AUD 57,216/年",rate:0.22}}},
+  {name:"University of Sydney",city:"Sydney",qs:18,programs:{
+    "Business":{gpa:3.4,ielts:7.0,work:3,fee:"AUD 88,200/年",rate:0.22},
+    "Computer Science":{gpa:3.3,ielts:6.5,work:0,fee:"AUD 49,000/年",rate:0.28},
+    "Data Science":{gpa:3.3,ielts:6.5,work:0,fee:"AUD 48,500/年",rate:0.29},
+    "Law":{gpa:3.4,ielts:7.0,work:0,fee:"AUD 44,000/年",rate:0.25},
+    "Architecture":{gpa:3.2,ielts:7.0,work:0,fee:"AUD 46,000/年",rate:0.35}}},
+  {name:"Australian National University",city:"Canberra",qs:30,programs:{
+    "Computer Science":{gpa:3.4,ielts:6.5,work:0,fee:"AUD 48,480/年",rate:0.27},
+    "Finance":{gpa:3.4,ielts:6.5,work:0,fee:"AUD 47,520/年",rate:0.28},
+    "Economics":{gpa:3.5,ielts:6.5,work:0,fee:"AUD 45,600/年",rate:0.25},
+    "Law":{gpa:3.4,ielts:7.0,work:0,fee:"AUD 44,640/年",rate:0.28}}},
+  {name:"University of New South Wales",city:"Sydney",qs:19,programs:{
+    "Business":{gpa:3.3,ielts:7.0,work:3,fee:"AUD 82,000/年",rate:0.28},
+    "Computer Science":{gpa:3.3,ielts:6.5,work:0,fee:"AUD 48,700/年",rate:0.28},
+    "Data Science":{gpa:3.3,ielts:6.5,work:0,fee:"AUD 47,500/年",rate:0.30},
+    "Engineering":{gpa:3.2,ielts:6.5,work:0,fee:"AUD 46,000/年",rate:0.32},
+    "Finance":{gpa:3.3,ielts:6.5,work:0,fee:"AUD 47,000/年",rate:0.29}}},
+  {name:"Monash University",city:"Melbourne",qs:37,programs:{
+    "Computer Science":{gpa:3.2,ielts:6.5,work:0,fee:"AUD 46,000/年",rate:0.32},
+    "Business":{gpa:3.2,ielts:7.0,work:3,fee:"AUD 75,000/年",rate:0.35},
+    "Finance":{gpa:3.2,ielts:6.5,work:0,fee:"AUD 45,000/年",rate:0.33},
+    "Data Science":{gpa:3.2,ielts:6.5,work:0,fee:"AUD 44,000/年",rate:0.35},
+    "Engineering":{gpa:3.0,ielts:6.5,work:0,fee:"AUD 43,000/年",rate:0.38}}},
+  {name:"University of Queensland",city:"Brisbane",qs:40,programs:{
+    "Business":{gpa:3.2,ielts:6.5,work:3,fee:"AUD 68,000/年",rate:0.38},
+    "Computer Science":{gpa:3.1,ielts:6.5,work:0,fee:"AUD 44,500/年",rate:0.38},
+    "Data Science":{gpa:3.1,ielts:6.5,work:0,fee:"AUD 43,200/年",rate:0.40},
+    "Biotechnology":{gpa:3.1,ielts:6.5,work:0,fee:"AUD 42,000/年",rate:0.40}}},
+  {name:"University of Adelaide",city:"Adelaide",qs:89,programs:{
+    "Computer Science":{gpa:3.0,ielts:6.5,work:0,fee:"AUD 40,500/年",rate:0.42},
+    "Business":{gpa:3.0,ielts:6.5,work:3,fee:"AUD 58,000/年",rate:0.45},
+    "Finance":{gpa:3.0,ielts:6.5,work:0,fee:"AUD 39,600/年",rate:0.44},
+    "Engineering":{gpa:2.9,ielts:6.0,work:0,fee:"AUD 38,800/年",rate:0.48}}},
+  {name:"University of Western Australia",city:"Perth",qs:90,programs:{
+    "Computer Science":{gpa:3.0,ielts:6.5,work:0,fee:"AUD 40,200/年",rate:0.43},
+    "Data Science":{gpa:3.0,ielts:6.5,work:0,fee:"AUD 39,200/年",rate:0.45},
+    "Finance":{gpa:3.0,ielts:6.5,work:0,fee:"AUD 38,800/年",rate:0.46}}},
+  {name:"RMIT University",city:"Melbourne",qs:140,programs:{
+    "Computer Science":{gpa:2.8,ielts:6.5,work:0,fee:"AUD 38,000/年",rate:0.55},
+    "Business":{gpa:2.8,ielts:6.5,work:2,fee:"AUD 52,000/年",rate:0.55},
+    "Engineering":{gpa:2.7,ielts:6.0,work:0,fee:"AUD 36,500/年",rate:0.58},
+    "Design":{gpa:2.7,ielts:6.5,work:0,fee:"AUD 34,000/年",rate:0.60}}},
+  {name:"Macquarie University",city:"Sydney",qs:195,programs:{
+    "Finance":{gpa:3.0,ielts:6.5,work:0,fee:"AUD 40,800/年",rate:0.48},
+    "Data Science":{gpa:2.9,ielts:6.5,work:0,fee:"AUD 39,500/年",rate:0.50},
+    "Business":{gpa:2.9,ielts:6.5,work:2,fee:"AUD 55,000/年",rate:0.52},
+    "Computer Science":{gpa:2.8,ielts:6.5,work:0,fee:"AUD 37,600/年",rate:0.55}}},
+];
+
+// ════════════════════════════════════════════════════════════
+//  预测引擎
+// ════════════════════════════════════════════════════════════
+const TIER_BONUS = {"985":8,"985/211":5,"211":2,"双非":0};
+
+function gpaScore(sg,rg){const d=sg-rg;if(d>=.3)return 30;if(d>=.1)return 25;if(d>=0)return 20;if(d>=-.1)return 14;if(d>=-.2)return 8;return 2}
+function ieltsScore(si,ri){const d=si-ri;if(d>=1)return 25;if(d>=.5)return 22;if(d>=0)return 18;if(d>=-.5)return 12;if(d>=-.1)return 5;return 0}
+function workScore(sw,rw){if(rw===0){return 10+Math.min(10,sw*2)}const d=sw-rw;if(d>=2)return 20;if(d>=0)return 16;if(d===-1)return 8;return 3}
+function holisticBonus(st){let b=0;b+=Math.min(8,st.pubs*4);b+=Math.min(6,st.awards*2);b+=(TIER_BONUS[st.tier]||0);if(st.gre>=165)b+=3;if(st.gmat>=700)b+=3;if(st.gap)b-=2;return Math.min(25,Math.max(0,b))}
+
+function calcRate(raw,base){
+  const k=0.08,mp=50;
+  const logistic=1/(1+Math.exp(-k*(raw-mp)));
+  return Math.max(0.02,Math.min(0.92,base*(logistic/0.5)*0.7));
+}
+
+function predict(st){
+  const unis=[];
+  if(st.country==="UK"||st.country==="两者")unis.push(...UK_UNIS.map(u=>({...u,ctry:"英国"})));
+  if(st.country==="澳大利亚"||st.country==="两者")unis.push(...AU_UNIS.map(u=>({...u,ctry:"澳大利亚"})));
+
+  const results=[];
+  for(const uni of unis){
+    const prog=uni.programs[st.field];
+    if(!prog) continue;
+    const raw=gpaScore(st.gpa,prog.gpa)+ieltsScore(st.ielts,prog.ielts)+workScore(st.work,prog.work)+holisticBonus(st);
+    const rate=calcRate(raw,prog.rate);
+    const label=rate>=.55?"稳妥 ✅":rate>=.30?"匹配 🎯":"冲刺 🚀";
+    const notes=[];
+    if(st.gpa-prog.gpa<0) notes.push(`GPA低于要求${Math.abs(st.gpa-prog.gpa).toFixed(1)}分，建议强化其他方面`);
+    else if(st.gpa-prog.gpa>=.3) notes.push(`GPA超出要求${(st.gpa-prog.gpa).toFixed(1)}分，学术背景强`);
+    if(st.ielts-prog.ielts<0) notes.push(`雅思低于要求，建议提升至${prog.ielts}`);
+    else if(st.ielts-prog.ielts>=.5) notes.push("雅思优势明显");
+    if(prog.work>0&&st.work<prog.work) notes.push(`工作经验不足${prog.work-st.work}年`);
+    results.push({uni:uni.name,city:uni.city,ctry:uni.ctry,qs:uni.qs,fee:prog.fee,rate,label,notes,raw});
+  }
+  results.sort((a,b)=>b.rate-a.rate);
+  return results;
+}
+
+function buildPlan(st){
+  const matches=predict(st);
+  const dream=matches.filter(m=>m.label.startsWith("冲刺")).slice(0,4);
+  const target=matches.filter(m=>m.label.startsWith("匹配")).slice(0,4);
+  const safe=matches.filter(m=>m.label.startsWith("稳妥")).slice(0,4);
+
+  const strengths=[],weaknesses=[];
+  if(st.gpa>=3.6) strengths.push(`GPA ${st.gpa} 较为优秀`);
+  else if(st.gpa<3.2) weaknesses.push(`GPA ${st.gpa} 偏低，建议在文书中说明`);
+  if(st.ielts>=7.0) strengths.push(`雅思 ${st.ielts} 超过多数项目要求`);
+  else if(st.ielts<6.5) weaknesses.push(`雅思 ${st.ielts} 偏低，建议刷分至6.5+`);
+  if(st.work>=3) strengths.push(`${st.work}年工作经验，MBA竞争力强`);
+  if(st.pubs>=2) strengths.push(`${st.pubs}篇科研发表，学术背景突出`);
+  if(st.tier==="985"||st.tier==="985/211") strengths.push("985/211背景，国际认可度高");
+  else weaknesses.push("非985/211，建议文书突出个人亮点");
+
+  const comp=strengths.length>=3?"强竞争力":strengths.length>=1?"中等竞争力":"竞争力偏弱，需重点提升";
+
+  let out="";
+  out+=`${"═".repeat(50)}\n`;
+  out+=`  🎓 ${st.name} 的英澳留学方案\n`;
+  out+=`${"═".repeat(50)}\n\n`;
+  out+=`📋 学术画像：GPA ${st.gpa} | 雅思 ${st.ielts} | 工作${st.work}年\n`;
+  out+=`   目标：${st.country} · ${st.field}\n\n`;
+  out+=`⚡ 综合竞争力：${comp}\n`;
+  if(strengths.length) out+="   优势："+strengths.map(s=>"✅ "+s).join(" | ")+"\n";
+  if(weaknesses.length) out+="   待提升："+weaknesses.map(w=>"⚠️ "+w).join(" | ")+"\n";
+  out+="\n";
+
+  const sec=(title,list)=>{
+    if(!list.length) return "";
+    let s=`${"─".repeat(46)}\n  ${title}（共${list.length}所）\n${"─".repeat(46)}\n`;
+    for(const m of list){
+      s+=`  🏛 [${m.label}] ${m.uni}\n`;
+      s+=`     QS #${m.qs} | ${m.ctry}·${m.city} | ${m.fee}\n`;
+      s+=`     录取成功率：${(m.rate*100).toFixed(1)}%\n`;
+      if(m.notes.length) s+=`     💡 ${m.notes.slice(0,2).join("；")}\n`;
+      s+="\n";
+    }
+    return s;
+  };
+  out+=sec("🚀 冲刺院校",dream);
+  out+=sec("🎯 匹配院校",target);
+  out+=sec("✅ 稳妥保底",safe);
+
+  out+=`${"─".repeat(46)}\n  📌 申请建议\n${"─".repeat(46)}\n`;
+  const tips=[
+    "尽早准备文书（PS、推荐信），建议9月前完成初稿",
+    "英国通过UCAS申请，澳大利亚直接向学校官网递交",
+    "准备3封推荐信，优先选教授或直属主管",
+    "准备充分的资金证明（第一年学费+生活费）",
+  ];
+  if(st.ielts<6.5) tips.unshift("优先提升雅思至6.5+，再启动申请流程");
+  if((st.field==="Finance"||st.field==="Business")&&!st.gmat) tips.push("商科建议备考GMAT 700+，显著提升竞争力");
+  if(["Computer Science","Data Science","Engineering"].includes(st.field)) tips.push("理工科重视项目/GitHub/竞赛，提前整理作品集");
+  tips.forEach((t,i)=>{ out+=`  ${i+1}. ${t}\n`; });
+
+  out+=`\n${"═".repeat(50)}\n  输入 "重新开始" 可重新评估\n${"═".repeat(50)}`;
+  return out;
+}
+
+// ════════════════════════════════════════════════════════════
+//  对话状态机
+// ════════════════════════════════════════════════════════════
+const FIELDS=["Computer Science","Data Science","Business","Finance","Law","Engineering","Economics","Architecture","Biotechnology","Design","Neuroscience"];
+const CHIPS_MAP={
+  1:["英国","澳大利亚","两者"],
+  2:["Computer Science","Data Science","Business","Finance","Law","Engineering","Economics"],
+  4:["6.0","6.5","7.0","7.5","8.0"],
+  5:["0（应届）","1年","2年","3年","4年+"],
+  6:["本科已毕业","本科在读","硕士已毕业","硕士在读"],
+  7:["985","985/211","211","双非"],
+};
+const STEP_LABELS=["开始","目标国家","专业方向","GPA","雅思","工作经验","学历","院校层次","科研奖项","完成"];
+
+let step=0, student={};
+
+const PROMPTS=[
+  ()=>`👋 您好！我是英澳留学智能顾问。\n\n我将通过几个问题了解您的情况，然后为您生成：\n  ✅ 个性化院校推荐（冲刺/匹配/稳妥）\n  ✅ 每所大学的录取成功率\n  ✅ 专属申请建议\n\n全程约3分钟，随时可输入「重新开始」重来。\n\n请问您的姓名是？`,
+  ()=>"您希望申请哪个国家？\n  1️⃣ 英国（UK）\n  2️⃣ 澳大利亚（Australia）\n  3️⃣ 两者都考虑",
+  ()=>`您计划申请哪个专业方向？\n${FIELDS.map((f,i)=>`  ${i+1}. ${f}`).join("\n")}\n\n请输入序号或专业名称：`,
+  ()=>"您目前的GPA是多少？\n  • 4.0制（如 3.6）\n  • 或百分制（如 85分），系统自动换算",
+  ()=>"您的雅思总分是多少？\n  • 接受半分制，如 6.5 / 7.0\n  • 未考试可填预估分",
+  ()=>"您有多少年全职工作经验？\n  • 应届生或在校生请填 0",
+  ()=>"您目前的最高学历？\n  1. 本科已毕业\n  2. 本科在读\n  3. 硕士已毕业\n  4. 硕士在读",
+  ()=>`${student.name||"您"}就读院校类型？\n  1. 985院校\n  2. 985/211院校\n  3. 211院校\n  4. 普通本科（双非）`,
+  ()=>"最后两个问题：\n  • 论文发表数量（无填0）\n  • 获奖数量（无填0）\n\n格式：论文数,奖项数（如 1,2 或 0,0）\n也可只输入一个数字代表论文数：",
+];
+
+function parseGpa(t){
+  const m4=t.match(/(\d+\.?\d*)\s*\/\s*4/);
+  if(m4) return parseFloat(m4[1]);
+  const md=t.match(/\b(\d+\.\d+)\b/);
+  if(md){const v=parseFloat(md[1]);if(v<=4)return v;if(v>=50)return cn2gpa(v);}
+  const mi=t.match(/\b(\d{2,3})\b/);
+  if(mi){const v=parseInt(mi[1]);if(v>=50&&v<=100)return cn2gpa(v);}
+  return null;
+}
+function cn2gpa(s){if(s>=90)return 4.0;if(s>=85)return 3.7;if(s>=80)return 3.3;if(s>=75)return 3.0;if(s>=70)return 2.7;if(s>=65)return 2.3;if(s>=60)return 2.0;return 1.0;}
+function parseIelts(t){const m=t.match(/\b([4-9](?:\.[05])?)\b/);if(m)return parseFloat(m[1]);const m2=t.match(/\b([4-9])\b/);if(m2)return parseFloat(m2[1]);return null;}
+function parseWork(t){if(/无|没有|应届|在校|0|zero/i.test(t))return 0;const m=t.match(/(\d+)/);return m?Math.min(parseInt(m[1]),30):null;}
+function parseCountry(t){const lo=t.toLowerCase();if(/uk|英国|英/.test(lo)&&/au|澳/.test(lo))return "两者";if(/uk|英国|英/.test(lo)||t==="1")return "UK";if(/au|澳/.test(lo)||t==="2")return "澳大利亚";if(/两|都|both|3/.test(lo))return "两者";return null;}
+function parseField(t){const lo=t.toLowerCase();const kw={"Computer Science":["cs","computer","计算机","软件"],"Data Science":["data","数据","ml","ai","人工智能"],"Business":["mba","business","商科","管理"],"Finance":["finance","金融","fintech","投行"],"Law":["law","法律","llm"],"Engineering":["engineer","工程","机械","电气"],"Economics":["econ","经济"],"Architecture":["arch","建筑"],"Biotechnology":["bio","生物","biotech"],"Design":["design","设计"],"Neuroscience":["neuro","神经","脑科学"]};for(const[f,ks]of Object.entries(kw)){if(ks.some(k=>lo.includes(k)))return f;}const n=parseInt(t);if(n>=1&&n<=FIELDS.length)return FIELDS[n-1];return null;}
+function parseTier(t){if(/985.*211|211.*985/.test(t))return "985/211";if(/985/.test(t)||t==="1")return "985";if(/211/.test(t)||t==="3")return "211";if(/普通|双非|regular|4/.test(t.toLowerCase()))return "双非";if(t==="2")return "985/211";return null;}
+function parseDegree(t){const lo=t.toLowerCase();if(/master|硕士|msc|ma/.test(lo)){if(/在读|studying|ongoing|2/.test(lo)||t==="4")return "Master (ongoing)";return "Master";}if(/bachelor|本科|under/.test(lo)||(t==="1"||t==="2")){if(/在读|ongoing/.test(lo)||t==="2")return "Bachelor (ongoing)";return "Bachelor";}if(t==="1")return "Bachelor";if(t==="3")return "Master";if(t==="4")return "Master (ongoing)";return null;}
+
+function processStep(input){
+  if(/重新开始|restart/i.test(input)){restart();return;}
+  switch(step){
+    case 0: student.name=input.trim().slice(0,20); step++;
+      return {reply:PROMPTS[step](),chips:CHIPS_MAP[step]||[]};
+    case 1:{const c=parseCountry(input);if(!c)return{reply:"请输入：1（英国）/ 2（澳大利亚）/ 3（两者）",chips:CHIPS_MAP[1]};student.country=c;step++;return{reply:PROMPTS[step](),chips:CHIPS_MAP[step]||[]};}
+    case 2:{const f=parseField(input);if(!f)return{reply:"未识别专业，请输入序号1-11或关键词",chips:CHIPS_MAP[2]};student.field=f;step++;return{reply:PROMPTS[step](),chips:[]};}
+    case 3:{const g=parseGpa(input);if(!g||g<1||g>4)return{reply:"请输入有效GPA，如 3.6 或百分制 85"};student.gpa=g;step++;return{reply:PROMPTS[step](),chips:CHIPS_MAP[step]||[]};}
+    case 4:{const i=parseIelts(input);if(!i)return{reply:"请输入雅思分数，如 6.5"};student.ielts=i;step++;return{reply:PROMPTS[step](),chips:CHIPS_MAP[step]||[]};}
+    case 5:{const w=parseWork(input);if(w===null)return{reply:"请输入工作年限（整数），应届生填0"};student.work=w;step++;return{reply:PROMPTS[step](),chips:CHIPS_MAP[step]||[]};}
+    case 6:{const d=parseDegree(input);if(!d)return{reply:"请选择 1/2/3/4"};student.degree=d;step++;return{reply:PROMPTS[step](),chips:CHIPS_MAP[step]||[]};}
+    case 7:{const t=parseTier(input);if(!t)return{reply:"请选择 1(985) / 2(985/211) / 3(211) / 4(双非)"};student.tier=t;step++;return{reply:PROMPTS[step](),chips:[]};}
+    case 8:{
+      const nums=input.match(/\d+/g)||[];
+      student.pubs=parseInt(nums[0]||0);
+      student.awards=parseInt(nums[1]||0);
+      student.gre=0;student.gmat=0;student.gap=false;
+      step++;
+      // generate plan
+      const plan=buildPlan(student);
+      return{reply:plan,isResult:true,chips:["↺ 重新开始"]};
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+//  UI
+// ════════════════════════════════════════════════════════════
+function send(txt){
+  const inp=document.getElementById("userInput");
+  const msg=(txt||inp.value).trim();
+  if(!msg)return;
+  inp.value="";autoResize(inp);
+  appendUser(msg);
+  setChips([]);
+  setTimeout(()=>{
+    const r=processStep(msg);
+    if(!r)return;
+    showTyping(true);
+    setTimeout(()=>{
+      showTyping(false);
+      if(r.isResult) appendResult(r.reply);
+      else appendBot(r.reply);
+      updateProgress(step);
+      setChips(r.chips||[]);
+    },600);
+  },100);
+}
+
+function restart(){
+  step=0;student={};
+  document.getElementById("messages").innerHTML="";
+  setChips([]);updateProgress(0);
+  showTyping(true);
+  setTimeout(()=>{showTyping(false);appendBot(PROMPTS[0]());},400);
+}
+
+function appendBot(t){
+  document.getElementById("messages").innerHTML+=`<div class="msg bot"><div class="bubble-avatar">🎓</div><div class="bubble">${esc(t)}</div></div>`;
+  scrollBottom();
+}
+function appendUser(t){
+  document.getElementById("messages").innerHTML+=`<div class="msg user"><div class="bubble-avatar">👤</div><div class="bubble">${esc(t)}</div></div>`;
+  scrollBottom();
+}
+function appendResult(t){
+  document.getElementById("messages").innerHTML+=`<div class="msg bot"><div class="bubble-avatar">🎓</div><div class="result-card">${esc(t)}</div></div>`;
+  scrollBottom();
+}
+function showTyping(show){
+  const msgs=document.getElementById("messages");
+  let el=document.getElementById("ty");
+  if(show){if(!el){msgs.innerHTML+=`<div class="msg bot typing show" id="ty"><div class="bubble-avatar">🎓</div><div class="bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;scrollBottom();}}
+  else{el=document.getElementById("ty");if(el)el.remove();}
+}
+function setChips(items){
+  document.getElementById("chips").innerHTML=items.map(t=>{
+    const a=t.startsWith("↺")?`onclick="restart()"`:`onclick="send('${t.replace(/'/g,"\\'")}')"`;
+    return`<span class="chip" ${a}>${t}</span>`;
+  }).join("");
+}
+function updateProgress(s){
+  const pct=Math.min(100,Math.round(s/9*100));
+  document.getElementById("progressFill").style.width=pct+"%";
+  document.getElementById("stepCount").textContent=`${Math.min(s,9)} / 9`;
+  document.getElementById("stepLabel").textContent=STEP_LABELS[Math.min(s,STEP_LABELS.length-1)]||"完成";
+}
+function scrollBottom(){const el=document.getElementById("messages");el.scrollTop=el.scrollHeight;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function handleKey(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send();}}
+function autoResize(el){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,120)+"px";}
+
+window.onload=()=>{
+  showTyping(true);
+  setTimeout(()=>{showTyping(false);appendBot(PROMPTS[0]());},500);
+};
+</script>
+</body>
+</html>
