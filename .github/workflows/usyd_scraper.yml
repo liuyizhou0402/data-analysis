@@ -1,0 +1,50 @@
+name: 每日悉大新生获客清单
+
+on:
+  schedule:
+    - cron: '0 1 * * *'   # 09:00 CST
+  workflow_dispatch:
+
+jobs:
+  usyd-lead-list:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          ref: claude/amazing-faraday-I9TwX
+
+      - name: 设置 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r usyd_scraper/requirements.txt
+
+      - name: 安装 Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: 恢复去重历史库
+        uses: actions/cache@v4
+        with:
+          path: usyd_scraper/data/seen_users.json
+          key: usyd-seen-users-${{ github.run_id }}
+          restore-keys: usyd-seen-users-
+
+      - name: 运行获客 Pipeline
+        run: cd usyd_scraper && python main.py --now
+        env:
+          USYD_USE_MOCK: 'false'
+          XHS_COOKIE: ${{ secrets.XHS_COOKIE }}
+          XHS_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
+          XHS_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
+          USYD_WECHAT: ${{ secrets.USYD_WECHAT }}
+
+      - name: 上传今日报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: usyd-report-${{ github.run_number }}
+          path: usyd_scraper/data/reports/
+          retention-days: 30
