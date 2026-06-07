@@ -5,6 +5,10 @@ Sensitive credentials are read from environment variables — never hardcode the
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load .env from project root (one level above xhs_scraper/)
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 # ---------------------------------------------------------------------------
 # Directory layout
@@ -71,7 +75,7 @@ EMAIL_RECIPIENT: str = "1225265377@qq.com"
 SMTP_HOST: str = "smtp.qq.com"
 SMTP_PORT_SSL: int = 465       # SSL
 SMTP_PORT_STARTTLS: int = 587  # STARTTLS (fallback)
-SMTP_USE_SSL: bool = True      # prefer SSL; set False to try STARTTLS
+SMTP_USE_SSL: bool = False     # use STARTTLS on port 587 (465 may be blocked)
 
 # ---------------------------------------------------------------------------
 # HTTP headers used for real scraping
