@@ -33,7 +33,7 @@ jobs:
 
       - name: 运行爬虫并发送邮件
         env:
-          XHS_USE_MOCK: false
+          XHS_USE_MOCK: 'true'
           XHS_COOKIE: ${{ secrets.XHS_COOKIE }}
           XHS_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
           XHS_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
