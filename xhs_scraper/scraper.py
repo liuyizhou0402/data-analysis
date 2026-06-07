@@ -462,7 +462,3 @@ def _scrape_live() -> list[UserDict]:
         return []
 
     return _scrape_live_playwright()
-            break
-
-    logger.info("Live scrape complete — %d unique users", len(all_users))
-    return all_users
