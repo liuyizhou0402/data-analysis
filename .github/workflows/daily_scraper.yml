@@ -3,7 +3,7 @@ name: 每日小红书留学客户爬取
 on:
   schedule:
     - cron: '0 1 * * *'  # 每天北京时间 09:00 (UTC+8 = UTC 01:00)
-  workflow_dispatch:       # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   scrape-and-email:
@@ -22,6 +22,9 @@ jobs:
 
       - name: 安装依赖
         run: pip install -r xhs_scraper/requirements.txt
+
+      - name: 安装 Playwright Chromium
+        run: playwright install chromium --with-deps
 
       - name: 加载历史去重数据
         uses: actions/cache@v4
