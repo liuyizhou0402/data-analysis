@@ -106,7 +106,7 @@ def _generate_mock_users(keyword: str, count: int = 10) -> list[UserDict]:
                 "profile_url": f"{config.XHS_PROFILE_BASE}/{uid}",
                 "bio": random.choice(_MOCK_BIO_SNIPPETS),
                 "source_keyword": keyword,
-                "match_reason": f"发布了与"{keyword}"相关的笔记",
+                "match_reason": f'发布了与「{keyword}」相关的笔记',
                 "discovered_date": datetime.now().strftime("%Y-%m-%d"),
                 # Extra context fields (used by keyword_matcher)
                 "recent_posts": [

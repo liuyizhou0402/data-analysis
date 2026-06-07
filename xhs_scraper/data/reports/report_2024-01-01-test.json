@@ -1,0 +1,191 @@
+{
+  "report_date": "2024-01-01-test",
+  "total_users": 5,
+  "generated_at": "2026-06-06T12:09:51.968566",
+  "users": [
+    {
+      "user_id": "50457e1b4c994bd4b1ebc9d4",
+      "nickname": "伯明翰大学日常",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/50457e1b4c994bd4b1ebc9d4",
+      "bio": "英国本科+澳洲硕士双申中",
+      "source_keyword": "国际课程",
+      "match_reason": "发布了与「国际课程」相关的笔记",
+      "discovered_date": "2026-06-06",
+      "recent_posts": [
+        {
+          "title": "IB备考经验分享，从35到42",
+          "likes": 1649,
+          "comments": 20,
+          "publish_time": "2026-06-01 19:13:57"
+        },
+        {
+          "title": "国际学校选择指南，家长必看",
+          "likes": 139,
+          "comments": 58,
+          "publish_time": "2026-06-05 13:25:31"
+        },
+        {
+          "title": "英澳留学中介避坑指南",
+          "likes": 112,
+          "comments": 133,
+          "publish_time": "2026-05-22 17:38:34"
+        }
+      ],
+      "relevance_score": 86,
+      "match_reasons": [
+        "发布了与「国际课程」相关的笔记",
+        "内容含留学相关词：英国、澳洲、英澳、IB、留学",
+        "总互动量2111",
+        "最近0天内活跃",
+        "有昵称、有个人简介、有主页链接",
+        "包含意向词：中介、备考"
+      ]
+    },
+    {
+      "user_id": "a67d24f72b994e75b200b98b",
+      "nickname": "皇家墨尔本日常",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/a67d24f72b994e75b200b98b",
+      "bio": "正在备考雅思，目标7分，希望申请曼彻斯特大学",
+      "source_keyword": "雅思备考",
+      "match_reason": "发布了与「雅思备考」相关的笔记",
+      "discovered_date": "2026-06-06",
+      "recent_posts": [
+        {
+          "title": "澳洲技术移民+留学双规划",
+          "likes": 167,
+          "comments": 81,
+          "publish_time": "2026-06-03 01:56:54"
+        },
+        {
+          "title": "澳洲技术移民+留学双规划",
+          "likes": 1750,
+          "comments": 276,
+          "publish_time": "2026-05-14 00:35:48"
+        },
+        {
+          "title": "悉尼vs墨尔本，你选哪个？",
+          "likes": 6,
+          "comments": 466,
+          "publish_time": "2026-06-04 21:13:48"
+        }
+      ],
+      "relevance_score": 86,
+      "match_reasons": [
+        "发布了与「雅思备考」相关的笔记",
+        "内容含留学相关词：澳洲、曼彻斯特、悉尼、墨尔本、雅思",
+        "总互动量2746",
+        "最近1天内活跃",
+        "有昵称、有个人简介、有主页链接",
+        "包含意向词：备考、规划"
+      ]
+    },
+    {
+      "user_id": "58e67cc5e58e43108d690803",
+      "nickname": "英国公立高中生",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/58e67cc5e58e43108d690803",
+      "bio": "正在备考雅思，目标7分，希望申请曼彻斯特大学",
+      "source_keyword": "澳大利亚大学",
+      "match_reason": "发布了与「澳大利亚大学」相关的笔记",
+      "discovered_date": "2026-06-06",
+      "recent_posts": [
+        {
+          "title": "英国语言班性价比排行榜",
+          "likes": 2432,
+          "comments": 76,
+          "publish_time": "2026-05-20 03:21:34"
+        },
+        {
+          "title": "澳洲技术移民+留学双规划",
+          "likes": 890,
+          "comments": 167,
+          "publish_time": "2026-05-26 07:10:25"
+        },
+        {
+          "title": "IB备考经验分享，从35到42",
+          "likes": 21,
+          "comments": 288,
+          "publish_time": "2026-06-02 23:15:46"
+        }
+      ],
+      "relevance_score": 86,
+      "match_reasons": [
+        "发布了与「澳大利亚大学」相关的笔记",
+        "内容含留学相关词：英国、澳洲、曼彻斯特、IB、雅思",
+        "总互动量3874",
+        "最近3天内活跃",
+        "有昵称、有个人简介、有主页链接",
+        "包含意向词：备考、规划"
+      ]
+    },
+    {
+      "user_id": "dbdbcc0cd5e940a6ba5a2d51",
+      "nickname": "托福满分攻略",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/dbdbcc0cd5e940a6ba5a2d51",
+      "bio": "英国本科+澳洲硕士双申中",
+      "source_keyword": "英国留学",
+      "match_reason": "发布了与「英国留学」相关的笔记",
+      "discovered_date": "2026-06-06",
+      "recent_posts": [
+        {
+          "title": "墨尔本生活成本大揭秘",
+          "likes": 2474,
+          "comments": 291,
+          "publish_time": "2026-06-01 14:59:52"
+        },
+        {
+          "title": "留学顾问真的值得花钱吗？",
+          "likes": 2950,
+          "comments": 260,
+          "publish_time": "2026-05-09 06:54:28"
+        },
+        {
+          "title": "托福备考计划表，三个月提分",
+          "likes": 825,
+          "comments": 185,
+          "publish_time": "2026-06-04 17:24:08"
+        }
+      ],
+      "relevance_score": 81,
+      "match_reasons": [
+        "发布了与「英国留学」相关的笔记",
+        "内容含留学相关词：英国、澳洲、墨尔本、托福、留学",
+        "总互动量6985",
+        "最近1天内活跃",
+        "有昵称、有个人简介、有主页链接",
+        "包含意向词：顾问、备考"
+      ]
+    },
+    {
+      "user_id": "acbaad10522d43188ade6a82",
+      "nickname": "雅思7分不是梦",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/acbaad10522d43188ade6a82",
+      "bio": "正在备考雅思，目标7分，希望申请曼彻斯特大学",
+      "source_keyword": "A-level辅导",
+      "match_reason": "发布了与「A-level辅导」相关的笔记",
+      "discovered_date": "2026-06-06",
+      "recent_posts": [
+        {
+          "title": "澳洲技术移民+留学双规划",
+          "likes": 498,
+          "comments": 181,
+          "publish_time": "2026-05-14 09:04:25"
+        },
+        {
+          "title": "分享我的英国留学申请经历",
+          "likes": 141,
+          "comments": 269,
+          "publish_time": "2026-06-03 07:49:45"
+        }
+      ],
+      "relevance_score": 81,
+      "match_reasons": [
+        "发布了与「A-level辅导」相关的笔记",
+        "内容含留学相关词：英国、澳洲、曼彻斯特、雅思、留学",
+        "总互动量1089",
+        "最近3天内活跃",
+        "有昵称、有个人简介、有主页链接",
+        "包含意向词：备考、规划"
+      ]
+    }
+  ]
+}

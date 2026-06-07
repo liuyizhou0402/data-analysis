@@ -168,7 +168,7 @@ def score_user(user: dict[str, Any]) -> dict[str, Any]:
     elif source_kw:
         # Fallback: credit the search keyword itself
         total_score += 10
-        reasons.append(f"通过关键词"{source_kw}"发现")
+        reasons.append(f'通过关键词「{source_kw}」发现')
 
     # -- 2. Engagement (0-20) --
     eng_pts, eng_reason = _engagement_score(posts)
