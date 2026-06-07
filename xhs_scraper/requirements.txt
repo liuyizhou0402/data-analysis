@@ -3,6 +3,9 @@ requests>=2.31.0
 beautifulsoup4>=4.12.0
 lxml>=5.1.0
 
+# Headless browser (handles XHS JS-signed APIs automatically)
+playwright>=1.44.0
+
 # User-agent spoofing
 fake-useragent>=1.4.0
 

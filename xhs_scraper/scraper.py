@@ -315,6 +315,144 @@ def _scrape_mock() -> list[UserDict]:
     return all_users
 
 
+def _parse_cookies_string(cookie_str: str) -> list[dict]:
+    """Convert a raw Cookie header string into a list of dicts for Playwright."""
+    cookies = []
+    for part in cookie_str.split(";"):
+        part = part.strip()
+        if "=" in part:
+            name, _, value = part.partition("=")
+            cookies.append({
+                "name": name.strip(),
+                "value": value.strip(),
+                "domain": ".xiaohongshu.com",
+                "path": "/",
+            })
+    return cookies
+
+
+def _scrape_live_playwright() -> list[UserDict]:
+    """
+    Use a headless Chromium browser (via Playwright) to search XHS.
+    Injects the user's cookies so the page is fully authenticated and
+    the JavaScript-generated security signatures are handled automatically.
+    """
+    try:
+        from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
+    except ImportError:
+        logger.error("playwright not installed. Run: pip install playwright && playwright install chromium")
+        return []
+
+    if not config.XHS_COOKIE:
+        logger.error("XHS_COOKIE is not set. Falling back to empty result.")
+        return []
+
+    all_users: list[UserDict] = []
+    seen_ids: set[str] = set()
+    cookies = _parse_cookies_string(config.XHS_COOKIE)
+
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch(headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
+        context = browser.new_context(
+            user_agent=config.DEFAULT_HEADERS["User-Agent"],
+            locale="zh-CN",
+            viewport={"width": 1280, "height": 800},
+        )
+        # Inject cookies so we appear logged in
+        context.add_cookies(cookies)
+        page = context.new_page()
+
+        # Intercept API responses to extract note/user data
+        captured: list[dict] = []
+
+        def on_response(response):
+            try:
+                if "search/notes" in response.url and response.status == 200:
+                    data = response.json()
+                    items = (
+                        data.get("data", {}).get("items")
+                        or data.get("data", {}).get("notes")
+                        or []
+                    )
+                    captured.extend(items)
+            except Exception:
+                pass
+
+        page.on("response", on_response)
+
+        for keyword in config.SEARCH_KEYWORDS:
+            captured.clear()
+            keyword_users: list[UserDict] = []
+
+            try:
+                search_url = f"https://www.xiaohongshu.com/search_result?keyword={keyword}&source=web_search_result_notes"
+                page.goto(search_url, timeout=30000, wait_until="networkidle")
+                time.sleep(2)  # let JS finish rendering
+
+                # Scroll to trigger more results
+                for _ in range(2):
+                    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+                    time.sleep(1.5)
+
+            except PWTimeout:
+                logger.warning("Timeout loading search page for '%s'", keyword)
+            except Exception as exc:
+                logger.warning("Error navigating to '%s': %s", keyword, exc)
+
+            # Parse captured API responses
+            for item in captured:
+                user = _parse_note(item, keyword)
+                if user and user["user_id"] not in seen_ids:
+                    seen_ids.add(user["user_id"])
+                    keyword_users.append(user)
+
+            # Fallback: parse visible note cards from the DOM
+            if not keyword_users:
+                try:
+                    cards = page.query_selector_all("section.note-item, div[data-v-note-item]")
+                    for card in cards[:20]:
+                        try:
+                            link = card.query_selector("a[href*='/user/profile/']")
+                            if not link:
+                                continue
+                            href = link.get_attribute("href") or ""
+                            uid = href.split("/user/profile/")[-1].split("?")[0].strip()
+                            if not uid or uid in seen_ids:
+                                continue
+                            seen_ids.add(uid)
+                            nickname_el = card.query_selector(".author-wrapper .name, .nickname, span.name")
+                            nickname = nickname_el.inner_text().strip() if nickname_el else "未知用户"
+                            title_el = card.query_selector(".title, .note-title, a.title")
+                            title = title_el.inner_text().strip() if title_el else ""
+                            keyword_users.append({
+                                "user_id": uid,
+                                "nickname": nickname,
+                                "profile_url": f"{config.XHS_PROFILE_BASE}/{uid}",
+                                "bio": "",
+                                "source_keyword": keyword,
+                                "match_reason": f'搜索关键词「{keyword}」发现笔记作者',
+                                "discovered_date": datetime.now().strftime("%Y-%m-%d"),
+                                "recent_posts": [{"title": title, "likes": 0, "comments": 0, "publish_time": ""}],
+                            })
+                        except Exception:
+                            continue
+                except Exception as exc:
+                    logger.debug("DOM fallback failed for '%s': %s", keyword, exc)
+
+            all_users.extend(keyword_users)
+            logger.info("Live: keyword '%s' → %d new users (total: %d)", keyword, len(keyword_users), len(all_users))
+            time.sleep(config.REQUEST_DELAY_SECONDS)
+
+            if len(all_users) >= config.TARGET_USER_COUNT * 3:
+                logger.info("Reached early-stop threshold; skipping remaining keywords")
+                break
+
+        browser.close()
+
+    logger.info("Playwright scrape complete — %d unique users", len(all_users))
+    return all_users
+
+
 def _scrape_live() -> list[UserDict]:
     if not config.XHS_COOKIE:
         logger.error(
@@ -323,48 +461,7 @@ def _scrape_live() -> list[UserDict]:
         )
         return []
 
-    session = _build_session()
-    all_users: list[UserDict] = []
-    seen_ids: set[str] = set()
-
-    for keyword in config.SEARCH_KEYWORDS:
-        keyword_users: list[UserDict] = []
-
-        for page in range(1, config.MAX_PAGES_PER_KEYWORD + 1):
-            raw_items = _search_keyword(session, keyword, page)
-            if not raw_items:
-                break  # no more pages or error — move to next keyword
-
-            for item in raw_items:
-                user = _parse_note(item, keyword)
-                if user and user["user_id"] not in seen_ids:
-                    seen_ids.add(user["user_id"])
-                    keyword_users.append(user)
-
-                # Also collect commenters from this note
-                note_id = (
-                    item.get("id")
-                    or item.get("note_card", {}).get("note_id", "")
-                )
-                if note_id:
-                    for cu in _fetch_comment_users(session, note_id, keyword):
-                        if cu["user_id"] not in seen_ids:
-                            seen_ids.add(cu["user_id"])
-                            keyword_users.append(cu)
-
-            time.sleep(config.REQUEST_DELAY_SECONDS)
-
-        all_users.extend(keyword_users)
-        logger.info(
-            "Live: keyword '%s' → %d new users (total so far: %d)",
-            keyword,
-            len(keyword_users),
-            len(all_users),
-        )
-
-        if len(all_users) >= config.TARGET_USER_COUNT * 3:
-            # Collected plenty — stop early to avoid over-scraping
-            logger.info("Reached early-stop threshold; skipping remaining keywords")
+    return _scrape_live_playwright()
             break
 
     logger.info("Live scrape complete — %d unique users", len(all_users))
