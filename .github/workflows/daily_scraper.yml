@@ -1,0 +1,49 @@
+name: 每日小红书留学客户爬取
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # 每天北京时间 09:00 (UTC+8 = UTC 01:00)
+  workflow_dispatch:       # 允许手动触发
+
+jobs:
+  scrape-and-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+        with:
+          ref: claude/amazing-faraday-I9TwX
+
+      - name: 安装 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r xhs_scraper/requirements.txt
+
+      - name: 加载历史去重数据
+        uses: actions/cache@v4
+        with:
+          path: xhs_scraper/data/seen_users.json
+          key: seen-users-${{ github.run_id }}
+          restore-keys: |
+            seen-users-
+
+      - name: 运行爬虫并发送邮件
+        env:
+          XHS_USE_MOCK: false
+          XHS_COOKIE: ${{ secrets.XHS_COOKIE }}
+          XHS_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
+          XHS_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
+        run: |
+          cd xhs_scraper
+          python main.py --now
+
+      - name: 保存今日报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-report-${{ github.run_number }}
+          path: xhs_scraper/data/reports/
+          retention-days: 30
