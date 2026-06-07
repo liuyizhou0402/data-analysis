@@ -100,3 +100,10 @@ XHS_EXPLORE_URL: str = "https://www.xiaohongshu.com/explore"
 XHS_SEARCH_API: str = "https://edith.xiaohongshu.com/api/sns/web/v1/search/notes"
 XHS_NOTE_COMMENTS_API: str = "https://edith.xiaohongshu.com/api/sns/web/v1/comment/list"
 XHS_PROFILE_BASE: str = "https://www.xiaohongshu.com/user/profile"
+
+# ---------------------------------------------------------------------------
+# Scheduler configuration
+# ---------------------------------------------------------------------------
+SCHEDULER_TIMEZONE: str = "Asia/Shanghai"
+SCHEDULE_HOUR: int = int(os.getenv("SCHEDULE_HOUR", "9"))
+SCHEDULE_MINUTE: int = int(os.getenv("SCHEDULE_MINUTE", "0"))
