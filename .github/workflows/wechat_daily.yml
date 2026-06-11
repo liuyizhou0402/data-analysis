@@ -1,0 +1,43 @@
+name: 每日留学资讯公众号三连发
+
+on:
+  schedule:
+    - cron: '0 23 * * *'   # UTC 23:00 = 北京时间 07:00
+  workflow_dispatch:
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          ref: claude/affectionate-brahmagupta-063tf3
+
+      - name: 设置 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装中文字体（封面图渲染用）
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
+
+      - name: 安装依赖
+        run: pip install -r wechat_publisher/requirements.txt
+
+      - name: 运行每日流水线
+        run: cd wechat_publisher && python main.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
+          WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
+          WECHAT_AUTO_PUBLISH: ${{ vars.WECHAT_AUTO_PUBLISH || 'false' }}
+
+      - name: 上传今日文章与封面
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wechat-articles-${{ github.run_number }}
+          path: wechat_publisher/data/output/
+          retention-days: 30
