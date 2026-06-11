@@ -107,15 +107,20 @@ ap-biology-astar/
 - [x] 100 课时总蓝图
 - [x] 核心 IP：答题模板与拿分清单
 - [x] 三大标准模板
-- [x] **Unit 1** Chemistry of Life —— 完整 8 课时
-- [x] **Unit 2** Cell Structure & Function —— 完整 10 课时
-- [x] **Unit 3** Cellular Energetics —— 完整 13 课时
-- [x] Unit 6 旗舰课（操纵子）+ Unit 7 旗舰课（Hardy-Weinberg）
-- [ ] Unit 4、5、6、7、8（按单元逐步产出）
-- [ ] 全真模考卷 ×2
+- [x] **Unit 1** Chemistry of Life —— 8 课时
+- [x] **Unit 2** Cell Structure & Function —— 10 课时
+- [x] **Unit 3** Cellular Energetics —— 13 课时
+- [x] **Unit 4** Cell Communication & Cell Cycle —— 11 课时
+- [x] **Unit 5** Heredity —— 9 课时
+- [x] **Unit 6** Gene Expression & Regulation —— 13 课时
+- [x] **Unit 7** Natural Selection —— 13 课时
+- [x] **Unit 8** Ecology —— 10 课时
+- [ ] 模块 0（诊断 + 学习系统）2 课时
+- [ ] 应试专训（MCQ + FRQ 六大题型）4 课时
+- [ ] 冲刺模考（全真模考 ×2 + 串讲）7 课时
 - [ ] 第二阶段：获客与宣传
 
-> **进度速览**：已完成 31 节完整课时（Unit 1–3）+ 2 节跨单元旗舰课，约占 100 课时的 1/3。
+> **进度速览**：**8 大核心单元全部完成（87 课时）**！剩余模块 0、应试专训、冲刺模考共 13 课时，即可凑齐 100 课。
 
 ---
 
