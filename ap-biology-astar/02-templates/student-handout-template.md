@@ -71,4 +71,4 @@
 
 ---
 
-*学生版 · BioA★ · {你的品牌}｜本讲义为原创内容，对齐 College Board AP Biology CED。*
+*学生版 · BioA★ · 墨轩国际教育｜本讲义为原创内容，对齐 College Board AP Biology CED。*

