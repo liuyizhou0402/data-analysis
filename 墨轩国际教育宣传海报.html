@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>墨轩国际教育</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #0a0a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+  }
+
+  /* ===== POSTER 1: 主品牌海报 ===== */
+  .poster-1 {
+    width: 375px;
+    min-height: 667px;
+    background: linear-gradient(160deg, #0d1b3e 0%, #1a0a3e 40%, #0d1b3e 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  .poster-1 .bg-glow {
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(100,60,255,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .poster-1 .bg-glow-2 {
+    position: absolute;
+    bottom: 0; right: -100px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(0,180,255,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .poster-1 .stars {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.4) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .poster-1 .content {
+    position: relative; z-index: 2;
+    padding: 40px 30px 40px;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  .poster-1 .top-badge {
+    background: linear-gradient(90deg, #6c3fff, #00b4ff);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  .poster-1 .globe-ring {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(108,63,255,0.4), rgba(0,180,255,0.4));
+    border: 2px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 0 40px rgba(100,60,255,0.4), inset 0 0 30px rgba(0,180,255,0.2);
+  }
+
+  .poster-1 .globe-ring::before {
+    content: '';
+    position: absolute;
+    width: 190px; height: 190px;
+    border-radius: 50%;
+    border: 1px solid rgba(108,63,255,0.3);
+    animation: spin 8s linear infinite;
+  }
+
+  .poster-1 .globe-ring::after {
+    content: '';
+    position: absolute;
+    width: 210px; height: 210px;
+    border-radius: 50%;
+    border: 1px dashed rgba(0,180,255,0.2);
+    animation: spin 12s linear infinite reverse;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .poster-1 .globe-inner {
+    font-size: 60px;
+    filter: drop-shadow(0 0 15px rgba(100,180,255,0.8));
+  }
+
+  .poster-1 .brand-name {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, #fff 0%, #b4d0ff 50%, #6c3fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .poster-1 .brand-en {
+    font-size: 12px;
+    color: rgba(180,208,255,0.7);
+    letter-spacing: 5px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .poster-1 .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #6c3fff, #00b4ff, transparent);
+    margin-bottom: 24px;
+  }
+
+  .poster-1 .tagline {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .poster-1 .sub-tagline {
+    font-size: 13px;
+    color: rgba(180,208,255,0.7);
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+  }
+
+  .poster-1 .stats-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  .poster-1 .stat-card {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 14px 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .poster-1 .stat-num {
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #6c3fff, #00b4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
+
+  .poster-1 .stat-label {
+    font-size: 11px;
+    color: rgba(180,208,255,0.6);
+    margin-top: 4px;
+    display: block;
+    letter-spacing: 1px;
+  }
+
+  .poster-1 .services {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .poster-1 .service-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid #6c3fff;
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+
+  .poster-1 .service-icon { font-size: 20px; }
+
+  .poster-1 .service-text { flex: 1; }
+
+  .poster-1 .service-title {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .poster-1 .service-desc {
+    font-size: 11px;
+    color: rgba(180,208,255,0.5);
+    margin-top: 2px;
+  }
+
+  .poster-1 .cta-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(90deg, #6c3fff, #00b4ff);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 30px rgba(108,63,255,0.4);
+  }
+
+  .poster-1 .footer-contact {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .poster-1 .contact-item {
+    font-size: 11px;
+    color: rgba(180,208,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ===== POSTER 2: 留学目的地海报 ===== */
+  .poster-2 {
+    width: 375px;
+    background: linear-gradient(180deg, #fff8f0 0%, #fff 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  .poster-2 .header {
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    padding: 30px 25px 25px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .poster-2 .header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .poster-2 .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -20px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .poster-2 .header-inner { position: relative; z-index: 1; }
+
+  .poster-2 .p2-brand {
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  .poster-2 .p2-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .poster-2 .p2-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+  }
+
+  .poster-2 .dest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #eee;
+  }
+
+  .poster-2 .dest-card {
+    background: white;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+
+  .poster-2 .dest-flag { font-size: 32px; }
+
+  .poster-2 .dest-country {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .poster-2 .dest-unis {
+    font-size: 11px;
+    color: #ff6b35;
+    font-weight: 600;
+  }
+
+  .poster-2 .dest-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .poster-2 .dest-tag {
+    font-size: 10px;
+    background: #fff5f0;
+    color: #ff6b35;
+    border: 1px solid #ffd4c2;
+    border-radius: 20px;
+    padding: 2px 8px;
+  }
+
+  .poster-2 .promise-section {
+    padding: 24px 25px;
+    background: linear-gradient(135deg, #1a1a2e, #2d1b69);
+  }
+
+  .poster-2 .promise-title {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .poster-2 .promise-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .poster-2 .promise-item {
+    flex: 1;
+    text-align: center;
+    padding: 14px 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .poster-2 .promise-icon { font-size: 22px; }
+
+  .poster-2 .promise-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .poster-2 .bottom-bar {
+    background: linear-gradient(90deg, #ff6b35, #f7931e);
+    padding: 14px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .poster-2 .bottom-brand {
+    font-size: 16px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 2px;
+  }
+
+  .poster-2 .bottom-contact {
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* ===== POSTER 3: 成功案例/朋友圈方图 ===== */
+  .poster-3 {
+    width: 375px;
+    height: 375px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  }
+
+  .poster-3 .bg-decor {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(120,80,255,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(0,180,255,0.2) 0%, transparent 50%);
+  }
+
+  .poster-3 .content {
+    position: relative; z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .poster-3 .year-badge {
+    font-size: 11px;
+    color: rgba(255,220,100,0.9);
+    letter-spacing: 4px;
+    background: rgba(255,220,100,0.15);
+    border: 1px solid rgba(255,220,100,0.3);
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+
+  .poster-3 .big-num {
+    font-size: 72px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #fff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .poster-3 .big-num span {
+    font-size: 28px;
+    vertical-align: super;
+  }
+
+  .poster-3 .big-label {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+  }
+
+  .poster-3 .school-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .poster-3 .school-chip {
+    font-size: 11px;
+    color: white;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 12px;
+  }
+
+  .poster-3 .brand-bottom {
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, #a78bfa, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .label {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    text-align: center;
+    font-family: 'PingFang SC', sans-serif;
+    letter-spacing: 2px;
+    padding: 5px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- 海报一：主品牌形象海报 -->
+<p class="label">▼ 海报一：品牌形象海报（适合朋友圈）</p>
+<div class="poster-1">
+  <div class="bg-glow"></div>
+  <div class="bg-glow-2"></div>
+  <div class="stars"></div>
+  <div class="content">
+    <div class="top-badge">INTERNATIONAL EDUCATION</div>
+
+    <div class="globe-ring">
+      <div class="globe-inner">🌐</div>
+    </div>
+
+    <div class="brand-name">墨轩国际教育</div>
+    <div class="brand-en">MOXUAN INTERNATIONAL EDUCATION</div>
+    <div class="divider"></div>
+
+    <div class="tagline">梦想不设边界<br>未来由你定义</div>
+    <div class="sub-tagline">
+      专业留学规划 · 名校申请护航<br>
+      让每一份努力都抵达理想彼岸
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-num">98%</span>
+        <span class="stat-label">录取率</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">合作院校</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">10年+</span>
+        <span class="stat-label">专业经验</span>
+      </div>
+    </div>
+
+    <div class="services">
+      <div class="service-item">
+        <div class="service-icon">🎓</div>
+        <div class="service-text">
+          <div class="service-title">名校申请全程辅导</div>
+          <div class="service-desc">G5·常青藤·QS前100 专属文书定制</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">📋</div>
+        <div class="service-text">
+          <div class="service-title">背景提升规划</div>
+          <div class="service-desc">科研实习·竞赛·领导力项目全覆盖</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">✈️</div>
+        <div class="service-text">
+          <div class="service-title">签证·行前·海外跟进</div>
+          <div class="service-desc">从申请到入学 全程无忧陪伴</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="cta-btn">立即咨询 · 免费评估</button>
+
+    <div class="footer-contact">
+      <div class="contact-item">📱 扫码添加顾问</div>
+      <div class="contact-item">🌐 www.moxuan-edu.com</div>
+    </div>
+  </div>
+</div>
+
+<!-- 海报二：留学目的地海报 -->
+<p class="label">▼ 海报二：留学目的地海报（适合朋友圈）</p>
+<div class="poster-2">
+  <div class="header">
+    <div class="header-inner">
+      <div class="p2-brand">墨轩国际教育 · MOXUAN EDU</div>
+      <div class="p2-title">全球名校<br>触手可及</div>
+      <div class="p2-sub">英美澳加新 · 五大留学目的地<br>专属顾问一对一，帮你圆梦海外名校</div>
+    </div>
+  </div>
+
+  <div class="dest-grid">
+    <div class="dest-card">
+      <div class="dest-flag">🇬🇧</div>
+      <div class="dest-country">英国</div>
+      <div class="dest-unis">G5 · 罗素盟校</div>
+      <div class="dest-tags">
+        <span class="dest-tag">牛津</span>
+        <span class="dest-tag">剑桥</span>
+        <span class="dest-tag">帝理</span>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-flag">🇺🇸</div>
+      <div class="dest-country">美国</div>
+      <div class="dest-unis">常青藤 · TOP30</div>
+      <div class="dest-tags">
+        <span class="dest-tag">哈佛</span>
+        <span class="dest-tag">MIT</span>
+        <span class="dest-tag">斯坦福</span>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-flag">🇦🇺</div>
+      <div class="dest-country">澳大利亚</div>
+      <div class="dest-unis">八大名校</div>
+      <div class="dest-tags">
+        <span class="dest-tag">墨尔本</span>
+        <span class="dest-tag">悉尼</span>
+        <span class="dest-tag">ANU</span>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-flag">🇨🇦</div>
+      <div class="dest-country">加拿大</div>
+      <div class="dest-unis">U15联盟</div>
+      <div class="dest-tags">
+        <span class="dest-tag">多伦多</span>
+        <span class="dest-tag">UBC</span>
+        <span class="dest-tag">麦吉尔</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="promise-section">
+    <div class="promise-title">我们的承诺</div>
+    <div class="promise-row">
+      <div class="promise-item">
+        <div class="promise-icon">🔒</div>
+        <div class="promise-text">不录取<br>全额退款</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">👨‍💼</div>
+        <div class="promise-text">资深顾问<br>1对1服务</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">📝</div>
+        <div class="promise-text">原创文书<br>零抄袭</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">🏆</div>
+        <div class="promise-text">名校录取<br>有保障</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bottom-brand">墨轩国际教育</div>
+    <div class="bottom-contact">
+      扫码免费咨询<br>微信同号：moxuan-edu
+    </div>
+  </div>
+</div>
+
+<!-- 海报三：方图（适合朋友圈九宫格/首图）-->
+<p class="label">▼ 海报三：方形海报（适合朋友圈首图）</p>
+<div class="poster-3">
+  <div class="bg-decor"></div>
+  <div class="content">
+    <div class="year-badge">2025届 · 录取捷报</div>
+    <div class="big-num"><span>+</span>300</div>
+    <div class="big-label">名学员成功录取海外名校</div>
+
+    <div class="school-chips">
+      <span class="school-chip">🎓 牛津大学</span>
+      <span class="school-chip">🎓 剑桥大学</span>
+      <span class="school-chip">🎓 哈佛大学</span>
+      <span class="school-chip">🎓 MIT</span>
+      <span class="school-chip">🎓 斯坦福</span>
+      <span class="school-chip">🎓 帝国理工</span>
+      <span class="school-chip">🎓 墨尔本大学</span>
+      <span class="school-chip">🎓 多伦多大学</span>
+    </div>
+
+    <div class="brand-bottom">墨轩国际教育</div>
+  </div>
+</div>
+
+<p class="label" style="margin-bottom:40px;">— 墨轩国际教育 · 专业留学规划机构 —</p>
+
+</body>
+</html>
