@@ -114,16 +114,18 @@ with tab1:
         "states and territories, 2013–2023."
     )
 
-    # KPI cards
-    latest = prev_df[prev_df["year"] == prev_df["year"].max()]
-    nat_avg = {col: latest[col].mean() for col in DISEASE_LABELS}
-    oldest  = prev_df[prev_df["year"] == prev_df["year"].min()]
-    nat_old = {col: oldest[col].mean() for col in DISEASE_LABELS}
+    # KPI cards — show 2023 prevalence + 2022→2023 YoY change
+    latest    = prev_df[prev_df["year"] == prev_df["year"].max()]       # 2023 rows
+    prev_year = prev_df[prev_df["year"] == prev_df["year"].max() - 1]   # 2022 rows
+    nat_avg   = {col: latest[col].mean()    for col in DISEASE_LABELS}
+    nat_prev  = {col: prev_year[col].mean() for col in DISEASE_LABELS}
 
     cols = st.columns(4)
     icons = ["🩺", "❤️", "🧠", "⚖️"]
     for i, (col_name, label) in enumerate(DISEASE_LABELS.items()):
-        delta = nat_avg[col_name] - nat_old[col_name]
+        delta = nat_avg[col_name] - nat_prev[col_name]   # 2022→2023 change
+        arrow = "▲" if delta > 0 else "▼"
+        colour = "#c0392b" if delta > 0 else "#27ae60"   # red = up, green = down
         with cols[i]:
             st.markdown(f"""
             <div class="metric-card">
@@ -132,7 +134,10 @@ with tab1:
             </div>
             """, unsafe_allow_html=True)
             st.caption(
-                f"{'▲' if delta > 0 else '▼'} {abs(delta):.1f}pp since 2013"
+                f"{arrow} {abs(delta):.2f}pp vs 2022 &nbsp;"
+                f"<span style='color:{colour};font-weight:600'>"
+                f"({'↑' if delta > 0 else '↓'} year-on-year)</span>",
+                unsafe_allow_html=True,
             )
 
     st.markdown("---")
@@ -277,20 +282,52 @@ with tab2:
 with tab3:
     st.header("Age & Sex Demographics")
 
-    demo_df = filter_prev(prev_df)
-    disease_demo = st.selectbox(
-        "Condition",
-        options=list(DISEASE_LABELS.keys()),
-        format_func=lambda x: DISEASE_LABELS[x],
-        key="demo_disease",
-    )
-    demo_year = st.slider(
-        "Year", int(prev_df["year"].min()), int(prev_df["year"].max()),
-        value=2022, key="demo_year"
-    )
+    # ── Filter controls ───────────────────────────────────────────────────────
+    ctrl_col1, ctrl_col2, ctrl_col3 = st.columns([2, 2, 3])
 
+    with ctrl_col1:
+        # 下拉菜单：按病种筛选
+        # st.selectbox → 单选下拉框
+        # options       → 选项列表（用字典的 key）
+        # format_func   → 把 key 转成人类可读的标签显示
+        disease_demo = st.selectbox(
+            "🔍 Select condition",
+            options=list(DISEASE_LABELS.keys()),
+            format_func=lambda x: DISEASE_LABELS[x],
+            key="demo_disease",
+        )
+
+    with ctrl_col2:
+        demo_year = st.slider(
+            "📅 Year",
+            min_value=int(prev_df["year"].min()),
+            max_value=int(prev_df["year"].max()),
+            value=2022,
+            key="demo_year",
+        )
+
+    with ctrl_col3:
+        all_ages = ["0-14", "15-24", "25-44", "45-64", "65-74", "75+"]
+        # st.multiselect → 多选框，用户可勾选多个年龄段
+        # 默认全选（default=all_ages）
+        selected_ages = st.multiselect(
+            "👥 Age groups",
+            options=all_ages,
+            default=all_ages,
+            key="demo_ages",
+        )
+    # 若用户取消全部选项，自动回退到全选（避免空图表）
+    if not selected_ages:
+        selected_ages = all_ages
+
+    st.markdown("---")
+
+    # 用筛选条件过滤数据
     age_sex = (
-        prev_df[prev_df["year"] == demo_year]
+        prev_df[
+            (prev_df["year"] == demo_year) &
+            (prev_df["age_group"].isin(selected_ages))   # ← 年龄组过滤
+        ]
         .groupby(["age_group", "sex"])[disease_demo]
         .mean()
         .reset_index()
