@@ -8,7 +8,7 @@
 
 # ============ 收件人 ============
 # 排名后的 job alert 发到这个邮箱（可被环境变量 JOB_ALERT_TO 覆盖）
-DEFAULT_RECIPIENT = "yizhouliu612@gmail.com"
+DEFAULT_RECIPIENT = "1225265377@qq.com"
 
 # ============ 个人画像 ============
 PROFILE = {

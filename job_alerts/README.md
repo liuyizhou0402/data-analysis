@@ -30,7 +30,7 @@
 |---|---|---|
 | `XHS_EMAIL_USER` | ✅ | 发件 Gmail 地址（你仓库里其它爬虫已在用，复用即可）|
 | `XHS_EMAIL_PASSWORD` | ✅ | Gmail **应用专用密码**（App Password，不是登录密码）|
-| `JOB_ALERT_TO` | 可选 | 收件邮箱，默认 `yizhouliu612@gmail.com` |
+| `JOB_ALERT_TO` | 可选 | 收件邮箱，默认 `1225265377@qq.com` |
 | `ADZUNA_APP_ID` | 建议 | 免费注册 https://developer.adzuna.com/ 获取 |
 | `ADZUNA_APP_KEY` | 建议 | 同上 |
 
