@@ -1,0 +1,53 @@
+name: 每日健康数据岗位雷达
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 每天 UTC 22:00 = 悉尼 08:00 (AEST) / 09:00 (AEDT)
+  workflow_dispatch:        # 支持在 Actions 页面手动触发测试
+
+jobs:
+  job-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          ref: claude/magical-dirac-gxtokl
+
+      - name: 设置 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r job_alerts/requirements.txt
+
+      - name: 安装 Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: 恢复跨天去重库
+        uses: actions/cache@v4
+        with:
+          path: job_alerts/data/seen_jobs.json
+          key: job-seen-${{ github.run_id }}
+          restore-keys: job-seen-
+
+      - name: 运行岗位雷达并发邮件
+        env:
+          # 复用仓库已有的 Gmail 密钥
+          XHS_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
+          XHS_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
+          # 收件人（不设则用 config 里的默认邮箱）
+          JOB_ALERT_TO: ${{ secrets.JOB_ALERT_TO }}
+          # 可选：Adzuna 官方聚合 API（强烈建议配置，最稳定的数据源）
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python -m job_alerts.main --now
+
+      - name: 上传今日报告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: job-radar-${{ github.run_number }}
+          path: job_alerts/data/reports/
+          retention-days: 30
