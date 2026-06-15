@@ -17,14 +17,20 @@ from . import config
 
 
 def send(subject: str, html_body: str) -> bool:
-    user = os.environ.get("XHS_EMAIL_USER")
-    pwd = os.environ.get("XHS_EMAIL_PASSWORD")
+    # 去掉前后空格；应用专用密码常被复制成 "abcd efgh ijkl mnop"，中间空格也一并去掉
+    user = (os.environ.get("XHS_EMAIL_USER") or "").strip()
+    pwd = (os.environ.get("XHS_EMAIL_PASSWORD") or "").replace(" ", "").strip()
     # 注意：未设置的 GitHub Secret 会以空字符串注入，所以要 or 兜底
     to_addr = os.environ.get("JOB_ALERT_TO") or config.DEFAULT_RECIPIENT
 
     if not user or not pwd:
         print("⚠ 未配置 XHS_EMAIL_USER / XHS_EMAIL_PASSWORD，跳过发信（仅本地预览模式）。")
         return False
+
+    # 安全诊断（不泄露密钥本身）：发件账号的域名 + 密码长度。
+    # Gmail 应用专用密码应为 16 位；若长度不是 16，多半是贴错（贴成了登录密码）。
+    domain = user.split("@")[-1] if "@" in user else "(无@，可能填错)"
+    print(f"📧 发件账号域名: @{domain} · 应用密码长度: {len(pwd)}（Gmail 应为 16）· 收件: {to_addr}")
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
