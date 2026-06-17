@@ -95,9 +95,13 @@ def run(mode: str) -> int:
     print(f"过滤+排序后: {len(scored)} 条（≥{config.MIN_SCORE}分）")
 
     # 跨天去重（只在正式发信时启用，预览不消耗去重库）
-    if mode == "now":
+    # 手动补发时可设 JOB_ALERT_NO_DEDUPE=true 跳过去重，强制推送完整排名
+    no_dedupe = os.environ.get("JOB_ALERT_NO_DEDUPE", "").lower() == "true"
+    if mode == "now" and not no_dedupe:
         scored = dedupe.filter_new(scored)
         print(f"跨天去重后新增: {len(scored)} 条")
+    elif mode == "now" and no_dedupe:
+        print(f"⏭ 已跳过跨天去重，强制推送完整排名 {len(scored)} 条")
 
     stats = {
         "raw": len(raw_jobs),
@@ -105,6 +109,7 @@ def run(mode: str) -> int:
         "by_source": dict(by_source),
     }
     subject, body = report.build_email(scored, stats)
+    text_body = report.build_text(scored, stats)
 
     # 落地一份报告（artifact）
     os.makedirs(os.path.join(os.path.dirname(__file__), "data", "reports"), exist_ok=True)
@@ -118,7 +123,7 @@ def run(mode: str) -> int:
         print(f"   {j.score:>3}  {j.title[:48]:48}  [{j.source}]")
 
     if mode == "now":
-        ok = emailer.send(subject, body)
+        ok = emailer.send(subject, body, text_body)
         # 发信失败时让这步以非 0 退出，GitHub Actions 会标红，方便第一时间发现
         # 邮箱密钥失效（否则只在日志里一行 ❌，很容易被忽略）。
         if not ok:

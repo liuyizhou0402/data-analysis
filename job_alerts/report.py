@@ -56,6 +56,24 @@ def _card(job: JobPosting, rank: int) -> str:
     """
 
 
+def build_text(jobs: list[JobPosting], stats: dict) -> str:
+    """纯文本版（邮件 fallback + 提升送达率）。"""
+    today = datetime.now().strftime("%Y-%m-%d")
+    lines = [f"每日健康数据岗位雷达 · {today} · Sydney", ""]
+    if not jobs:
+        lines.append("今天没有达到匹配阈值的新岗位，明天会自动再试。")
+    else:
+        for i, j in enumerate(jobs, 1):
+            label, _ = _tier(j.score)
+            sal = f" · {j.salary}" if j.salary else ""
+            lines.append(f"{i}. [{j.score}分/{label}] {j.title} — {j.company or '—'} "
+                         f"({j.location}) [{j.source}]{sal}")
+            lines.append(f"   {j.url}")
+    lines.append("")
+    lines.append("打分基于 USYD MDHDS 健康数据画像。改 job_alerts/config.py 可调权重。")
+    return "\n".join(lines)
+
+
 def build_email(jobs: list[JobPosting], stats: dict) -> tuple[str, str]:
     """返回 (subject, html_body)。"""
     today = datetime.now().strftime("%Y-%m-%d")
