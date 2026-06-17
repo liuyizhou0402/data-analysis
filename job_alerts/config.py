@@ -8,7 +8,8 @@
 
 # ============ 收件人 ============
 # 排名后的 job alert 发到这个邮箱（可被环境变量 JOB_ALERT_TO 覆盖）
-DEFAULT_RECIPIENT = "1225265377@qq.com"
+# 同时发 QQ 和 Gmail：QQ 偶尔把跨域邮件拦进垃圾箱，Gmail（发件人自己）作为保底一定收得到
+DEFAULT_RECIPIENT = "1225265377@qq.com, yizhouliu612@gmail.com"
 
 # ============ 个人画像 ============
 PROFILE = {

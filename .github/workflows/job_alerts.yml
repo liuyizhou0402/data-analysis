@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 22 * * *'   # 每天 UTC 22:00 = 悉尼 08:00 (AEST) / 09:00 (AEDT)
   workflow_dispatch:        # 支持在 Actions 页面手动触发测试
+    inputs:
+      ignore_dedupe:
+        description: '忽略跨天去重，强制推送完整排名（手动补发用）'
+        type: boolean
+        default: false
 
 jobs:
   job-radar:
@@ -37,6 +42,7 @@ jobs:
           # 复用仓库已有的 Gmail 密钥
           XHS_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
           XHS_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
+          JOB_ALERT_NO_DEDUPE: ${{ inputs.ignore_dedupe }}
           # 收件人（不设则用 config 里的默认邮箱）
           JOB_ALERT_TO: ${{ secrets.JOB_ALERT_TO }}
           # 可选：Adzuna 官方聚合 API（强烈建议配置，最稳定的数据源）

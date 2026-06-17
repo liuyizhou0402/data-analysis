@@ -43,12 +43,16 @@ def collect_live() -> tuple[list[JobPosting], Counter]:
             continue
         fetch = REGISTRY[name]
         print(f"\n=== 数据源: {name} ===")
+        # 熔断器：被反爬的源会连续返回 0，没必要把 10 个关键词都跑一遍（每次 ~25s 超时）；
+        # 不吃关键词的源（如 GradConnection 每次返回同一批）连续"新增 0"也提前收手。
+        consec_empty = 0   # 连续抓到 0 条原始结果
+        consec_no_new = 0  # 连续 0 条新增（去重后）
         for kw in config.SEARCH_KEYWORDS:
             try:
                 found = fetch(kw, config.SEARCH_LOCATION, config.PER_SOURCE_LIMIT)
             except Exception as e:  # noqa: BLE001
                 print(f"  [{name}] 关键词「{kw}」抓取异常: {e}")
-                continue
+                found = []
             added = 0
             for j in found:
                 fp = j.fingerprint()
@@ -59,6 +63,15 @@ def collect_live() -> tuple[list[JobPosting], Counter]:
                 by_source[name] += 1
                 added += 1
             print(f"  「{kw}」-> {len(found)} 条，新增 {added}")
+
+            consec_empty = consec_empty + 1 if not found else 0
+            consec_no_new = consec_no_new + 1 if added == 0 else 0
+            if consec_empty >= 2:
+                print(f"  [{name}] 连续 2 次空结果（疑似被反爬/无数据），跳过剩余关键词。")
+                break
+            if consec_no_new >= 3:
+                print(f"  [{name}] 连续 3 次无新增，提前结束该源。")
+                break
     return jobs, by_source
 
 
@@ -82,9 +95,13 @@ def run(mode: str) -> int:
     print(f"过滤+排序后: {len(scored)} 条（≥{config.MIN_SCORE}分）")
 
     # 跨天去重（只在正式发信时启用，预览不消耗去重库）
-    if mode == "now":
+    # 手动补发时可设 JOB_ALERT_NO_DEDUPE=true 跳过去重，强制推送完整排名
+    no_dedupe = os.environ.get("JOB_ALERT_NO_DEDUPE", "").lower() == "true"
+    if mode == "now" and not no_dedupe:
         scored = dedupe.filter_new(scored)
         print(f"跨天去重后新增: {len(scored)} 条")
+    elif mode == "now" and no_dedupe:
+        print(f"⏭ 已跳过跨天去重，强制推送完整排名 {len(scored)} 条")
 
     stats = {
         "raw": len(raw_jobs),
@@ -92,6 +109,7 @@ def run(mode: str) -> int:
         "by_source": dict(by_source),
     }
     subject, body = report.build_email(scored, stats)
+    text_body = report.build_text(scored, stats)
 
     # 落地一份报告（artifact）
     os.makedirs(os.path.join(os.path.dirname(__file__), "data", "reports"), exist_ok=True)
@@ -105,7 +123,12 @@ def run(mode: str) -> int:
         print(f"   {j.score:>3}  {j.title[:48]:48}  [{j.source}]")
 
     if mode == "now":
-        emailer.send(subject, body)
+        ok = emailer.send(subject, body, text_body)
+        # 发信失败时让这步以非 0 退出，GitHub Actions 会标红，方便第一时间发现
+        # 邮箱密钥失效（否则只在日志里一行 ❌，很容易被忽略）。
+        if not ok:
+            print("❌ 邮件未发出——请检查 XHS_EMAIL_USER / XHS_EMAIL_PASSWORD 密钥。")
+            return 1
     else:
         print(f"\n（{mode} 模式不发信）主题预览: {subject}")
     return 0
