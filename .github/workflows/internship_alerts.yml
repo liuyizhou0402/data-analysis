@@ -1,0 +1,62 @@
+name: 悉尼实习雷达（AI / 具身智能 / Digital Health）
+
+on:
+  schedule:
+    # 每天 UTC 23:00 = 悉尼 09:00 AEST / 10:00 AEDT
+    # 与健康数据雷达（UTC 22:00）错开一小时，不同主题的邮件分开收
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+    inputs:
+      ignore_dedupe:
+        description: '忽略跨天去重，强制推送完整排名（手动补发用）'
+        type: boolean
+        default: false
+
+jobs:
+  internship-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          ref: claude/compassionate-noether-rhs1hv
+
+      - name: 设置 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r job_alerts/requirements.txt
+
+      - name: 安装 Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: 恢复跨天去重库（实习专用，独立于健康数据雷达）
+        uses: actions/cache@v4
+        with:
+          path: job_alerts/data/seen_internships.json
+          key: internship-seen-${{ github.run_id }}
+          restore-keys: internship-seen-
+
+      - name: 运行实习雷达并发邮件
+        env:
+          # 复用仓库已有的 Gmail 密钥
+          XHS_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
+          XHS_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
+          # 跨天去重开关（workflow_dispatch 手动触发时可选忽略）
+          INTERNSHIP_NO_DEDUPE: ${{ inputs.ignore_dedupe }}
+          # 收件人（不设则用 internship_config 里的默认邮箱）
+          JOB_ALERT_TO: ${{ secrets.JOB_ALERT_TO }}
+          # Adzuna 官方聚合 API（强烈建议配置，最稳定的数据源之一）
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python -m job_alerts.internship_main --now
+
+      - name: 上传今日报告（artifact 保留 30 天）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: internship-radar-${{ github.run_number }}
+          path: job_alerts/data/reports/internships_*.html
+          retention-days: 30
