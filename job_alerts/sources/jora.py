@@ -31,19 +31,42 @@ def fetch(keyword: str, location: str, limit: int = 25) -> list[JobPosting]:
     for card in soup.select(
         "article.result, div[data-job-id], [class*='job-card'], li[class*='result']"
     )[: limit * 2]:
+        # 优先从 data-job-id 属性构造稳定 URL
+        job_id = card.get("data-job-id") or card.get("data-id")
+
         title_el = (
             card.select_one("a.job-title, h2 a, h3 a, [class*='title'] a")
             or card.select_one("h2, h3, [class*='title']")
         )
-        link_el = card.select_one("a[href*='/job/'], a.job-title, a[href]")
+        # Jora 岗位链接格式：/jobs/view/xxx、/j?p=xxx 等，不一定含 /job/
+        link_el = (
+            card.select_one("a[href*='/jobs/view/']")
+            or card.select_one("a[href*='/j?p']")
+            or card.select_one("a.job-title")
+            or card.select_one("a[href]")
+        )
         comp_el = card.select_one("[class*='company'], [class*='employer'], [class*='advertiser']")
         loc_el = card.select_one("[class*='location'], [class*='suburb'], [class*='area']")
         date_el = card.select_one("[class*='date'], [class*='listed'], time")
 
-        if not title_el or not link_el:
+        if not title_el:
             continue
-        href = link_el.get("href", "")
-        if not href or href in seen:
+
+        # 构造 URL：data-job-id 最可靠，其次用抓到的链接
+        if job_id:
+            href = f"{BASE}/jobs/view/{job_id}"
+        elif link_el:
+            href = link_el.get("href", "")
+            if not href:
+                continue
+            href = href if href.startswith("http") else BASE + href
+            # 过滤掉搜索页自身 URL（Jora 搜索 URL 含 ?q= 参数）
+            if "?q=" in href or href.rstrip("/") == BASE:
+                continue
+        else:
+            continue
+
+        if href in seen:
             continue
         seen.add(href)
 
@@ -52,7 +75,7 @@ def fetch(keyword: str, location: str, limit: int = 25) -> list[JobPosting]:
             title=title_el.get_text(strip=True),
             company=comp_el.get_text(strip=True) if comp_el else "",
             location=loc_el.get_text(strip=True) if loc_el else location,
-            url=href if href.startswith("http") else BASE + href,
+            url=href,
             source="Jora",
             posted=posted,
             posted_days_ago=parse_relative_date(posted),

@@ -27,13 +27,25 @@ def fetch(keyword: str, location: str, limit: int = 25) -> list[JobPosting]:
     jobs: list[JobPosting] = []
     for card in soup.select("div.job_seen_beacon, td.resultContent")[:limit]:
         title_el = card.select_one("h2.jobTitle span, a.jcs-JobTitle span, h2 a")
-        link_el = card.select_one("a.jcs-JobTitle, h2.jobTitle a, a[href*='/rc/clk'], a[href*='/viewjob']")
+        # 优先用 /viewjob 稳定链接；/rc/clk 是点击追踪链接，会快速过期
+        link_el = (
+            card.select_one("a[href*='/viewjob']")
+            or card.select_one("a.jcs-JobTitle, h2.jobTitle a")
+            or card.select_one("a[href*='/rc/clk']")
+        )
         comp_el = card.select_one("[data-testid='company-name'], span.companyName")
         loc_el = card.select_one("[data-testid='text-location'], div.companyLocation")
         date_el = card.select_one("[data-testid='myJobsStateDate'], span.date")
         if not title_el or not link_el:
             continue
         href = link_el.get("href", "")
+        if not href:
+            continue
+        # /rc/clk 是相对路径追踪链接，转成 viewjob 稳定格式
+        if href.startswith("/rc/clk"):
+            import re as _re
+            jk_match = _re.search(r"jk=([a-f0-9]+)", href)
+            href = f"/viewjob?jk={jk_match.group(1)}" if jk_match else href
         posted = date_el.get_text(strip=True) if date_el else ""
         jobs.append(JobPosting(
             title=title_el.get_text(strip=True),

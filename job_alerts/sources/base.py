@@ -70,6 +70,20 @@ def http_get(url: str, params: dict | None = None, headers: dict | None = None,
         return None
 
 
+def is_valid_job_url(url: str) -> bool:
+    """True 表示 URL 看起来是一个真实岗位链接（不是主页、不含 None、路径够深）。"""
+    if not url or not url.startswith(("http://", "https://")):
+        return False
+    if "None" in url:          # Python None 被字符串化到 URL 里
+        return False
+    try:
+        from urllib.parse import urlparse
+        path = urlparse(url).path.rstrip("/")
+        return len(path) > 1  # 至少有一个有意义的路径段
+    except Exception:          # noqa: BLE001
+        return False
+
+
 def parse_relative_date(text: str) -> Optional[int]:
     """把 '3 days ago' / 'today' / '1 week ago' 解析成"几天前"。"""
     if not text:

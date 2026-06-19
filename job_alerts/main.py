@@ -23,12 +23,12 @@ if __package__ in (None, ""):
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from job_alerts import config, dedupe, emailer, report, scorer
     from job_alerts.sources import REGISTRY
-    from job_alerts.sources.base import JobPosting
+    from job_alerts.sources.base import JobPosting, is_valid_job_url
     from job_alerts import sample_data
 else:
     from . import config, dedupe, emailer, report, scorer
     from .sources import REGISTRY
-    from .sources.base import JobPosting
+    from .sources.base import JobPosting, is_valid_job_url
     from . import sample_data
 
 
@@ -56,7 +56,7 @@ def collect_live() -> tuple[list[JobPosting], Counter]:
             added = 0
             for j in found:
                 fp = j.fingerprint()
-                if fp in seen_fp or not j.title:
+                if fp in seen_fp or not j.title or not is_valid_job_url(j.url):
                     continue
                 seen_fp.add(fp)
                 jobs.append(j)

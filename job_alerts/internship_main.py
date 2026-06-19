@@ -25,7 +25,7 @@ if __package__ in (None, ""):
     from job_alerts import internship_dedupe as dedupe
     from job_alerts import emailer
     from job_alerts.sources import REGISTRY
-    from job_alerts.sources.base import JobPosting
+    from job_alerts.sources.base import JobPosting, is_valid_job_url
 else:
     from . import internship_config as cfg
     from . import internship_scorer as scorer
@@ -33,7 +33,7 @@ else:
     from . import internship_dedupe as dedupe
     from . import emailer
     from .sources import REGISTRY
-    from .sources.base import JobPosting
+    from .sources.base import JobPosting, is_valid_job_url
 
 
 def collect_live() -> tuple[list[JobPosting], Counter]:
@@ -58,7 +58,7 @@ def collect_live() -> tuple[list[JobPosting], Counter]:
             added = 0
             for j in found:
                 fp = j.fingerprint()
-                if fp in seen_fp or not j.title:
+                if fp in seen_fp or not j.title or not is_valid_job_url(j.url):
                     continue
                 seen_fp.add(fp)
                 jobs.append(j)

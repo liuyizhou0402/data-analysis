@@ -27,22 +27,42 @@ def fetch(keyword: str, location: str, limit: int = 25) -> list[JobPosting]:
     cards = soup.select("div.campaign-box, div.box-content-block, a.box-header-title")
     seen = set()
     for card in cards[: limit * 3]:
-        link = card if card.name == "a" else card.select_one("a[href*='/employers/'], a.box-header-title, a")
-        if not link or not link.get("href"):
+        # 优先找具体岗位链接（路径深度 ≥ 3，如 /employers/google/ai-intern/）
+        # 而非雇主概览页（/employers/google/ 只有 2 段路径）
+        candidate_link = None
+        if card.name == "a":
+            candidate_link = card
+        else:
+            best_depth = 0
+            for a in card.select("a[href]"):
+                href_a = a.get("href", "")
+                full = href_a if href_a.startswith("http") else BASE + href_a
+                depth = full.rstrip("/").count("/")
+                if depth > best_depth:
+                    best_depth = depth
+                    candidate_link = a
+            # 如果只找到雇主概览页（深度 < 5 即 https://au.gradconnection.com/employers/x/），跳过
+            if candidate_link and best_depth < 5:
+                candidate_link = None
+
+        if not candidate_link or not candidate_link.get("href"):
             continue
-        href = link["href"]
+        href = candidate_link["href"]
         if href in seen:
             continue
         seen.add(href)
-        title = link.get_text(strip=True)
+        title = candidate_link.get_text(strip=True) or card.select_one(
+            ".box-header-title, h2, h3"
+        ) and card.select_one(".box-header-title, h2, h3").get_text(strip=True) or ""
         emp = card.select_one(".employer-name, .box-employer") if card.name != "a" else None
         if not title:
             continue
+        full_url = href if href.startswith("http") else BASE + href
         jobs.append(JobPosting(
             title=title,
-            company=(emp.get_text(strip=True) if emp else "GradConnection employer"),
+            company=(emp.get_text(strip=True) if emp else "GradConnection"),
             location="Sydney",
-            url=href if href.startswith("http") else BASE + href,
+            url=full_url,
             source="GradConnection",
         ))
         if len(jobs) >= limit:

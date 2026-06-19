@@ -28,6 +28,8 @@ def fetch(keyword: str, location: str, limit: int = 25) -> list[JobPosting]:
     jobs: list[JobPosting] = []
     for it in (data.get("data") or [])[:limit]:
         job_id = it.get("id")
+        if not job_id:         # 没有 job_id 就无法构造有效链接，跳过
+            continue
         adv = it.get("advertiser", {}) or {}
         sal = it.get("salaryLabel", "") or ""
         loc = ", ".join(
@@ -37,7 +39,7 @@ def fetch(keyword: str, location: str, limit: int = 25) -> list[JobPosting]:
             title=it.get("title", ""),
             company=adv.get("description", "") or it.get("companyName", ""),
             location=loc,
-            url=f"https://www.seek.com.au/job/{job_id}" if job_id else HOME,
+            url=f"https://www.seek.com.au/job/{job_id}",
             source="Seek",
             description=it.get("teaser", ""),
             salary=sal,
