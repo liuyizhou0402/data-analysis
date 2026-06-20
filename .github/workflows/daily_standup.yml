@@ -1,0 +1,84 @@
+name: 📋 每日进展 standup
+
+# 每天自动开一个「每日进展」Issue 作为打卡提醒（会进你的 GitHub 通知/邮箱）。
+# 也可在 Actions 页面手动触发。
+on:
+  schedule:
+    # 22:00 UTC = 08:00 悉尼(AEST, UTC+10) / 09:00 (AEDT, UTC+11)
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  open-standup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create daily standup issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 悉尼时区的今天
+            const fmt = new Intl.DateTimeFormat('en-CA', {
+              timeZone: 'Australia/Sydney',
+              year: 'numeric', month: '2-digit', day: '2-digit'
+            });
+            const date = fmt.format(new Date()); // YYYY-MM-DD
+            const weekdayCN = ['日','一','二','三','四','五','六'][
+              new Date(new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' })).getDay()
+            ];
+            const title = `📋 每日进展 ${date}（周${weekdayCN}）`;
+
+            // 确保 label 存在
+            const label = 'standup';
+            try {
+              await github.rest.issues.getLabel({ owner: context.repo.owner, repo: context.repo.repo, name: label });
+            } catch (e) {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner, repo: context.repo.repo,
+                name: label, color: '0E8A16', description: '每日进展打卡'
+              });
+            }
+
+            // 防重复：同名 Issue 已存在就跳过
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: label, per_page: 50
+            });
+            if (existing.data.some(i => i.title === title)) {
+              core.info(`今天的 standup 已存在，跳过：${title}`);
+              return;
+            }
+
+            const body = [
+              `## 📋 每日进展 · ${date}`,
+              ``,
+              `### 1. 昨天我承诺要交付什么？做到了吗？`,
+              `- `,
+              ``,
+              `### 2. 今天我卡在哪 / 有什么障碍？`,
+              `- `,
+              ``,
+              `### 3. 今天我承诺交付什么？（具体、可验证、当天能完成）`,
+              `- [ ] `,
+              ``,
+              `### 4. 四条线进展（有就勾）`,
+              `- [ ] 硬技能`,
+              `- [ ] 作品集 / 项目`,
+              `- [ ] 投递 / networking`,
+              `- [ ] 方向 / 认知`,
+              ``,
+              `### 5. 今日产出链接（commit / PR / 文档 / 投递记录）`,
+              `- `,
+              ``,
+              `---`,
+              `> 填完来对话里找 Claude 汇报，我会检查兑现情况并派当天任务。断签请诚实写明原因。`,
+              `> Roadmap: \`growth/roadmap.md\` · 投递表: \`growth/applications.md\``
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner, repo: context.repo.repo,
+              title, body, labels: [label]
+            });
+            core.info(`已创建：${title}`);
