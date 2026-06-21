@@ -1,0 +1,8 @@
+timestamp,patient_id,risk_probability,risk_level,top_factor_1,top_factor_2
+2026-06-21T00:47:37.605562+00:00,health-check,0.0049,Low,bmi,age
+2026-06-21T00:47:37.628729+00:00,TEST-001,0.0001,Low,age,waist_cm
+2026-06-21T00:47:37.651260+00:00,TEST-002,0.9904,High,ethnicity_Indigenous_Australian,waist_cm
+2026-06-21T00:47:37.673706+00:00,unknown,0.0001,Low,age,waist_cm
+2026-06-21T00:47:37.695346+00:00,unknown,0.9904,High,ethnicity_Indigenous_Australian,waist_cm
+2026-06-21T00:47:37.728257+00:00,BATCH-001,0.0001,Low,age,waist_cm
+2026-06-21T00:47:37.745180+00:00,BATCH-002,0.9904,High,ethnicity_Indigenous_Australian,waist_cm
