@@ -77,7 +77,7 @@ edexcel-ial-biology-2026-course/
 | PPT 制作规范（≥100 页标准） | ✅ |
 | Topic 1（1A–1C）PPT + 动画 | ✅ 1A(132) · 1B(128) · 1C(149) 页 |
 | Topic 2（2A–2C）PPT + 动画 | ✅ 2A(142) · 2B(161) · 2C(122) 页 |
-| Topic 3（3A–3C）PPT + 动画 | ⬜ |
+| Topic 3（3A–3C）PPT + 动画 | ✅ 3A(147) · 3B(132) · 3C(125) 页 |
 | Topic 4（4A–4C）PPT + 动画 | ⬜ |
 | Topic 5（5A–5C）PPT + 动画 | ⬜ |
 | Topic 6（6A–6C）PPT + 动画 | ⬜ |
