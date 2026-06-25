@@ -85,20 +85,38 @@ def run(mode: str) -> int:
     raw_jobs, by_source = collect_live()
     print(f"\n抓取合计: {len(raw_jobs)} 条（跨平台去重后）")
 
-    scored = scorer.score_all(raw_jobs)
-    print(f"打分+过滤后: {len(scored)} 条（≥{cfg.MIN_SCORE}分）")
+    scored = scorer.score_all(raw_jobs)            # 完整候选池（已按分排序，未截断）
+    print(f"打分+过滤后候选池: {len(scored)} 条（≥{cfg.MIN_SCORE}分）")
 
     no_dedupe = os.environ.get("INTERNSHIP_NO_DEDUPE", "").lower() == "true"
+    n_backfill = 0
     if mode == "now" and not no_dedupe:
-        scored = dedupe.filter_new(scored)
-        print(f"跨天去重后新增: {len(scored)} 条")
-    elif mode == "now" and no_dedupe:
-        print(f"⏭ 已跳过跨天去重，强制推送 {len(scored)} 条")
+        new_jobs = dedupe.filter_new(scored)       # 今日新增（标记为已见）
+        print(f"跨天去重后新增: {len(new_jobs)} 条")
+        # —— 保底 30 条：今日新增不足时，用候选池里的往期高分岗位补足 ——
+        if len(new_jobs) < cfg.MIN_DAILY_RESULTS:
+            new_fps = {j.fingerprint() for j in new_jobs}
+            backfill = [j for j in scored if j.fingerprint() not in new_fps]
+            need = cfg.MIN_DAILY_RESULTS - len(new_jobs)
+            for j in backfill[:need]:
+                j.is_backfill = True
+            n_backfill = min(need, len(backfill))
+            final = new_jobs + backfill[:need]
+            print(f"今日新增不足 {cfg.MIN_DAILY_RESULTS} 条，补充 {n_backfill} 条往期高分至保底。")
+        else:
+            final = new_jobs
+        scored = final[: cfg.MAX_RESULTS]
+    else:
+        if no_dedupe:
+            print(f"⏭ 已跳过跨天去重，强制推送候选池前 {cfg.MAX_RESULTS} 条")
+        scored = scored[: cfg.MAX_RESULTS]
 
     stats = {
         "raw": len(raw_jobs),
         "min_score": cfg.MIN_SCORE,
         "by_source": dict(by_source),
+        "n_new": sum(1 for j in scored if not j.is_backfill),
+        "n_backfill": sum(1 for j in scored if j.is_backfill),
     }
     subject, body = report.build_email(scored, stats)
     text_body = report.build_text(scored, stats)

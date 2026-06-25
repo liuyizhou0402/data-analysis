@@ -22,29 +22,36 @@ PROFILE = {
 
 # ============ 搜索关键词 ============
 SEARCH_KEYWORDS = [
-    # AI/ML 实习核心词
-    "machine learning intern",
+    # —— Data / 数据分析（最高领域优先级，多铺关键词保量）——
+    "data analyst intern",
+    "data intern",
     "data science intern",
+    "data analytics intern",
+    "business intelligence intern",
+    "business analyst intern",
+    "data engineer intern",
+    "analytics intern",
+    # —— AI / ML 实习 ——
+    "machine learning intern",
     "AI intern",
     "artificial intelligence intern",
-    "software engineer intern",
-    "data engineer intern",
+    "data scientist intern",
     # 专项 AI 技术
     "computer vision intern",
     "NLP intern",
     "deep learning intern",
-    # 具身智能 / 机器人
+    # —— 具身智能 / 机器人 ——
     "robotics intern",
     "embodied AI",
     "autonomous systems intern",
-    # Digital Health
+    # —— Digital Health ——
     "digital health data",
-    "health technology intern",
     "health data intern",
-    # 广搜兜底（保量用）
+    "health technology intern",
+    # —— 广搜兜底（保量用）——
+    "software engineer intern",
     "technology intern",
-    "analytics intern",
-    "research intern AI",
+    "research intern",
 ]
 
 SEARCH_LOCATION = "Sydney NSW"
@@ -78,6 +85,25 @@ TITLE_CORE = [
     "ai ", " ai", "ml ", "computer vision", "nlp",
     "deep learning", "research assistant", "robotics", "embodied",
     "digital health", "data analyst", "analytics",
+]
+
+# 「Data」广义数据方向（数据科学/工程/大数据/平台）—— 优先级仅次于实习标题
+DOMAIN_DATA = [
+    "data science", "data scientist", "data engineer", "data engineering",
+    "big data", "data pipeline", "data platform", "data infrastructure",
+    "analytics engineer", "data analytics", "data warehouse", "data lake",
+    "machine learning engineer", "data modelling", "data modeling",
+    "data quality", "data governance", "data mining", "etl",
+    "data management", "data ops", "dataops",
+]
+
+# 「Data Analyst」狭义数据分析/BI/商业分析角色 —— 优先级次于 Data
+DOMAIN_DATA_ANALYST = [
+    "data analyst", "data analysis", "business intelligence", "bi analyst",
+    "business analyst", "insights analyst", "reporting analyst",
+    "analytics analyst", "bi developer", "bi consultant",
+    "reporting", "dashboard", "data visualisation", "data visualization",
+    "power bi", "tableau", "looker", "qlik",
 ]
 
 DOMAIN_AI = [
@@ -158,22 +184,27 @@ VISA_BAD = [
     "australian citizens only",
 ]
 
-# ============ 打分权重（总计约 104 满分，压缩到 0~100）============
+# ============ 打分权重（按领域优先级递减；总分压缩到 0~100）============
+# 领域优先级（用户指定）：实习标题 > Data > Data Analyst > AI/ML > 具身/机器人 > Digital Health > 技能
 WEIGHTS = {
-    "title_intern":    30,   # 标题含 intern/internship 等实习词
-    "domain_ai":       18,   # AI/ML 领域关键词
-    "domain_embodied":  8,   # 具身智能/机器人领域
-    "domain_health":    8,   # Digital Health 领域
-    "skills":          12,   # 技能命中
-    "employer":        10,   # 目标雇主
-    "seniority":        8,   # 资历匹配（intern/junior 加分）
-    "location_usyd":   12,   # 离悉尼大学距离（越近越高）
-    "recency":          4,   # 新鲜度（最近发布优先）
-    "visa":             4,   # PR/Working Rights 友好
+    "title_intern":        30,   # 1️⃣ 标题含 intern/internship（最高优先级）
+    "domain_data":         24,   # 2️⃣ Data（数据科学/工程/大数据）
+    "domain_data_analyst": 20,   # 3️⃣ Data Analyst（数据分析/BI/商业分析）
+    "domain_ai":           16,   # 4️⃣ AI / ML
+    "domain_embodied":     10,   # 5️⃣ 具身智能 / 机器人
+    "domain_health":        8,   # 6️⃣ Digital Health
+    "skills":               6,   # 7️⃣ 技能匹配（领域里优先级最低）
+    # —— 以下为正交情境因子（与领域并列加分，不参与领域排序）——
+    "employer":            10,   # ⭐ 目标雇主
+    "seniority":            8,   # 资历匹配（intern/junior 加分，senior 减分）
+    "location_usyd":       12,   # 📍 离悉尼大学距离（越近越高）—— 用户强调的硬指标
+    "recency":              4,   # 新鲜度（最近发布优先）
+    "visa":                 4,   # PR/Working Rights 友好
 }
 
-MIN_SCORE = 25       # 较低阈值，保证每日 ≥20 条推送
-MAX_RESULTS = 60     # 最多推送条数
+MIN_SCORE = 28           # 进入候选池的最低分
+MIN_DAILY_RESULTS = 30   # 每日保底推送条数：今日新增不足时，用往期高分岗位补足
+MAX_RESULTS = 60         # 单封邮件最多展示条数
 
 # ============ 数据源开关 ============
 SOURCES_ENABLED = {

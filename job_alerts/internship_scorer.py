@@ -16,6 +16,22 @@ def _hit_any(text: str, words: list[str]) -> list[str]:
     return [w for w in words if w and w in text]
 
 
+def _is_relevant(job: JobPosting) -> bool:
+    """关联门槛：必须命中至少一个目标领域（Data/DataAnalyst/AI/具身/Health），
+    否则即便是实习岗也判定为「跑题」（如 Marketing/HR/Finance 实习）予以剔除。"""
+    blob = job.text_blob()
+    title = job.title.lower()
+    if (_hit_any(blob, cfg.DOMAIN_DATA) or _hit_any(blob, cfg.DOMAIN_DATA_ANALYST)
+            or _hit_any(blob, cfg.DOMAIN_AI) or _hit_any(blob, cfg.DOMAIN_EMBODIED)
+            or _hit_any(blob, cfg.DOMAIN_HEALTH)):
+        return True
+    # 标题里直接含数据/AI/研究类词也算相关（覆盖描述抓取不全的情况）
+    return bool(_hit_any(title, [
+        "data", "analyt", "scientist", "machine learning", "intelligence",
+        " ai", "ai ", " ml", "ml ", "robot", "health", "research",
+    ]))
+
+
 def _usyd_proximity(location: str) -> tuple[int, str]:
     """按地名判断离 USYD 的距离，返回 (得分, 位置标签)。"""
     loc = location.lower()
@@ -46,33 +62,48 @@ def score_job(job: JobPosting) -> JobPosting:
         pts += cfg.WEIGHTS["title_intern"]
         reasons.append(f"实习岗: {intern_title[0]}")
     else:
-        # 无 intern 字样但含 AI/ML 核心词 → 给 40% 加成（研究助理/项目类）
-        ai_title = _hit_any(title, ["machine learning", "data science", "artificial intelligence",
-                                     "computer vision", "deep learning", "robotics", "embodied",
-                                     "research assistant", "nlp", "analytics"])
-        if ai_title:
+        # 无 intern 字样但标题含数据/AI 核心词 → 给 40% 加成（研究助理/项目/初级岗）
+        core_title = _hit_any(title, [
+            "data analyst", "data scientist", "data engineer", "data science",
+            "business intelligence", "business analyst", "analytics", "data",
+            "machine learning", "artificial intelligence", "computer vision",
+            "deep learning", "robotics", "embodied", "research assistant", "nlp",
+        ])
+        if core_title:
             pts += cfg.WEIGHTS["title_intern"] * 0.4
-            reasons.append(f"AI/研究: {ai_title[0]}")
+            reasons.append(f"相关岗: {core_title[0]}")
 
-    # 2) AI/ML 领域（18分）
+    # 2) Data 广义数据方向（24分）—— 领域第一优先级
+    data_hits = _hit_any(blob, cfg.DOMAIN_DATA)
+    if data_hits:
+        pts += cfg.WEIGHTS["domain_data"]
+        reasons.append("Data: " + ", ".join(data_hits[:3]))
+
+    # 3) Data Analyst 数据分析/BI（20分）—— 领域第二优先级
+    da_hits = _hit_any(blob, cfg.DOMAIN_DATA_ANALYST)
+    if da_hits:
+        pts += cfg.WEIGHTS["domain_data_analyst"]
+        reasons.append("Data Analyst: " + ", ".join(da_hits[:3]))
+
+    # 4) AI/ML 领域（16分）
     ai_hits = _hit_any(blob, cfg.DOMAIN_AI)
     if ai_hits:
         pts += cfg.WEIGHTS["domain_ai"]
         reasons.append("AI/ML: " + ", ".join(ai_hits[:3]))
 
-    # 3) 具身智能/机器人（8分）
+    # 5) 具身智能/机器人（10分）
     emb_hits = _hit_any(blob, cfg.DOMAIN_EMBODIED)
     if emb_hits:
         pts += cfg.WEIGHTS["domain_embodied"]
         reasons.append("具身/机器人: " + emb_hits[0])
 
-    # 4) Digital Health（8分）
+    # 6) Digital Health（8分）
     health_hits = _hit_any(blob, cfg.DOMAIN_HEALTH)
     if health_hits:
         pts += cfg.WEIGHTS["domain_health"]
         reasons.append("Digital Health")
 
-    # 5) 技能命中（最高12分，按命中数量线性累计）
+    # 7) 技能命中（最高6分，按命中数量线性累计，领域里优先级最低）
     sk = _hit_any(blob, cfg.SKILLS)
     if sk:
         ratio = min(len(sk) / 4.0, 1.0)
@@ -124,7 +155,9 @@ def score_job(job: JobPosting) -> JobPosting:
 
 
 def score_all(jobs: list[JobPosting]) -> list[JobPosting]:
-    scored = [score_job(j) for j in jobs]
+    """打分 + 过滤 + 排序。返回完整候选池（不截断），
+    最终展示条数 / 保底补足由 main 决定（这样跨天去重后还能从池里补足到 30 条）。"""
+    scored = [score_job(j) for j in jobs if _is_relevant(j)]
     scored = [j for j in scored if j.score >= cfg.MIN_SCORE]
     scored.sort(key=lambda j: j.score, reverse=True)
-    return scored[: cfg.MAX_RESULTS]
+    return scored[:200]  # 200 条安全上限，足够支撑去重后补足

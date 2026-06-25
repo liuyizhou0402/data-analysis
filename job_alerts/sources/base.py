@@ -36,6 +36,7 @@ class JobPosting:
     # 打分阶段填充
     score: int = 0
     reasons: list = field(default_factory=list)
+    is_backfill: bool = False      # True = 往期高分补充（今日新增不足保底数时启用）
 
     def fingerprint(self) -> str:
         """用于跨平台去重的指纹：公司+标题（归一化）。"""
