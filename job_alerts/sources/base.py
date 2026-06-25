@@ -33,6 +33,8 @@ class JobPosting:
     salary: str = ""
     posted: str = ""               # 原始发布时间文本，如 "2 days ago"
     posted_days_ago: Optional[int] = None
+    closes: str = ""                # 原始截止日期文本，如 "30 Jun 2026"
+    closes_in_days: Optional[int] = None  # 距截止还剩几天（负数=已过期）
     # 打分阶段填充
     score: int = 0
     reasons: list = field(default_factory=list)
@@ -83,6 +85,56 @@ def is_valid_job_url(url: str) -> bool:
         return len(path) > 1  # 至少有一个有意义的路径段
     except Exception:          # noqa: BLE001
         return False
+
+
+def parse_closing_date(text: str) -> Optional[int]:
+    """把截止日期文本解析成"距今还剩几天"（负数=已过期）。
+    支持格式：'30 Jun 2026', 'June 30, 2026', '30/06/2026', '2026-06-30'。"""
+    if not text:
+        return None
+    t = text.strip()
+    from datetime import date
+    today = date.today()
+    # ISO: 2026-06-30
+    m = re.match(r"(\d{4})-(\d{2})-(\d{2})", t)
+    if m:
+        try:
+            d = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+            return (d - today).days
+        except ValueError:
+            pass
+    # DD/MM/YYYY or DD-MM-YYYY
+    m = re.match(r"(\d{1,2})[/\-](\d{1,2})[/\-](\d{4})", t)
+    if m:
+        try:
+            d = date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
+            return (d - today).days
+        except ValueError:
+            pass
+    # "30 Jun 2026" or "June 30, 2026" or "30 June 2026"
+    MONTHS = {
+        "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
+        "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
+    }
+    tl = t.lower()
+    for abbr, mnum in MONTHS.items():
+        # "30 Jun 2026" / "30 June 2026"
+        m2 = re.search(r"(\d{1,2})\s+" + abbr + r"[a-z]*\s+(\d{4})", tl)
+        if m2:
+            try:
+                d = date(int(m2.group(2)), mnum, int(m2.group(1)))
+                return (d - today).days
+            except ValueError:
+                pass
+        # "June 30, 2026"
+        m3 = re.search(abbr + r"[a-z]*\s+(\d{1,2}),?\s+(\d{4})", tl)
+        if m3:
+            try:
+                d = date(int(m3.group(2)), mnum, int(m3.group(1)))
+                return (d - today).days
+            except ValueError:
+                pass
+    return None
 
 
 def parse_relative_date(text: str) -> Optional[int]:

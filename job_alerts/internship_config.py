@@ -200,6 +200,7 @@ WEIGHTS = {
     "location_usyd":       12,   # 📍 离悉尼大学距离（越近越高）—— 用户强调的硬指标
     "recency":              4,   # 新鲜度（最近发布优先）
     "visa":                 4,   # PR/Working Rights 友好
+    "urgency":             15,   # ⏰ 截止紧迫度（快截止拉到前排）
 }
 
 MIN_SCORE = 28           # 进入候选池的最低分

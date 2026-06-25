@@ -16,21 +16,6 @@ def _hit_any(text: str, words: list[str]) -> list[str]:
     return [w for w in words if w and w in text]
 
 
-def _is_relevant(job: JobPosting) -> bool:
-    """关联门槛：必须命中至少一个目标领域（Data/DataAnalyst/AI/具身/Health），
-    否则即便是实习岗也判定为「跑题」（如 Marketing/HR/Finance 实习）予以剔除。"""
-    blob = job.text_blob()
-    title = job.title.lower()
-    if (_hit_any(blob, cfg.DOMAIN_DATA) or _hit_any(blob, cfg.DOMAIN_DATA_ANALYST)
-            or _hit_any(blob, cfg.DOMAIN_AI) or _hit_any(blob, cfg.DOMAIN_EMBODIED)
-            or _hit_any(blob, cfg.DOMAIN_HEALTH)):
-        return True
-    # 标题里直接含数据/AI/研究类词也算相关（覆盖描述抓取不全的情况）
-    return bool(_hit_any(title, [
-        "data", "analyt", "scientist", "machine learning", "intelligence",
-        " ai", "ai ", " ml", "ml ", "robot", "health", "research",
-    ]))
-
 
 def _usyd_proximity(location: str) -> tuple[int, str]:
     """按地名判断离 USYD 的距离，返回 (得分, 位置标签)。"""
@@ -149,6 +134,27 @@ def score_job(job: JobPosting) -> JobPosting:
         elif job.posted_days_ago <= 3:
             pts += cfg.WEIGHTS["recency"] * 0.6
 
+    # 11) 截止日期紧迫度（最高15分，已过期不展示）
+    if job.closes_in_days is not None:
+        d = job.closes_in_days
+        if d < 0:
+            # 已过截止，从候选池剔除（得分强制为0，后面过滤掉）
+            job.score = 0
+            job.reasons = reasons
+            return job
+        elif d == 0:
+            pts += cfg.WEIGHTS["urgency"]
+            reasons.append("⏰ 今天截止!")
+        elif d <= 2:
+            pts += cfg.WEIGHTS["urgency"] * 0.87
+            reasons.append(f"⏰ {d}天后截止")
+        elif d <= 7:
+            pts += cfg.WEIGHTS["urgency"] * 0.6
+            reasons.append(f"⏰ {d}天后截止")
+        elif d <= 14:
+            pts += cfg.WEIGHTS["urgency"] * 0.33
+            reasons.append(f"📅 {d}天后截止")
+
     job.score = max(0, min(100, round(pts)))
     job.reasons = reasons
     return job
@@ -157,7 +163,7 @@ def score_job(job: JobPosting) -> JobPosting:
 def score_all(jobs: list[JobPosting]) -> list[JobPosting]:
     """打分 + 过滤 + 排序。返回完整候选池（不截断），
     最终展示条数 / 保底补足由 main 决定（这样跨天去重后还能从池里补足到 30 条）。"""
-    scored = [score_job(j) for j in jobs if _is_relevant(j)]
+    scored = [score_job(j) for j in jobs]
     scored = [j for j in scored if j.score >= cfg.MIN_SCORE]
     scored.sort(key=lambda j: j.score, reverse=True)
     return scored[:200]  # 200 条安全上限，足够支撑去重后补足

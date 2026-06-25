@@ -11,7 +11,7 @@ from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
 
 from . import browser
-from .base import JobPosting
+from .base import JobPosting, parse_closing_date
 
 BASE = "https://au.gradconnection.com"
 
@@ -58,12 +58,27 @@ def fetch(keyword: str, location: str, limit: int = 25) -> list[JobPosting]:
         if not title:
             continue
         full_url = href if href.startswith("http") else BASE + href
+        # 截止日期：在卡片文本中搜索 "clos" / "deadline" / "apply by"
+        closes_raw = ""
+        closes_days = None
+        if card.name != "a":
+            card_text = card.get_text(" ", strip=True)
+            import re
+            m = re.search(
+                r"(?:clos(?:es?|ing)|deadline|apply by)[:\s]+([0-9A-Za-z ,/\-]+\d{4})",
+                card_text, re.IGNORECASE
+            )
+            if m:
+                closes_raw = m.group(1).strip()
+                closes_days = parse_closing_date(closes_raw)
         jobs.append(JobPosting(
             title=title,
             company=(emp.get_text(strip=True) if emp else "GradConnection"),
             location="Sydney",
             url=full_url,
             source="GradConnection",
+            closes=closes_raw,
+            closes_in_days=closes_days,
         ))
         if len(jobs) >= limit:
             break

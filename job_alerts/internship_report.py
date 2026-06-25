@@ -18,6 +18,25 @@ def _tier(score: int) -> tuple[str, str]:
     return "备选", "#64748B"
 
 
+def _deadline_badge(job: JobPosting) -> str:
+    d = job.closes_in_days
+    if d is None:
+        return ""
+    if d == 0:
+        return ('<span style="display:inline-block;font-size:11px;font-weight:700;color:#fff;'
+                'background:#DC2626;border-radius:5px;padding:2px 7px;margin-left:6px;">⏰ 今天截止!</span>')
+    if d <= 3:
+        return (f'<span style="display:inline-block;font-size:11px;font-weight:700;color:#fff;'
+                f'background:#DC2626;border-radius:5px;padding:2px 7px;margin-left:6px;">⏰ {d}天后截止</span>')
+    if d <= 7:
+        return (f'<span style="display:inline-block;font-size:11px;font-weight:700;color:#92400E;'
+                f'background:#FED7AA;border-radius:5px;padding:2px 7px;margin-left:6px;">⏰ {d}天后截止</span>')
+    if d <= 14:
+        return (f'<span style="display:inline-block;font-size:11px;color:#4A5568;'
+                f'background:#E2E8F0;border-radius:5px;padding:2px 7px;margin-left:6px;">📅 {d}天后截止</span>')
+    return ""
+
+
 def _card(job: JobPosting, rank: int) -> str:
     label, color = _tier(job.score)
     backfill_badge = (
@@ -25,6 +44,7 @@ def _card(job: JobPosting, rank: int) -> str:
         'background:#FEF3C7;border-radius:5px;padding:1px 6px;margin-left:6px;">往期高分</span>'
         if job.is_backfill else ""
     )
+    deadline_badge = _deadline_badge(job)
     tags = "".join(
         f'<span style="display:inline-block;font-size:11px;color:#4A5568;'
         f'background:#EDF2F7;border-radius:6px;padding:2px 8px;margin:2px 4px 2px 0;">'
@@ -41,7 +61,7 @@ def _card(job: JobPosting, rank: int) -> str:
                 border-radius:10px;padding:14px 16px;margin-bottom:10px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:4px;">
         <div style="font-size:15px;font-weight:700;color:#0C1F35;flex:1;">
-          {rank}. {html.escape(job.title)}{backfill_badge}
+          {rank}. {html.escape(job.title)}{backfill_badge}{deadline_badge}
         </div>
         <div style="white-space:nowrap;font-size:13px;font-weight:700;color:{color};">
           {job.score}分&nbsp;·&nbsp;{label}
