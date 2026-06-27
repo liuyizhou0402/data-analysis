@@ -1,0 +1,57 @@
+name: 悉尼名企实习雷达·第二封（全球大厂 + USYD健康对口 + 国内大厂线上）
+
+on:
+  schedule:
+    # 每天 UTC 23:03 = 第一封（UTC 23:00）之后 3 分钟发出
+    - cron: '3 23 * * *'
+  workflow_dispatch:
+    inputs:
+      ignore_dedupe:
+        description: '忽略跨天去重，强制推送完整排名（手动补发用）'
+        type: boolean
+        default: false
+
+jobs:
+  career2-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          ref: claude/compassionate-noether-rhs1hv
+
+      - name: 设置 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r job_alerts/requirements.txt
+
+      - name: 安装 Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: 恢复跨天去重库（第二封专用，独立于第一封）
+        uses: actions/cache@v4
+        with:
+          path: job_alerts/data/seen_career2.json
+          key: career2-seen-${{ github.run_id }}
+          restore-keys: career2-seen-
+
+      - name: 运行第二封实习雷达并发邮件
+        env:
+          XHS_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
+          XHS_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
+          CAREER2_NO_DEDUPE: ${{ inputs.ignore_dedupe }}
+          JOB_ALERT_TO: ${{ secrets.JOB_ALERT_TO }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python -m job_alerts.career2_main --now
+
+      - name: 上传今日报告（artifact 保留 30 天）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: career2-radar-${{ github.run_number }}
+          path: job_alerts/data/reports/career2_*.html
+          retention-days: 30
