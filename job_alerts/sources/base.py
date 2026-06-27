@@ -39,6 +39,7 @@ class JobPosting:
     score: int = 0
     reasons: list = field(default_factory=list)
     is_backfill: bool = False      # True = 往期高分补充（今日新增不足保底数时启用）
+    category: str = ""             # 第二封邮件分流用：bigtech_syd / health / china_online
 
     def fingerprint(self) -> str:
         """用于跨平台去重的指纹：公司+标题（归一化）。"""
