@@ -1,0 +1,49 @@
+name: 每日悉尼高端家教需求清单
+
+on:
+  schedule:
+    - cron: '0 1 * * *'   # 09:00 CST
+  workflow_dispatch:
+
+jobs:
+  tutor-leads:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          ref: claude/amazing-faraday-I9TwX
+
+      - name: 设置 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r tutor_scraper/requirements.txt
+
+      - name: 安装 Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: 恢复去重历史库
+        uses: actions/cache@v4
+        with:
+          path: tutor_scraper/data/seen_posts.json
+          key: tutor-seen-posts-${{ github.run_id }}
+          restore-keys: tutor-seen-posts-
+
+      - name: 运行爬取 Pipeline
+        run: cd tutor_scraper && python main.py --now
+        env:
+          TUTOR_USE_MOCK: 'false'
+          TUTOR_EMAIL_USER: ${{ secrets.XHS_EMAIL_USER }}
+          TUTOR_EMAIL_PASSWORD: ${{ secrets.XHS_EMAIL_PASSWORD }}
+          TUTOR_EMAIL_RECIPIENT: '1225265377@qq.com'
+
+      - name: 上传今日报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: tutor-report-${{ github.run_number }}
+          path: tutor_scraper/data/reports/
+          retention-days: 30
