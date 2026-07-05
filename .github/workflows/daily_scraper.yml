@@ -1,9 +1,7 @@
 name: 每日小红书留学客户爬取
 
 on:
-  schedule:
-    - cron: '0 1 * * *'  # 每天北京时间 09:00 (UTC+8 = UTC 01:00)
-  workflow_dispatch:
+  workflow_dispatch:  # 仅手动触发，已关闭定时自动运行
 
 jobs:
   scrape-and-email:
