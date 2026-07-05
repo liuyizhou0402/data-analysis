@@ -1,9 +1,7 @@
 name: 每日悉大新生获客清单
 
 on:
-  schedule:
-    - cron: '0 1 * * *'   # 09:00 CST
-  workflow_dispatch:
+  workflow_dispatch:  # 仅手动触发，已关闭定时自动运行
 
 jobs:
   usyd-lead-list:
