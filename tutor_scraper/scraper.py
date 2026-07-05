@@ -1,22 +1,36 @@
 """
-多平台爬虫：今日澳洲 / Gumtree / 澳洲论坛 / 微博
+多平台爬虫：Gumtree / Seek / 今日澳洲
+用 requests + BS4 直接爬（比 Playwright 更难被屏蔽）。
 """
 from __future__ import annotations
 
-import json
 import logging
 import random
 import re
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any
 
 import config
 
 logger = logging.getLogger(__name__)
 
-# ── Mock 数据 ─────────────────────────────────────────────────────────────────
+# ── 请求头（模拟真实浏览器）─────────────────────────────────────────────────
+_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-AU,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Cache-Control": "max-age=0",
+}
 
+# ── Mock 数据 ─────────────────────────────────────────────────────────────────
 MOCK_POSTS = [
     {
         "id": "gumtree_001",
@@ -31,19 +45,7 @@ MOCK_POSTS = [
         "score": 95,
     },
     {
-        "id": "jraus_002",
-        "source": "今日澳洲",
-        "title": "诚招数学/物理家教，悉尼北区，时薪面议",
-        "content": "孩子读Year 11，就读私立学校，准备HSC，需要数学和物理一对一辅导，每周2次，每次2小时。时薪面议，有经验者优先，要求有相关专业背景。",
-        "url": "https://www.jraus.com/xxx",
-        "location": "悉尼北区",
-        "posted_at": datetime.now().strftime("%Y-%m-%d"),
-        "contact_hint": "站内信联系",
-        "price_signal": "时薪面议（私立学校Year 11）",
-        "score": 90,
-    },
-    {
-        "id": "gumtree_003",
+        "id": "gumtree_002",
         "source": "Gumtree",
         "title": "IB Tutor Needed - Chemistry & Maths HL - $90/hr",
         "content": "Seeking IB tutor for Chemistry and Maths HL. Student currently in Year 12 IB programme. Eastern Suburbs. $90/hr negotiable for right candidate.",
@@ -55,43 +57,19 @@ MOCK_POSTS = [
         "score": 92,
     },
     {
-        "id": "jraus_004",
-        "source": "今日澳洲",
-        "title": "找悉尼家教老师，精英学校备考，数学英语",
-        "content": "小孩现在Year 5，准备考精英学校（Selective School），需要数学和英语辅导。每周两次，地点在Chatswood附近，愿意提供有竞争力的报酬。",
-        "url": "https://www.jraus.com/zzz",
-        "location": "Chatswood, Sydney",
+        "id": "seek_003",
+        "source": "Seek",
+        "title": "Private Tutor - HSC English & History - $75-85/hr",
+        "content": "Tutoring company seeking experienced HSC English and History tutors. $75-85/hr. Must have university degree and strong HSC results.",
+        "url": "https://www.seek.com.au/job/xxx",
+        "location": "Sydney CBD",
         "posted_at": datetime.now().strftime("%Y-%m-%d"),
-        "contact_hint": "站内信联系",
-        "price_signal": "有竞争力的报酬（精英学校备考）",
+        "contact_hint": "Apply via Seek",
+        "price_signal": "$75-85/hr",
         "score": 88,
     },
     {
-        "id": "gumtree_005",
-        "source": "Gumtree",
-        "title": "University Chemistry Tutor Needed - UNSW - $70/hr",
-        "content": "1st year UNSW chemistry student looking for tutor. Struggling with organic chemistry. $70/hr, flexible schedule, can meet on campus or online.",
-        "url": "https://www.gumtree.com.au/s-ad/aaa",
-        "location": "Kensington (UNSW), Sydney",
-        "posted_at": datetime.now().strftime("%Y-%m-%d"),
-        "contact_hint": "Reply via Gumtree",
-        "price_signal": "$70/hr",
-        "score": 82,
-    },
-    {
-        "id": "aussiezone_006",
-        "source": "澳洲论坛",
-        "title": "求HSC中文继承语家教，悉尼西北区",
-        "content": "孩子读Year 12，需要中文继承语（Chinese in Context）家教，目前成绩中等，希望冲刺90分以上。悉尼西北区，时薪$60-80，有经验者优先。",
-        "url": "https://www.aussiezone.com/xxx",
-        "location": "西北区, Sydney",
-        "posted_at": datetime.now().strftime("%Y-%m-%d"),
-        "contact_hint": "帖子内回复",
-        "price_signal": "$60-80/hr",
-        "score": 80,
-    },
-    {
-        "id": "gumtree_007",
+        "id": "gumtree_004",
         "source": "Gumtree",
         "title": "Scholarship Exam Tutor - Year 6 - $75/hr - Mosman",
         "content": "Looking for tutor to prepare Year 6 daughter for scholarship exams (AAS/ACER). Mosman area. $75/hr, 2 sessions per week. Must have scholarship exam experience.",
@@ -103,169 +81,131 @@ MOCK_POSTS = [
         "score": 85,
     },
     {
-        "id": "jraus_008",
-        "source": "今日澳洲",
-        "title": "悉尼CBD附近找钢琴老师兼文化课辅导",
-        "content": "孩子就读本地私立小学，寻找能提供钢琴+数学双辅导的全能家教。时薪$70起，有经验优先，地点在CBD附近，可以上门。",
-        "url": "https://www.jraus.com/piano",
+        "id": "seek_005",
+        "source": "Seek",
+        "title": "University Level Maths Tutor - UNSW/USyd - $70/hr",
+        "content": "Seeking experienced university maths tutor. UNSW or USyd campus. $70/hr. Flexible hours. Strong mathematics background required.",
+        "url": "https://www.seek.com.au/job/yyy",
+        "location": "Sydney Universities",
+        "posted_at": datetime.now().strftime("%Y-%m-%d"),
+        "contact_hint": "Apply via Seek",
+        "price_signal": "$70/hr",
+        "score": 82,
+    },
+    {
+        "id": "gumtree_006",
+        "source": "Gumtree",
+        "title": "Selective School Prep Tutor Wanted - $65/hr - Chatswood",
+        "content": "Year 5 child needs selective school preparation. Maths and English. Chatswood area. $65/hr, 2x per week. Please reply with your qualifications.",
+        "url": "https://www.gumtree.com.au/s-ad/ccc",
+        "location": "Chatswood, Sydney",
+        "posted_at": datetime.now().strftime("%Y-%m-%d"),
+        "contact_hint": "Reply via Gumtree",
+        "price_signal": "$65/hr",
+        "score": 80,
+    },
+    {
+        "id": "seek_007",
+        "source": "Seek",
+        "title": "Senior HSC Tutor - Multiple Subjects - $60-90/hr",
+        "content": "Growing tutoring centre seeking senior HSC tutors across multiple subjects. $60-90/hr depending on experience. Must have strong ATAR and tutoring background.",
+        "url": "https://www.seek.com.au/job/zzz",
+        "location": "North Sydney",
+        "posted_at": datetime.now().strftime("%Y-%m-%d"),
+        "contact_hint": "Apply via Seek",
+        "price_signal": "$60-90/hr",
+        "score": 83,
+    },
+    {
+        "id": "gumtree_008",
+        "source": "Gumtree",
+        "title": "Piano + Academic Tutor Wanted - $70/hr - CBD",
+        "content": "Seeking versatile tutor for piano and primary school academics. CBD location. $70/hr. Private school student.",
+        "url": "https://www.gumtree.com.au/s-ad/ddd",
         "location": "CBD, Sydney",
         "posted_at": datetime.now().strftime("%Y-%m-%d"),
-        "contact_hint": "站内信联系",
-        "price_signal": "$70起/hr",
+        "contact_hint": "Reply via Gumtree",
+        "price_signal": "$70/hr",
         "score": 78,
     },
 ]
 
 
-# ── 真实爬虫 ──────────────────────────────────────────────────────────────────
+# ── requests 爬虫 ─────────────────────────────────────────────────────────────
 
-def _scrape_gumtree(page, keyword: str) -> list[dict]:
-    """爬取 Gumtree 家教需求帖"""
-    posts = []
+def _get(url: str, session, timeout: int = 20) -> "requests.Response | None":
     try:
-        url = f"https://www.gumtree.com.au/s-tutoring-lessons/sydney/{keyword.replace(' ', '-').lower()}/k0c18320l3004532"
-        page.goto(url, timeout=30000, wait_until="domcontentloaded")
-        page.wait_for_timeout(2000)
-
-        results = page.query_selector_all("article.user-ad-row, .listing-results article, [data-q='search-result']")
-        for item in results[:10]:
-            try:
-                title_el = item.query_selector("a.user-ad-row-new-design__title-span, .listing-title, h2 a, [data-q='listing-title']")
-                price_el = item.query_selector(".user-ad-row-new-design__price, .listing-price, [data-q='listing-price']")
-                location_el = item.query_selector(".user-ad-row-new-design__location, .listing-location")
-                desc_el = item.query_selector(".user-ad-row-new-design__description, .listing-description")
-                link_el = item.query_selector("a[href*='/s-ad/']")
-
-                if not title_el:
-                    continue
-
-                title = title_el.inner_text().strip()
-                price = price_el.inner_text().strip() if price_el else ""
-                location = location_el.inner_text().strip() if location_el else "Sydney"
-                desc = desc_el.inner_text().strip() if desc_el else ""
-                href = link_el.get_attribute("href") if link_el else ""
-                full_url = f"https://www.gumtree.com.au{href}" if href and href.startswith("/") else href
-
-                post_id = f"gumtree_{abs(hash(title))}"
-                posts.append({
-                    "id": post_id,
-                    "source": "Gumtree",
-                    "title": title,
-                    "content": desc,
-                    "url": full_url,
-                    "location": location,
-                    "posted_at": datetime.now().strftime("%Y-%m-%d"),
-                    "contact_hint": "在 Gumtree 上回复帖子",
-                    "price_signal": price,
-                    "score": 0,
-                })
-            except Exception:
-                continue
+        resp = session.get(url, headers=_HEADERS, timeout=timeout, allow_redirects=True)
+        if resp.status_code == 200:
+            return resp
+        logger.warning("HTTP %d: %s", resp.status_code, url)
     except Exception as e:
-        logger.warning("Gumtree 爬取失败 (%s): %s", keyword, e)
-    return posts
+        logger.warning("请求失败 (%s): %s", url, e)
+    return None
 
 
-def _scrape_jraus(page) -> list[dict]:
-    """爬取今日澳洲论坛 - 尝试多个 URL 格式"""
+def _scrape_gumtree_requests(session) -> list[dict]:
+    """用 requests 爬 Gumtree 家教分类（悉尼）"""
+    from bs4 import BeautifulSoup
     posts = []
-    urls_to_try = [
-        "https://www.jraus.com/t/tutor/l/latest",
-        "https://www.jraus.com/search?q=%E5%AE%B6%E6%95%99&expanded=true",
-        "https://www.jraus.com/search?q=%E8%A1%A5%E4%B9%A0&expanded=true",
-    ]
-    for url in urls_to_try:
-        try:
-            page.goto(url, timeout=30000, wait_until="domcontentloaded")
-            page.wait_for_timeout(3000)
-
-            # 通用链接提取
-            links = page.query_selector_all("a[href*='/t/']")
-            for link in links[:15]:
-                try:
-                    href = link.get_attribute("href") or ""
-                    title = link.inner_text().strip()
-                    if not title or len(title) < 5:
-                        continue
-                    full_url = f"https://www.jraus.com{href}" if href.startswith("/") else href
-                    posts.append({
-                        "id": f"jraus_{abs(hash(href))}",
-                        "source": "今日澳洲",
-                        "title": title[:120],
-                        "content": "",
-                        "url": full_url,
-                        "location": "悉尼",
-                        "posted_at": datetime.now().strftime("%Y-%m-%d"),
-                        "contact_hint": "在今日澳洲论坛站内回复",
-                        "price_signal": "",
-                        "score": 0,
-                    })
-                except Exception:
-                    continue
-            if posts:
-                break
-        except Exception as e:
-            logger.warning("今日澳洲爬取失败 (%s): %s", url, e)
-    return posts
-
-
-def _scrape_gumtree_listing_page(page) -> list[dict]:
-    """直接爬 Gumtree Tutoring 分类页，用更宽松的选择器"""
-    posts = []
-    urls_to_try = [
+    urls = [
         "https://www.gumtree.com.au/s-tutoring-lessons/sydney/k0c18320l3004532?sort=date",
         "https://www.gumtree.com.au/s-tutoring-lessons/new-south-wales/k0c18320?sort=date",
-        "https://www.gumtree.com.au/s-tutoring-lessons/k0c18320?sort=date",
     ]
-    for url in urls_to_try:
+    for url in urls:
+        resp = _get(url, session)
+        if not resp:
+            continue
         try:
-            page.goto(url, timeout=40000, wait_until="domcontentloaded")
-            page.wait_for_timeout(4000)
-
-            # 提取所有帖子链接（最通用方式）
-            links = page.query_selector_all("a[href*='/s-ad/']")
-            seen_hrefs: set = set()
-            for link in links[:30]:
+            soup = BeautifulSoup(resp.text, "lxml")
+            # Gumtree 列表项
+            items = (
+                soup.select("article.user-ad-row") or
+                soup.select("li.user-ad-row") or
+                soup.select("[data-q='search-result']") or
+                soup.select(".listing-results article")
+            )
+            for item in items[:25]:
                 try:
-                    href = link.get_attribute("href") or ""
-                    if not href or href in seen_hrefs:
-                        continue
-                    seen_hrefs.add(href)
+                    title_el = (
+                        item.select_one("a[data-q='listing-title']") or
+                        item.select_one(".user-ad-row-new-design__title-span") or
+                        item.select_one("h2 a") or
+                        item.select_one("a.user-ad-row__title")
+                    )
+                    link_el = item.select_one("a[href*='/s-ad/']") or item.select_one("a[href]")
+                    price_el = (
+                        item.select_one("[data-q='listing-price']") or
+                        item.select_one(".user-ad-row-new-design__price") or
+                        item.select_one(".listing-price")
+                    )
+                    desc_el = (
+                        item.select_one("[data-q='listing-description']") or
+                        item.select_one(".user-ad-row-new-design__description")
+                    )
+                    loc_el = (
+                        item.select_one("[data-q='listing-location']") or
+                        item.select_one(".user-ad-row-new-design__location")
+                    )
 
-                    title = link.inner_text().strip()
-                    if not title or len(title) < 5:
-                        # 尝试从父元素找标题
-                        parent = link.query_selector("xpath=..")
-                        title = parent.inner_text().strip()[:120] if parent else ""
+                    if not title_el:
+                        continue
+                    title = title_el.get_text(strip=True)
                     if not title:
                         continue
-
+                    href = (link_el.get("href") or "") if link_el else ""
                     full_url = f"https://www.gumtree.com.au{href}" if href.startswith("/") else href
-
-                    # 从父容器提取价格和地点
-                    container = link
-                    for _ in range(4):
-                        container = container.query_selector("xpath=..")
-                        if not container:
-                            break
-                        text = container.inner_text()
-                        if len(text) > 30:
-                            break
-
-                    container_text = container.inner_text() if container else title
-                    price = ""
-                    import re as _re
-                    m = _re.search(r"\$[\d,]+(?:\s*/\s*(?:hr|hour|h\b))?", container_text)
-                    if m:
-                        price = m.group(0)
+                    price = price_el.get_text(strip=True) if price_el else ""
+                    desc = desc_el.get_text(strip=True) if desc_el else ""
+                    location = loc_el.get_text(strip=True) if loc_el else "Sydney"
 
                     posts.append({
-                        "id": f"gumtree_{abs(hash(href))}",
+                        "id": f"gumtree_{abs(hash(href or title))}",
                         "source": "Gumtree",
-                        "title": title[:120],
-                        "content": container_text[:400],
+                        "title": title[:150],
+                        "content": desc[:400],
                         "url": full_url,
-                        "location": "Sydney",
+                        "location": location,
                         "posted_at": datetime.now().strftime("%Y-%m-%d"),
                         "contact_hint": "在 Gumtree 上回复帖子",
                         "price_signal": price,
@@ -277,69 +217,135 @@ def _scrape_gumtree_listing_page(page) -> list[dict]:
             if posts:
                 break
         except Exception as e:
-            logger.warning("Gumtree 爬取失败 (%s): %s", url, e)
+            logger.warning("Gumtree 解析失败: %s", e)
 
-    logger.info("Gumtree 原始结果: %d 条", len(posts))
+    logger.info("Gumtree: %d 条", len(posts))
     return posts
 
 
-def _scrape_seek(page) -> list[dict]:
-    """爬 Seek.com.au 悉尼家教职位（英文高端帖）"""
+def _scrape_seek_requests(session) -> list[dict]:
+    """用 requests 爬 Seek 家教职位（悉尼）"""
+    from bs4 import BeautifulSoup
     posts = []
-    try:
-        url = "https://www.seek.com.au/tutor-jobs/in-Sydney-NSW-2000"
-        page.goto(url, timeout=40000, wait_until="domcontentloaded")
-        page.wait_for_timeout(3000)
+    urls = [
+        "https://www.seek.com.au/tutoring-jobs/in-Sydney-NSW",
+        "https://www.seek.com.au/tutor-jobs/in-Sydney-NSW-2000",
+    ]
+    for url in urls:
+        resp = _get(url, session)
+        if not resp:
+            continue
+        try:
+            soup = BeautifulSoup(resp.text, "lxml")
+            items = (
+                soup.select("article[data-automation='normalJob']") or
+                soup.select("article") or
+                soup.select("[data-automation='job-card']")
+            )
+            for item in items[:20]:
+                try:
+                    title_el = (
+                        item.select_one("[data-automation='jobTitle']") or
+                        item.select_one("h3 a") or
+                        item.select_one("h2 a")
+                    )
+                    link_el = item.select_one("a[href*='/job/']") or item.select_one("a[href]")
+                    salary_el = (
+                        item.select_one("[data-automation='jobSalary']") or
+                        item.select_one(".jobSalary")
+                    )
+                    loc_el = item.select_one("[data-automation='jobLocation']")
+                    desc_el = item.select_one("[data-automation='jobShortDescription']")
 
-        links = page.query_selector_all("article a[href*='/job/'], a[data-automation='jobTitle']")
-        seen: set = set()
-        for link in links[:15]:
-            try:
-                href = link.get_attribute("href") or ""
-                if href in seen:
+                    if not title_el:
+                        continue
+                    title = title_el.get_text(strip=True)
+                    if not title:
+                        continue
+                    href = (link_el.get("href") or "") if link_el else ""
+                    full_url = f"https://www.seek.com.au{href}" if href.startswith("/") else href
+                    salary = salary_el.get_text(strip=True) if salary_el else ""
+                    location = loc_el.get_text(strip=True) if loc_el else "Sydney"
+                    desc = desc_el.get_text(strip=True) if desc_el else ""
+
+                    posts.append({
+                        "id": f"seek_{abs(hash(href or title))}",
+                        "source": "Seek",
+                        "title": title[:150],
+                        "content": desc[:400],
+                        "url": full_url,
+                        "location": location,
+                        "posted_at": datetime.now().strftime("%Y-%m-%d"),
+                        "contact_hint": "在 Seek 上直接申请",
+                        "price_signal": salary,
+                        "score": 0,
+                    })
+                except Exception:
                     continue
-                seen.add(href)
-                title = link.inner_text().strip()
-                if not title:
-                    continue
-                full_url = f"https://www.seek.com.au{href}" if href.startswith("/") else href
 
-                # 父容器找公司/地点
-                parent = link
-                for _ in range(5):
-                    parent = parent.query_selector("xpath=..")
-                    if not parent:
-                        break
-                    t = parent.inner_text()
-                    if len(t) > 50:
-                        break
-                container_text = parent.inner_text()[:400] if parent else title
+            if posts:
+                break
+        except Exception as e:
+            logger.warning("Seek 解析失败: %s", e)
 
-                posts.append({
-                    "id": f"seek_{abs(hash(href))}",
-                    "source": "Seek",
-                    "title": title,
-                    "content": container_text,
-                    "url": full_url,
-                    "location": "Sydney",
-                    "posted_at": datetime.now().strftime("%Y-%m-%d"),
-                    "contact_hint": "在 Seek 上直接申请",
-                    "price_signal": "",
-                    "score": 0,
-                })
-            except Exception:
-                continue
-    except Exception as e:
-        logger.warning("Seek 爬取失败: %s", e)
     logger.info("Seek: %d 条", len(posts))
     return posts
 
 
-def _scrape_facebook_groups_via_search(page) -> list[dict]:
-    """尝试通过公开搜索找悉尼华人家教帖（Facebook 无需登录的公开帖）"""
-    # Facebook 公开帖非常有限，跳过避免登录墙
-    return []
+def _scrape_jraus_requests(session) -> list[dict]:
+    """用 requests 爬今日澳洲论坛（家教相关）"""
+    from bs4 import BeautifulSoup
+    posts = []
+    search_queries = ["家教", "补习 tutor", "辅导 悉尼"]
+    for q in search_queries:
+        import urllib.parse
+        url = f"https://www.jraus.com/search?q={urllib.parse.quote(q)}&expanded=true"
+        resp = _get(url, session)
+        if not resp:
+            continue
+        try:
+            soup = BeautifulSoup(resp.text, "lxml")
+            # Discourse 论坛格式
+            items = (
+                soup.select(".search-result-topic") or
+                soup.select(".fps-topic") or
+                soup.select("article.topic-list-item") or
+                soup.select(".topic-list-item")
+            )
+            for item in items[:15]:
+                try:
+                    title_el = item.select_one("a.search-link") or item.select_one("a[href*='/t/']") or item.select_one("a")
+                    if not title_el:
+                        continue
+                    title = title_el.get_text(strip=True)
+                    href = title_el.get("href", "")
+                    full_url = f"https://www.jraus.com{href}" if href.startswith("/") else href
+                    if not title or len(title) < 3:
+                        continue
 
+                    posts.append({
+                        "id": f"jraus_{abs(hash(href or title))}",
+                        "source": "今日澳洲",
+                        "title": title[:150],
+                        "content": "",
+                        "url": full_url,
+                        "location": "悉尼",
+                        "posted_at": datetime.now().strftime("%Y-%m-%d"),
+                        "contact_hint": "在今日澳洲论坛回复帖子",
+                        "price_signal": "",
+                        "score": 0,
+                    })
+                except Exception:
+                    continue
+        except Exception as e:
+            logger.warning("今日澳洲解析失败 (%s): %s", q, e)
+        time.sleep(1)
+
+    logger.info("今日澳洲: %d 条", len(posts))
+    return posts
+
+
+# ── 入口 ──────────────────────────────────────────────────────────────────────
 
 def scrape_posts() -> list[dict]:
     if config.USE_MOCK_DATA:
@@ -349,42 +355,25 @@ def scrape_posts() -> list[dict]:
         logger.info("Mock 爬取完成 — %d 条帖子", len(mock))
         return mock
 
-    from playwright.sync_api import sync_playwright
+    import requests as req_lib
+
+    session = req_lib.Session()
+    session.headers.update(_HEADERS)
 
     all_posts: list[dict] = []
 
-    with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"])
-        ctx = browser.new_context(
-            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            locale="en-AU",
-            timezone_id="Australia/Sydney",
-            viewport={"width": 1280, "height": 800},
-        )
-        page = ctx.new_page()
+    logger.info("爬取 Gumtree...")
+    all_posts.extend(_scrape_gumtree_requests(session))
+    time.sleep(2)
 
-        # 1. Gumtree 分类页
-        logger.info("爬取 Gumtree...")
-        gumtree_posts = _scrape_gumtree_listing_page(page)
-        all_posts.extend(gumtree_posts)
-        time.sleep(2)
+    logger.info("爬取 Seek...")
+    all_posts.extend(_scrape_seek_requests(session))
+    time.sleep(2)
 
-        # 2. Seek
-        logger.info("爬取 Seek...")
-        seek_posts = _scrape_seek(page)
-        all_posts.extend(seek_posts)
-        time.sleep(2)
+    logger.info("爬取今日澳洲...")
+    all_posts.extend(_scrape_jraus_requests(session))
 
-        # 3. 今日澳洲
-        logger.info("爬取今日澳洲...")
-        jraus_posts = _scrape_jraus(page)
-        all_posts.extend(jraus_posts)
-        logger.info("今日澳洲: %d 条", len(jraus_posts))
-        time.sleep(2)
-
-        browser.close()
-
-    # 去重（同一 id）
+    # 去重
     seen_ids: set = set()
     unique: list[dict] = []
     for p in all_posts:
