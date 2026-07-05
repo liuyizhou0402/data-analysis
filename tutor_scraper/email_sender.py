@@ -26,7 +26,8 @@ def _source_badge(source: str) -> str:
 
 def _score_bar(score: int) -> str:
     color = "#27ae60" if score >= 80 else "#f39c12" if score >= 60 else "#95a5a6"
-    return f'<span style="color:{color};font-weight:bold;">{'★' * (score // 20)}{'☆' * (5 - score // 20)} {score}分</span>'
+    stars = "★" * (score // 20) + "☆" * (5 - score // 20)
+    return f'<span style="color:{color};font-weight:bold;">{stars} {score}分</span>'
 
 
 def _post_card(post: dict, idx: int) -> str:
