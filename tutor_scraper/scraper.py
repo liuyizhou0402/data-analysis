@@ -167,34 +167,32 @@ def _scrape_gumtree(page, keyword: str) -> list[dict]:
 
 
 def _scrape_jraus(page) -> list[dict]:
-    """爬取今日澳洲论坛家教相关帖子"""
+    """爬取今日澳洲论坛 - 尝试多个 URL 格式"""
     posts = []
-    search_terms = ["家教", "补习", "辅导", "tutor"]
-    for term in search_terms:
+    urls_to_try = [
+        "https://www.jraus.com/t/tutor/l/latest",
+        "https://www.jraus.com/search?q=%E5%AE%B6%E6%95%99&expanded=true",
+        "https://www.jraus.com/search?q=%E8%A1%A5%E4%B9%A0&expanded=true",
+    ]
+    for url in urls_to_try:
         try:
-            url = f"https://www.jraus.com/search?q={term}&section=posts&sortby=newest"
             page.goto(url, timeout=30000, wait_until="domcontentloaded")
-            page.wait_for_timeout(2000)
+            page.wait_for_timeout(3000)
 
-            items = page.query_selector_all(".search-result, .post-list-item, article, .thread-item")
-            for item in items[:8]:
+            # 通用链接提取
+            links = page.query_selector_all("a[href*='/t/']")
+            for link in links[:15]:
                 try:
-                    title_el = item.query_selector("h2, h3, .title, a.title")
-                    link_el = item.query_selector("a[href]")
-                    desc_el = item.query_selector(".description, .excerpt, p")
-
-                    if not title_el:
+                    href = link.get_attribute("href") or ""
+                    title = link.inner_text().strip()
+                    if not title or len(title) < 5:
                         continue
-                    title = title_el.inner_text().strip()
-                    href = link_el.get_attribute("href") if link_el else ""
-                    desc = desc_el.inner_text().strip() if desc_el else ""
-                    full_url = f"https://www.jraus.com{href}" if href and href.startswith("/") else href
-
+                    full_url = f"https://www.jraus.com{href}" if href.startswith("/") else href
                     posts.append({
-                        "id": f"jraus_{abs(hash(title))}",
+                        "id": f"jraus_{abs(hash(href))}",
                         "source": "今日澳洲",
-                        "title": title,
-                        "content": desc,
+                        "title": title[:120],
+                        "content": "",
                         "url": full_url,
                         "location": "悉尼",
                         "posted_at": datetime.now().strftime("%Y-%m-%d"),
@@ -204,8 +202,10 @@ def _scrape_jraus(page) -> list[dict]:
                     })
                 except Exception:
                     continue
+            if posts:
+                break
         except Exception as e:
-            logger.warning("今日澳洲爬取失败 (%s): %s", term, e)
+            logger.warning("今日澳洲爬取失败 (%s): %s", url, e)
     return posts
 
 
@@ -214,12 +214,13 @@ def _scrape_gumtree_listing_page(page) -> list[dict]:
     posts = []
     urls_to_try = [
         "https://www.gumtree.com.au/s-tutoring-lessons/sydney/k0c18320l3004532?sort=date",
-        "https://www.gumtree.com.au/s-tutoring-lessons/k0c18320?q=tutor+wanted+sydney&sort=date",
+        "https://www.gumtree.com.au/s-tutoring-lessons/new-south-wales/k0c18320?sort=date",
+        "https://www.gumtree.com.au/s-tutoring-lessons/k0c18320?sort=date",
     ]
     for url in urls_to_try:
         try:
-            page.goto(url, timeout=40000, wait_until="networkidle")
-            page.wait_for_timeout(3000)
+            page.goto(url, timeout=40000, wait_until="domcontentloaded")
+            page.wait_for_timeout(4000)
 
             # 提取所有帖子链接（最通用方式）
             links = page.query_selector_all("a[href*='/s-ad/']")

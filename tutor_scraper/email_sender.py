@@ -93,6 +93,34 @@ def _build_html(posts: list[dict], date: str) -> str:
 </body></html>"""
 
 
+def _try_send(msg) -> None:
+    """尝试发送，优先 STARTTLS 587，失败回退 SSL 465"""
+    errors = []
+    # 方式 1: STARTTLS port 587
+    try:
+        with smtplib.SMTP(config.SMTP_HOST, 587, timeout=30) as s:
+            s.ehlo()
+            s.starttls(context=ssl.create_default_context())
+            s.ehlo()
+            s.login(config.EMAIL_USER, config.EMAIL_PASSWORD)
+            s.sendmail(config.EMAIL_USER, config.EMAIL_RECIPIENT, msg.as_string())
+        return
+    except Exception as e:
+        errors.append(f"STARTTLS-587: {e}")
+
+    # 方式 2: SSL port 465
+    try:
+        with smtplib.SMTP_SSL(config.SMTP_HOST, 465, timeout=30,
+                               context=ssl.create_default_context()) as s:
+            s.login(config.EMAIL_USER, config.EMAIL_PASSWORD)
+            s.sendmail(config.EMAIL_USER, config.EMAIL_RECIPIENT, msg.as_string())
+        return
+    except Exception as e:
+        errors.append(f"SSL-465: {e}")
+
+    raise RuntimeError(" | ".join(errors))
+
+
 def send_report(posts: list[dict], date: str) -> bool:
     if not config.EMAIL_USER or not config.EMAIL_PASSWORD:
         logger.warning("邮件未配置，跳过发送")
@@ -104,19 +132,19 @@ def send_report(posts: list[dict], date: str) -> bool:
         msg["To"] = config.EMAIL_RECIPIENT
         msg.attach(MIMEText(_build_html(posts, date), "html", "utf-8"))
 
-        if config.SMTP_USE_SSL:
-            with smtplib.SMTP_SSL(config.SMTP_HOST, config.SMTP_PORT) as s:
-                s.login(config.EMAIL_USER, config.EMAIL_PASSWORD)
-                s.sendmail(config.EMAIL_USER, config.EMAIL_RECIPIENT, msg.as_string())
-        else:
-            with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT) as s:
-                s.ehlo()
-                s.starttls(context=ssl.create_default_context())
-                s.login(config.EMAIL_USER, config.EMAIL_PASSWORD)
-                s.sendmail(config.EMAIL_USER, config.EMAIL_RECIPIENT, msg.as_string())
+        import time as _time
+        for attempt in range(3):
+            try:
+                _try_send(msg)
+                logger.info("邮件发送成功 → %s", config.EMAIL_RECIPIENT)
+                return True
+            except Exception as e:
+                logger.warning("邮件第 %d 次尝试失败: %s", attempt + 1, e)
+                if attempt < 2:
+                    _time.sleep(5)
 
-        logger.info("邮件发送成功 → %s", config.EMAIL_RECIPIENT)
-        return True
+        logger.error("邮件发送最终失败（3次重试均失败）")
+        return False
     except Exception as e:
         logger.error("发送邮件出错: %s", e)
         return False
