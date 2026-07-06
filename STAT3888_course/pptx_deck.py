@@ -311,6 +311,92 @@ class Deck:
                        [[("Next lecture →  ",16,ACCENT,True,False),(nextup,16,INK,False,False)]])
         self._footer(sl,idx); return sl
 
+    def big_point(self, kicker, statement, idx, sub=None, tone=INK):
+        sl=self._slide(); self._bg(sl, tone)
+        self._rect(sl, 0,0, EMU_W, EMU_H, fill=tone)
+        self._rect(sl, 0, Inches(2.55), Inches(0.35), Inches(2.4), fill=ACCENT)
+        if kicker:
+            self._text(sl, Inches(1.0), Inches(1.55), Inches(11), Inches(0.5),
+                       [[(kicker.upper(), 14, RGBColor(0xC8,0xD4,0xE2), True, False)]])
+        self._text(sl, Inches(1.0), Inches(2.35), Inches(11.4), Inches(3.0),
+                   [[(statement, 34, WHITE, True, False)]], line_spacing=1.06)
+        if sub:
+            self._text(sl, Inches(1.02), Inches(5.5), Inches(11.0), Inches(1.2),
+                       [[(sub, 19, RGBColor(0xB9,0xC6,0xD6), False, True)]], line_spacing=1.15)
+        return sl
+
+    def definition(self, kicker, term, definition, idx, extra=None, tone=BLUE):
+        sl=self._slide(); self._bg(sl); self._accentbar(sl)
+        if kicker: self._kicker(sl, kicker)
+        self._h2(sl, term)
+        self._rect(sl, Inches(0.9), Inches(1.95), Inches(11.5), Inches(1.7),
+                   fill=PANEL2, line=tone, line_w=1.4, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+        self._rect(sl, Inches(0.9), Inches(1.95), Inches(0.1), Inches(1.7), fill=tone)
+        tb=sl.shapes.add_textbox(Inches(1.3), Inches(2.15), Inches(10.8), Inches(1.35))
+        tf=tb.text_frame; tf.word_wrap=True; tf.vertical_anchor=MSO_ANCHOR.MIDDLE
+        p=tf.paragraphs[0]; p.line_spacing=1.14
+        for seg,b in _md(definition):
+            r=p.add_run(); r.text=seg; r.font.size=Pt(20); r.font.color.rgb=INK; r.font.bold=b; r.font.name=FONT
+        if extra:
+            tb=sl.shapes.add_textbox(Inches(0.95), Inches(4.0), Inches(11.4), Inches(2.6)); tf=tb.text_frame; tf.word_wrap=True
+            for i,it in enumerate(extra):
+                text = it if isinstance(it,str) else it[0]
+                p=tf.paragraphs[0] if i==0 else tf.add_paragraph(); p.line_spacing=1.1; p.space_after=Pt(9)
+                r=p.add_run(); r.text="▸  "; r.font.color.rgb=ACCENT; r.font.bold=True; r.font.size=Pt(18); r.font.name=FONT
+                for seg,b in _md(text):
+                    r=p.add_run(); r.text=seg; r.font.size=Pt(18); r.font.color.rgb=INK; r.font.bold=b; r.font.name=FONT
+        self._footer(sl, idx); return sl
+
+    def checkpoint(self, question, options, answer_idx, idx, explain=None):
+        """MCQ 'check your understanding'. options: list[str]; answer_idx: 0-based."""
+        sl=self._slide(); self._bg(sl, RGBColor(0xEE,0xF3,0xF9)); self._accentbar(sl)
+        self._kicker(sl, "Check your understanding")
+        self._h2(sl, question)
+        letters="ABCDEF"
+        y=Inches(2.0)
+        for j,opt in enumerate(options):
+            correct = (j==answer_idx)
+            bg = RGBColor(0xE4,0xF3,0xEC) if correct else WHITE
+            bar = TEAL if correct else RGBColor(0xC7,0xD0,0xDA)
+            self._rect(sl, Inches(0.9), y, Inches(11.5), Inches(0.72),
+                       fill=bg, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+            self._rect(sl, Inches(0.9), y, Inches(0.62), Inches(0.72), fill=bar,
+                       shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+            self._text(sl, Inches(0.9), y, Inches(0.62), Inches(0.72),
+                       [[(letters[j], 18, WHITE, True, False)]], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+            tb=sl.shapes.add_textbox(Inches(1.75), y, Inches(10.4), Inches(0.72)); tf=tb.text_frame
+            tf.word_wrap=True; tf.vertical_anchor=MSO_ANCHOR.MIDDLE; p=tf.paragraphs[0]
+            for seg,b in _md(opt):
+                r=p.add_run(); r.text=seg; r.font.size=Pt(16.5); r.font.color.rgb=INK
+                r.font.bold=b or correct; r.font.name=FONT
+            if correct:
+                r=p.add_run(); r.text="   ✓"; r.font.size=Pt(16.5); r.font.color.rgb=TEAL; r.font.bold=True; r.font.name=FONT
+            y += Inches(0.85)
+        if explain:
+            self._callout(sl, "Why: "+explain, Inches(0.9), y+Inches(0.05), Inches(11.5))
+        self._footer(sl, idx); return sl
+
+    def steps(self, kicker, title, step_list, idx, note=None):
+        """Numbered process slide. step_list: list[(head, body)]."""
+        sl=self._slide(); self._bg(sl); self._accentbar(sl)
+        if kicker: self._kicker(sl, kicker)
+        self._h2(sl, title)
+        y=Inches(1.9); n=len(step_list)
+        rowh = min(Inches(1.0), (Inches(4.7))/n)
+        for k,(head,body) in enumerate(step_list,1):
+            self._rect(sl, Inches(0.9), y, Inches(0.7), Inches(0.7), fill=BLUE,
+                       shape=MSO_SHAPE.OVAL)
+            self._text(sl, Inches(0.9), y, Inches(0.7), Inches(0.7),
+                       [[(str(k), 22, WHITE, True, False)]], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+            self._text(sl, Inches(1.8), y-Inches(0.02), Inches(10.6), Inches(0.45),
+                       [[(head, 19, INK, True, False)]])
+            self._text(sl, Inches(1.8), y+Inches(0.38), Inches(10.6), Inches(0.5),
+                       [[(body, 15.5, MUTED, False, False)]], line_spacing=1.05)
+            y += rowh + Inches(0.12)
+        if note:
+            self._callout(sl, note, Inches(0.9), Inches(6.55), Inches(11.5))
+        self._footer(sl, idx); return sl
+
     # -------- utilities
     def _callout(self, sl, text, x, y, w, tone="tip"):
         col = TEAL if tone=="tip" else (ACCENT if tone=="warn" else BLUE)
