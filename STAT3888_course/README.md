@@ -1,22 +1,21 @@
-# STAT3888 — Statistical Machine Learning · Lecture Series
+# STAT3888 — Statistical Machine Learning · Lecture PowerPoints
 
-Self-contained HTML lecture decks for **STAT3888 (Statistical Machine Learning)**,
-University of Sydney. Built to support the interdisciplinary NUTM3888 nutrition project.
+Full **60-minute PowerPoint (.pptx)** lectures for **STAT3888 (Statistical Machine
+Learning)**, University of Sydney, built to support the interdisciplinary NUTM3888
+nutrition project. Open the `.pptx` files directly in PowerPoint, Keynote or Google Slides.
 
-**Open `index.html`** to browse all 24 lectures. Each deck opens in any browser
-— navigate with the ← → arrow keys, and use the browser's *Print → Save as PDF*
-to produce handouts.
+## Ready now (Lectures 01–04)
 
-## Structure
+| File | Slides | Topic |
+|------|:------:|-------|
+| `Lecture01_Introduction.pptx` | 29 | Introduction to Statistical ML & the project |
+| `Lecture02_DataCleaning.pptx` | 24 | Data cleaning & preprocessing |
+| `Lecture03_IntroClustering.pptx` | 26 | Introduction to clustering |
+| `Lecture04_Kmeans.pptx` | 25 | K-means clustering |
 
-| File | Purpose |
-|------|---------|
-| `index.html` | Landing page / lecture index |
-| `lessonNN.html` | Individual lecture decks (self-contained) |
-| `figures/` | Generated figures (matplotlib) |
-| `slides.py` | Slide-deck framework (theme, layout helpers) |
-| `figs_*.py` | Figure generators per lecture batch |
-| `build_*.py` | Deck content + assembly per lecture batch |
+Each deck is a genuine 60-minute lecture: title, agenda, section dividers, concept
+build-up, **custom matplotlib figures**, formulae, R code, in-class exercises, and a
+summary with a look-ahead. Consistent USYD theme (16:9).
 
 ## 24-lecture plan
 
@@ -27,12 +26,23 @@ discriminant analysis, k-NN, trees, random forests/boosting, neural networks, SV
 **Part III — Evaluation & Communication (L21–24):** model evaluation, graphical
 models, the project workflow, and writing/presenting results.
 
-## Rebuilding
+## How it's built
+
+| File | Purpose |
+|------|---------|
+| `pptx_deck.py` | Reusable PowerPoint framework (theme, layouts, helpers) |
+| `figs_01_04.py`, `figs_pptx_01_04.py` | matplotlib figure generators |
+| `build_pptx_01_04.py` | Lecture content + deck assembly |
+| `slides.py` | Shared palette + figure-save helpers |
+| `figures/` | Generated PNG figures |
+
+### Rebuilding
 
 ```bash
-pip install matplotlib numpy scikit-learn
-python figs_01_04.py     # regenerate figures
-python build_01_04.py    # rebuild lesson01–04.html
+pip install python-pptx matplotlib numpy scikit-learn scipy pillow
+python figs_01_04.py         # base figures
+python figs_pptx_01_04.py    # extra figures for the full decks
+python build_pptx_01_04.py   # -> Lecture01..04 .pptx
 ```
 
-**Status:** Lectures 01–04 complete. Remaining lectures in progress.
+**Status:** Lectures 01–04 complete. Lectures 05–24 to follow in batches.
