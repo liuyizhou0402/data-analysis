@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STAT3888 · Lecture 04 — K-means</title><style>
+:root{--ink:#1b2430;--muted:#5b6a7d;--accent:#E64626;--blue:#2A6F97;
+--teal:#2A9D8F;--gold:#E9AF4B;--panel:#f4f6f9;--line:#dce3ec;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+color:var(--ink);background:#404a57;}
+.deck{max-width:1120px;margin:0 auto;}
+.slide{position:relative;background:#fff;min-height:640px;margin:26px auto;
+padding:54px 62px 66px;border-radius:14px;box-shadow:0 10px 34px rgba(0,0,0,.25);
+display:flex;flex-direction:column;}
+.slide::after{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;
+background:linear-gradient(#E64626,#b8331b);border-radius:14px 0 0 14px;}
+h1{font-size:44px;line-height:1.1;margin:.2em 0 .3em;letter-spacing:-.5px}
+h2{font-size:30px;margin:0 0 22px;line-height:1.15;letter-spacing:-.3px}
+h2 .kicker,.kicker{display:block;font-size:13px;font-weight:700;letter-spacing:.14em;
+text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h4{margin:0 0 8px;font-size:17px}
+p,li{font-size:19px;line-height:1.5;color:#26303c}
+.sub{font-size:22px;color:var(--muted);max-width:44ch}
+.title{justify-content:center}
+.badge{display:inline-block;align-self:flex-start;background:var(--accent);color:#fff;
+font-weight:700;font-size:14px;letter-spacing:.1em;padding:7px 14px;border-radius:30px}
+.tfoot{position:absolute;left:62px;right:62px;bottom:30px;display:flex;
+justify-content:space-between;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:12px}
+ul.obj li{margin:12px 0;padding-left:6px}
+ul.obj{padding-left:22px}
+ul.take li{margin:12px 0}
+.cols{display:flex;gap:22px;margin-top:6px}
+.col{flex:1}
+.split{display:flex;gap:30px;align-items:flex-start}
+.split .fig{flex:1.15}.split .side{flex:.85}
+.fig img{max-width:100%;border-radius:10px;border:1px solid var(--line)}
+.fig.center{text-align:center}
+.cap{color:var(--muted);font-size:15px;margin-top:10px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0;background:var(--panel)}
+.card h4{color:var(--blue)}
+.card.red h4{color:var(--accent)} .card.teal h4{color:var(--teal)}
+.card.gold h4{color:#b98416}
+.card p,.card li{font-size:17px}
+.formula{background:#0f1720;color:#eaf2fb;border-radius:10px;padding:16px 20px;margin:14px 0;
+font-family:'Cambria Math','Georgia',serif;font-size:22px;text-align:center;letter-spacing:.3px}
+.formula .v{color:#ffd08a;font-style:italic}
+pre.code{background:#0f1720;color:#e6edf3;border-radius:10px;padding:16px 18px;overflow:auto;
+font-family:'JetBrains Mono','Consolas',monospace;font-size:15px;line-height:1.5}
+pre.code code{color:#e6edf3}
+.callout{border-radius:10px;padding:14px 18px;margin:12px 0;font-size:17px;border-left:5px solid}
+.callout.tip{background:#eef6f4;border-color:var(--teal)}
+.callout.warn{background:#fdf0ec;border-color:var(--accent)}
+.callout.key{background:#eef3f9;border-color:var(--blue)}
+.exercise{background:linear-gradient(180deg,#fff,#fbf3f0)}
+.exbody{font-size:20px}
+.exbody ol{padding-left:22px}.exbody li{margin:9px 0}
+.hint{margin-top:16px;background:#fff6ee;border:1px dashed var(--gold);border-radius:10px;padding:12px 16px;font-size:17px}
+.next{margin-top:20px;background:var(--panel);border-radius:10px;padding:12px 16px;font-size:17px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left}
+th{background:var(--panel);color:var(--ink)}
+.pill{display:inline-block;background:var(--blue);color:#fff;border-radius:20px;padding:3px 12px;font-size:14px;font-weight:600;margin:2px}
+.nav{position:fixed;right:16px;bottom:16px;background:#1b2430cc;color:#fff;border-radius:30px;
+padding:8px 16px;font-size:13px;backdrop-filter:blur(4px);z-index:9}
+@media print{
+  body{background:#fff}
+  .slide{box-shadow:none;margin:0;border-radius:0;page-break-after:always;min-height:96vh}
+  .nav{display:none}
+}
+</style></head>
+<body><div class="deck">
+    <section class="slide title">
+      <div class="badge">Lecture 04</div>
+      <h1>K-means Clustering</h1>
+      <p class="sub">The workhorse partitioning algorithm: how it works, how to tune it, and where it breaks.</p>
+      <div class="tfoot">
+        <span>STAT3888 · Statistical Machine Learning</span>
+        <span>The University of Sydney · School of Mathematics &amp; Statistics</span>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Learning objectives</span>By the end of this lecture you can…</h2>
+      <ul class="obj"><li>State the <b>k-means objective</b> and describe <b>Lloyd's algorithm</b>.</li>
+<li>Explain why k-means finds a <b>local</b> optimum and how random restarts help.</li>
+<li>Choose the number of clusters with the <b>elbow</b> and <b>silhouette</b> methods.</li>
+<li>Recognise the <b>assumptions</b> of k-means and when it fails.</li></ul>
+    </section>
+
+    <section class="slide">
+      <h2>The objective</h2>
+      <p>K-means partitions <i>n</i> points into <i>k</i> clusters C<sub>1</sub>,…,C<sub>k</sub> to minimise the total <b>within-cluster sum of squares</b>:</p><div class="formula">min<sub>C</sub> &nbsp; Σ<sub>k</sub> Σ<sub><span class='v'>x</span>∈C<sub>k</sub></sub> ‖ <span class='v'>x</span> − <span class='v'>μ</span><sub>k</sub> ‖²</div><div class="cols"><div class="col"><div class="card blue"><h4>In words</h4><p>Each cluster is summarised by its <b>centroid</b> μ<sub>k</sub> (the mean). We want every point close to its own centroid.</p></div></div><div class="col"><div class="card red"><h4>Why it's hard</h4><p>Searching all partitions is <b>NP-hard</b>. Lloyd's algorithm gives a fast, greedy approximation that usually works well.</p></div></div></div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">The algorithm</span>Lloyd&#x27;s algorithm in action</h2>
+      <div class="fig center"><img src="figures/L04_iterations.png" alt="Lloyd&#x27;s algorithm in action"><p class="cap">Assign each point to the nearest centroid, then move each centroid to its points' mean; repeat until nothing changes. Here a poor start converged to a sub-optimal split — motivating random restarts.</p></div>
+    </section>
+
+    <section class="slide">
+      <h2>The algorithm, step by step</h2>
+      <p><b>Input:</b> data X, number of clusters k.</p><ol><li><b>Initialise</b> k centroids (randomly, or better with <code>k-means++</code>).</li><li><b>Assign</b> each point to its nearest centroid.</li><li><b>Update</b> each centroid to the mean of its assigned points.</li><li><b>Repeat</b> 2–3 until assignments stop changing.</li></ol><div class="callout key">Each step can only <b>decrease</b> the within-SS, so the algorithm always converges — but possibly to a <b>local</b> minimum that depends on the starting centroids.</div>
+    </section>
+
+    <section class="slide">
+      <h2>Local optima &amp;amp; how to beat them</h2>
+      <div class="cols"><div class="col"><div class="card red"><h4>The problem</h4><p>Different random starts can give different clusterings. A bad start gets stuck (see the ‘Converged’ panel on the previous slide).</p></div></div><div class="col"><div class="card teal"><h4>The fixes</h4><p>Run k-means from <b>many random starts</b> and keep the best (lowest within-SS). Use <b>k-means++</b> initialisation to spread starting centroids apart.</p></div></div></div><pre class="code"><code>set.seed(1)
+km &lt;- kmeans(X, centers = 3, nstart = 25)  # 25 random restarts
+km$tot.withinss   # objective value
+km$cluster        # cluster labels</code></pre>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">How many clusters?</span>Choosing k: elbow &amp;amp; silhouette</h2>
+      <div class="split">
+        <div class="fig"><img src="figures/L04_elbow.png" alt="Choosing k: elbow &amp;amp; silhouette"><p class="cap">Left: within-SS always falls with k — look for the ‘elbow’ where the gain flattens. Right: the silhouette rewards well-separated clusters and often gives a clearer peak.</p></div>
+        <div class="side"><div class="formula">s(i) = ( b<sub>i</sub> − a<sub>i</sub> ) / max(a<sub>i</sub>, b<sub>i</sub>)</div><div class="card blue"><h4>Reading silhouette</h4><p>a<sub>i</sub> = mean distance to own cluster; b<sub>i</sub> = mean distance to nearest other cluster. Near <b>+1</b> = well clustered, near <b>0</b> = on a boundary.</p></div></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Limitations</span>Know the assumptions — and the failure mode</h2>
+      <div class="split">
+        <div class="fig"><img src="figures/L04_failure.png" alt="Know the assumptions — and the failure mode"><p class="cap">K-means assumes roughly spherical, equal-size clusters and uses Euclidean distance. On these two interleaving ‘moons’ it carves a straight boundary and gets them wrong.</p></div>
+        <div class="side"><div class="card red"><h4>When k-means struggles</h4><p>• Non-convex / elongated shapes</p><p>• Very different cluster sizes or densities</p><p>• Unscaled variables</p><p>→ Consider GMM (L05), hierarchical (L06) or density-based methods.</p></div></div>
+      </div>
+    </section>
+
+    <section class="slide exercise">
+      <h2><span class="kicker">In-class exercise</span>Run and diagnose k-means</h2>
+      <div class="exbody"><p>Using the standardised nutrition data:</p><ol><li>Fit k-means for k = 2,…,8 with <code>nstart = 25</code> and record <code>tot.withinss</code>.</li><li>Plot within-SS vs k. Where is the elbow?</li><li>Compute the mean silhouette for each k (<code>cluster::silhouette</code>). Do the two methods agree?</li><li>For your chosen k, profile the cluster means — can you give each cluster a nutrition <i>name</i>?</li></ol></div>
+      <div class="hint"><b>Hint.</b> Naming clusters from their centroid profiles is exactly what you'll do in the project.</div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Summary</span>Key takeaways</h2>
+      <ul class="take"><li>K-means minimises <b>within-cluster sum of squares</b> via assign–update iterations.</li>
+<li>It converges to a <b>local</b> optimum — always use many <b>restarts</b> / k-means++.</li>
+<li>Choose k with the <b>elbow</b> and <b>silhouette</b>; let interpretability decide ties.</li>
+<li>It assumes <b>round, comparable</b> clusters — standardise, and switch methods when that fails.</li></ul>
+      <div class="next"><b>Next lecture →</b> Lecture 05 — Model-based clustering: soft assignments with Gaussian mixtures.</div>
+    </section></div>
+<div class="nav"><span class="n">1 / 10</span> · ← → to navigate</div>
+
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;
+const nav=document.querySelector('.nav .n');
+function go(n){i=Math.max(0,Math.min(s.length-1,n));s[i].scrollIntoView({behavior:'smooth'});nav.textContent=(i+1)+' / '+s.length;}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(i+1)}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}});
+const io=new IntersectionObserver(es=>{es.forEach(x=>{if(x.isIntersecting){i=s.indexOf(x.target);nav.textContent=(i+1)+' / '+s.length;}})},{threshold:.5});
+s.forEach(x=>io.observe(x));
+</script>
+</body></html>

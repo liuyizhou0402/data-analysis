@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STAT3888 · Statistical Machine Learning — Lecture Series</title>
+<style>
+:root{--ink:#1b2430;--muted:#5b6a7d;--accent:#E64626;--blue:#2A6F97;--panel:#f4f6f9;--line:#dce3ec}
+*{box-sizing:border-box}body{margin:0;font-family:'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink);background:#eef1f5}
+header{background:linear-gradient(120deg,#1b2430,#2A6F97);color:#fff;padding:56px 8vw 44px}
+header .badge{display:inline-block;background:var(--accent);padding:6px 14px;border-radius:30px;font-weight:700;font-size:13px;letter-spacing:.12em}
+header h1{font-size:40px;margin:16px 0 8px;letter-spacing:-.5px}
+header p{font-size:19px;color:#cdd8e6;max-width:60ch;line-height:1.5}
+main{max-width:1080px;margin:-24px auto 60px;padding:0 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.sec{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:34px 4px 6px}
+a.card{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.05);transition:.15s}
+a.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.12);border-color:var(--blue)}
+a.card.soon{opacity:.55;pointer-events:none}
+.num{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.1em}
+.card h3{margin:6px 0 4px;font-size:20px;line-height:1.2}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.tag{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;color:#fff;background:var(--blue);padding:2px 10px;border-radius:20px}
+.tag.soon{background:#adb8c4}
+footer{color:var(--muted);text-align:center;padding:30px;font-size:14px}
+</style></head><body>
+<header>
+  <span class="badge">STAT3888 · Semester 2</span>
+  <h1>Statistical Machine Learning</h1>
+  <p>A 24-lecture series taking you from raw nutrition survey data to fitted, evaluated and
+  communicated machine-learning models — built to support the interdisciplinary NUTM3888 project.
+  Open any lecture and use ← → to navigate; print to PDF for handouts.</p>
+</header>
+<main>
+  <div class="sec">Part I · Foundations &amp; Unsupervised Learning</div>
+  <div class="grid" id="g1"></div>
+  <div class="sec">Part II · Supervised Learning</div>
+  <div class="grid" id="g2"></div>
+  <div class="sec">Part III · Evaluation, Models &amp; Communication</div>
+  <div class="grid" id="g3"></div>
+</main>
+<footer>The University of Sydney · School of Mathematics &amp; Statistics · teaching materials</footer>
+<script>
+const L=[
+[1,"Introduction to Statistical ML","Supervised vs unsupervised; the workflow; the project.",1],
+[2,"Data Cleaning & Preprocessing","Missingness, outliers, scaling, reproducible pipelines.",1],
+[3,"Introduction to Clustering","Distance, within/between variation, method families.",1],
+[4,"K-means Clustering","Lloyd's algorithm, choosing k, assumptions & failure.",1],
+[5,"Model-based Clustering (GMM)","Soft assignments, EM, the BIC.",0],
+[6,"Hierarchical Clustering","Linkages, dendrograms, cutting the tree.",0],
+[7,"PCA Background","Variance, covariance, eigenvectors.",0],
+[8,"Principal Component Analysis","Projections, loadings, scree plots.",0],
+[9,"Dimension Reduction","MDS, t-SNE, when to reduce.",0],
+[10,"Introduction to Supervised Learning","Bias–variance, train/test, cross-validation.",0],
+[11,"Logistic Regression","Odds, the logit link, interpretation.",0],
+[12,"Penalized Logistic Regression","Ridge, lasso, elastic net.",0],
+[13,"Discriminant Analysis","LDA & QDA, decision boundaries.",0],
+[14,"k-Nearest Neighbours","Non-parametric prediction, choosing k.",0],
+[15,"Classification & Regression Trees","Splitting, pruning, interpretation.",0],
+[16,"Random Forests & Boosting","Bagging, variable importance, gradient boosting.",0],
+[17,"Neural Networks I","Perceptrons, layers, activations.",0],
+[18,"Neural Networks II","Backpropagation, regularisation, deep nets.",0],
+[19,"Support Vector Machines I","Maximal margin, soft margin.",0],
+[20,"Support Vector Machines II","Kernels, the kernel trick.",0],
+[21,"Model Evaluation & Selection","ROC/AUC, metrics, resampling.",0],
+[22,"Graphical & Log-linear Models","Gaussian graphical models, contingency tables.",0],
+[23,"The Nutrition Project Workflow","Putting the whole pipeline together.",0],
+[24,"Communicating Results","Writing the manuscript & presenting.",0]];
+function card(x){const[n,t,d,ready]=x;const a=document.createElement('a');
+ a.className='card'+(ready?'':' soon');a.href=ready?`lesson${String(n).padStart(2,'0')}.html`:'#';
+ a.innerHTML=`<div class="num">LECTURE ${String(n).padStart(2,'0')}</div><h3>${t}</h3><p>${d}</p>`+
+ (ready?'<span class="tag">Ready</span>':'<span class="tag soon">Coming soon</span>');return a;}
+L.forEach(x=>{const g=x[0]<=9?'g1':x[0]<=20?'g2':'g3';document.getElementById(g).appendChild(card(x));});
+</script>
+</body></html>

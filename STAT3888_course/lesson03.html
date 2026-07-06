@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STAT3888 · Lecture 03 — Intro to Clustering</title><style>
+:root{--ink:#1b2430;--muted:#5b6a7d;--accent:#E64626;--blue:#2A6F97;
+--teal:#2A9D8F;--gold:#E9AF4B;--panel:#f4f6f9;--line:#dce3ec;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+color:var(--ink);background:#404a57;}
+.deck{max-width:1120px;margin:0 auto;}
+.slide{position:relative;background:#fff;min-height:640px;margin:26px auto;
+padding:54px 62px 66px;border-radius:14px;box-shadow:0 10px 34px rgba(0,0,0,.25);
+display:flex;flex-direction:column;}
+.slide::after{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;
+background:linear-gradient(#E64626,#b8331b);border-radius:14px 0 0 14px;}
+h1{font-size:44px;line-height:1.1;margin:.2em 0 .3em;letter-spacing:-.5px}
+h2{font-size:30px;margin:0 0 22px;line-height:1.15;letter-spacing:-.3px}
+h2 .kicker,.kicker{display:block;font-size:13px;font-weight:700;letter-spacing:.14em;
+text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h4{margin:0 0 8px;font-size:17px}
+p,li{font-size:19px;line-height:1.5;color:#26303c}
+.sub{font-size:22px;color:var(--muted);max-width:44ch}
+.title{justify-content:center}
+.badge{display:inline-block;align-self:flex-start;background:var(--accent);color:#fff;
+font-weight:700;font-size:14px;letter-spacing:.1em;padding:7px 14px;border-radius:30px}
+.tfoot{position:absolute;left:62px;right:62px;bottom:30px;display:flex;
+justify-content:space-between;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:12px}
+ul.obj li{margin:12px 0;padding-left:6px}
+ul.obj{padding-left:22px}
+ul.take li{margin:12px 0}
+.cols{display:flex;gap:22px;margin-top:6px}
+.col{flex:1}
+.split{display:flex;gap:30px;align-items:flex-start}
+.split .fig{flex:1.15}.split .side{flex:.85}
+.fig img{max-width:100%;border-radius:10px;border:1px solid var(--line)}
+.fig.center{text-align:center}
+.cap{color:var(--muted);font-size:15px;margin-top:10px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0;background:var(--panel)}
+.card h4{color:var(--blue)}
+.card.red h4{color:var(--accent)} .card.teal h4{color:var(--teal)}
+.card.gold h4{color:#b98416}
+.card p,.card li{font-size:17px}
+.formula{background:#0f1720;color:#eaf2fb;border-radius:10px;padding:16px 20px;margin:14px 0;
+font-family:'Cambria Math','Georgia',serif;font-size:22px;text-align:center;letter-spacing:.3px}
+.formula .v{color:#ffd08a;font-style:italic}
+pre.code{background:#0f1720;color:#e6edf3;border-radius:10px;padding:16px 18px;overflow:auto;
+font-family:'JetBrains Mono','Consolas',monospace;font-size:15px;line-height:1.5}
+pre.code code{color:#e6edf3}
+.callout{border-radius:10px;padding:14px 18px;margin:12px 0;font-size:17px;border-left:5px solid}
+.callout.tip{background:#eef6f4;border-color:var(--teal)}
+.callout.warn{background:#fdf0ec;border-color:var(--accent)}
+.callout.key{background:#eef3f9;border-color:var(--blue)}
+.exercise{background:linear-gradient(180deg,#fff,#fbf3f0)}
+.exbody{font-size:20px}
+.exbody ol{padding-left:22px}.exbody li{margin:9px 0}
+.hint{margin-top:16px;background:#fff6ee;border:1px dashed var(--gold);border-radius:10px;padding:12px 16px;font-size:17px}
+.next{margin-top:20px;background:var(--panel);border-radius:10px;padding:12px 16px;font-size:17px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left}
+th{background:var(--panel);color:var(--ink)}
+.pill{display:inline-block;background:var(--blue);color:#fff;border-radius:20px;padding:3px 12px;font-size:14px;font-weight:600;margin:2px}
+.nav{position:fixed;right:16px;bottom:16px;background:#1b2430cc;color:#fff;border-radius:30px;
+padding:8px 16px;font-size:13px;backdrop-filter:blur(4px);z-index:9}
+@media print{
+  body{background:#fff}
+  .slide{box-shadow:none;margin:0;border-radius:0;page-break-after:always;min-height:96vh}
+  .nav{display:none}
+}
+</style></head>
+<body><div class="deck">
+    <section class="slide title">
+      <div class="badge">Lecture 03</div>
+      <h1>Unsupervised Learning: Introduction to Clustering</h1>
+      <p class="sub">Finding groups in data when nobody tells you the labels.</p>
+      <div class="tfoot">
+        <span>STAT3888 · Statistical Machine Learning</span>
+        <span>The University of Sydney · School of Mathematics &amp; Statistics</span>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Learning objectives</span>By the end of this lecture you can…</h2>
+      <ul class="obj"><li>Define the <b>clustering</b> problem and give nutrition examples.</li>
+<li>Explain the role of a <b>distance / dissimilarity</b> measure.</li>
+<li>Contrast <b>within-cluster</b> and <b>between-cluster</b> variation.</li>
+<li>List the main clustering families and how their assumptions differ.</li></ul>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">The problem</span>What clustering does</h2>
+      <div class="fig center"><img src="figures/L03_clusters.png" alt="What clustering does"><p class="cap">From an unlabelled cloud (left) we propose a partition into groups (right). There is no ‘true’ answer to check against — clustering is exploratory.</p></div>
+    </section>
+
+    <section class="slide">
+      <h2>Why cluster nutrition data?</h2>
+      <div class="cols"><div class="col"><div class="card blue"><h4>Dietary patterns</h4><p>Instead of studying 50 nutrients one at a time, group people into a few <b>eating patterns</b> (e.g. ‘prudent’ vs ‘Western’) and study those.</p></div></div><div class="col"><div class="card red"><h4>Metabolic subtypes</h4><p>Cluster participants by metabolite profiles to reveal <b>subgroups</b> that respond differently — a hypothesis generator for the project.</p></div></div></div><div class="callout key">Clustering is <b>unsupervised</b>: we use it to <i>discover</i> and <i>describe</i> structure, then validate biologically — not to predict a known label.</div>
+    </section>
+
+    <section class="slide">
+      <h2>Everything hinges on distance</h2>
+      <p>A clustering algorithm needs a way to say how <b>far apart</b> two observations are.</p><div class="formula">Euclidean:&nbsp; d(<span class='v'>x</span>,<span class='v'>y</span>) = √ Σ<sub>j</sub> (<span class='v'>x</span><sub>j</sub> − <span class='v'>y</span><sub>j</sub>)²</div><div class="cols"><div class="col"><div class="card teal"><h4>Common choices</h4><p><b>Euclidean</b> — straight-line, the default.</p><p><b>Manhattan</b> — sum of absolute differences, robust.</p><p><b>Correlation</b> — shape not magnitude (good for profiles).</p></div></div><div class="col"><div class="card red"><h4>Watch out</h4><p>Distance is <b>scale-sensitive</b> — standardise first (Lecture 02!). The metric encodes what you mean by ‘similar’, so choose it deliberately.</p></div></div></div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">The objective</span>What makes a clustering ‘good’?</h2>
+      <div class="split">
+        <div class="fig"><img src="figures/L03_withinbetween.png" alt="What makes a clustering ‘good’?"><p class="cap">We want points close to their own centre (small within-cluster variation) and centres far apart (large between-cluster variation).</p></div>
+        <div class="side"><div class="formula">Total SS = <span class='v'>Within</span> + <span class='v'>Between</span></div><div class="card blue"><h4>The trade-off</h4><p>Most algorithms minimise <b>within-cluster</b> variation. Adding clusters always reduces it — so we need principled ways to choose the number of clusters (Lecture 04).</p></div></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>The families of clustering methods</h2>
+      <table><tr><th>Family</th><th>Idea</th><th>This unit</th></tr><tr><td>Partitioning</td><td>Split into k groups minimising within-SS</td><td><b>k-means</b> (L04)</td></tr><tr><td>Model-based</td><td>Data from a mixture of distributions</td><td><b>GMM</b> (L05)</td></tr><tr><td>Hierarchical</td><td>Build a tree of nested groups</td><td><b>agglomerative</b> (L06)</td></tr><tr><td>Density-based</td><td>Clusters = dense regions</td><td>DBSCAN (mentioned)</td></tr></table><div class="callout tip">No method is universally best. Each encodes assumptions about cluster <b>shape, size and separation</b> — match the method to your data.</div>
+    </section>
+
+    <section class="slide exercise">
+      <h2><span class="kicker">In-class exercise</span>Reason about distance</h2>
+      <div class="exbody"><p>Two participants have daily intakes (energy kJ, vitamin C mg):</p><p>A = (8000, 60), B = (8000, 120), C = (16000, 60)</p><ol><li>Compute the Euclidean distance A–B and A–C on the <b>raw</b> scale.</li><li>Which pair looks ‘closer’? Is that the answer you want?</li><li>Recompute after standardising (assume SD = 4000 kJ and 30 mg). What changes, and why?</li></ol></div>
+      <div class="hint"><b>Hint.</b> Raw distances are dominated by energy because its numbers are ~100× larger.</div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Summary</span>Key takeaways</h2>
+      <ul class="take"><li>Clustering finds <b>groups without labels</b> — an exploratory, hypothesis-generating tool.</li>
+<li>A <b>distance measure</b> defines ‘similar’; it is scale-sensitive, so standardise first.</li>
+<li>Good clusterings have <b>small within, large between</b> variation.</li>
+<li>Families differ by <b>assumptions</b>; we start with partitioning next.</li></ul>
+      <div class="next"><b>Next lecture →</b> Lecture 04 — K-means clustering: the workhorse partitioning method.</div>
+    </section></div>
+<div class="nav"><span class="n">1 / 9</span> · ← → to navigate</div>
+
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;
+const nav=document.querySelector('.nav .n');
+function go(n){i=Math.max(0,Math.min(s.length-1,n));s[i].scrollIntoView({behavior:'smooth'});nav.textContent=(i+1)+' / '+s.length;}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(i+1)}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}});
+const io=new IntersectionObserver(es=>{es.forEach(x=>{if(x.isIntersecting){i=s.indexOf(x.target);nav.textContent=(i+1)+' / '+s.length;}})},{threshold:.5});
+s.forEach(x=>io.observe(x));
+</script>
+</body></html>

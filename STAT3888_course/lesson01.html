@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STAT3888 · Lecture 01 — Introduction</title><style>
+:root{--ink:#1b2430;--muted:#5b6a7d;--accent:#E64626;--blue:#2A6F97;
+--teal:#2A9D8F;--gold:#E9AF4B;--panel:#f4f6f9;--line:#dce3ec;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+color:var(--ink);background:#404a57;}
+.deck{max-width:1120px;margin:0 auto;}
+.slide{position:relative;background:#fff;min-height:640px;margin:26px auto;
+padding:54px 62px 66px;border-radius:14px;box-shadow:0 10px 34px rgba(0,0,0,.25);
+display:flex;flex-direction:column;}
+.slide::after{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;
+background:linear-gradient(#E64626,#b8331b);border-radius:14px 0 0 14px;}
+h1{font-size:44px;line-height:1.1;margin:.2em 0 .3em;letter-spacing:-.5px}
+h2{font-size:30px;margin:0 0 22px;line-height:1.15;letter-spacing:-.3px}
+h2 .kicker,.kicker{display:block;font-size:13px;font-weight:700;letter-spacing:.14em;
+text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h4{margin:0 0 8px;font-size:17px}
+p,li{font-size:19px;line-height:1.5;color:#26303c}
+.sub{font-size:22px;color:var(--muted);max-width:44ch}
+.title{justify-content:center}
+.badge{display:inline-block;align-self:flex-start;background:var(--accent);color:#fff;
+font-weight:700;font-size:14px;letter-spacing:.1em;padding:7px 14px;border-radius:30px}
+.tfoot{position:absolute;left:62px;right:62px;bottom:30px;display:flex;
+justify-content:space-between;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:12px}
+ul.obj li{margin:12px 0;padding-left:6px}
+ul.obj{padding-left:22px}
+ul.take li{margin:12px 0}
+.cols{display:flex;gap:22px;margin-top:6px}
+.col{flex:1}
+.split{display:flex;gap:30px;align-items:flex-start}
+.split .fig{flex:1.15}.split .side{flex:.85}
+.fig img{max-width:100%;border-radius:10px;border:1px solid var(--line)}
+.fig.center{text-align:center}
+.cap{color:var(--muted);font-size:15px;margin-top:10px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0;background:var(--panel)}
+.card h4{color:var(--blue)}
+.card.red h4{color:var(--accent)} .card.teal h4{color:var(--teal)}
+.card.gold h4{color:#b98416}
+.card p,.card li{font-size:17px}
+.formula{background:#0f1720;color:#eaf2fb;border-radius:10px;padding:16px 20px;margin:14px 0;
+font-family:'Cambria Math','Georgia',serif;font-size:22px;text-align:center;letter-spacing:.3px}
+.formula .v{color:#ffd08a;font-style:italic}
+pre.code{background:#0f1720;color:#e6edf3;border-radius:10px;padding:16px 18px;overflow:auto;
+font-family:'JetBrains Mono','Consolas',monospace;font-size:15px;line-height:1.5}
+pre.code code{color:#e6edf3}
+.callout{border-radius:10px;padding:14px 18px;margin:12px 0;font-size:17px;border-left:5px solid}
+.callout.tip{background:#eef6f4;border-color:var(--teal)}
+.callout.warn{background:#fdf0ec;border-color:var(--accent)}
+.callout.key{background:#eef3f9;border-color:var(--blue)}
+.exercise{background:linear-gradient(180deg,#fff,#fbf3f0)}
+.exbody{font-size:20px}
+.exbody ol{padding-left:22px}.exbody li{margin:9px 0}
+.hint{margin-top:16px;background:#fff6ee;border:1px dashed var(--gold);border-radius:10px;padding:12px 16px;font-size:17px}
+.next{margin-top:20px;background:var(--panel);border-radius:10px;padding:12px 16px;font-size:17px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:17px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left}
+th{background:var(--panel);color:var(--ink)}
+.pill{display:inline-block;background:var(--blue);color:#fff;border-radius:20px;padding:3px 12px;font-size:14px;font-weight:600;margin:2px}
+.nav{position:fixed;right:16px;bottom:16px;background:#1b2430cc;color:#fff;border-radius:30px;
+padding:8px 16px;font-size:13px;backdrop-filter:blur(4px);z-index:9}
+@media print{
+  body{background:#fff}
+  .slide{box-shadow:none;margin:0;border-radius:0;page-break-after:always;min-height:96vh}
+  .nav{display:none}
+}
+</style></head>
+<body><div class="deck">
+    <section class="slide title">
+      <div class="badge">Lecture 01</div>
+      <h1>Introduction to Statistical Machine Learning</h1>
+      <p class="sub">What this unit is about, how machines learn from data, and the interdisciplinary nutrition project.</p>
+      <div class="tfoot">
+        <span>STAT3888 · Statistical Machine Learning</span>
+        <span>The University of Sydney · School of Mathematics &amp; Statistics</span>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Learning objectives</span>By the end of this lecture you can…</h2>
+      <ul class="obj"><li>Explain what <b>statistical machine learning</b> is and how it differs from classical statistics.</li>
+<li>Distinguish <b>supervised</b> from <b>unsupervised</b> learning with real examples.</li>
+<li>Describe the end-to-end <b>data-analysis workflow</b> you will follow all semester.</li>
+<li>Understand the <b>NUTM3888 joint project</b> and how you will be assessed.</li></ul>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Big picture</span>What is statistical machine learning?</h2>
+      <div class="cols"><div class="col"><div class="card blue"><h4>The goal</h4><p>Build algorithms that <b>learn patterns from data</b> to make predictions or discover structure — <i>without being explicitly programmed</i> for the task.</p></div></div><div class="col"><div class="card red"><h4>Statistics meets ML</h4><p>Classical statistics asks <i>“is this effect real?”</i> (inference). ML asks <i>“how well can I predict the next case?”</i>. This unit lives at their <b>intersection</b>.</p></div></div></div><div class="callout key"><b>Two cultures (Breiman, 2001):</b> the <i>data-modelling</i> culture assumes a stochastic model; the <i>algorithmic</i> culture treats the mechanism as unknown and optimises prediction. Good data scientists move fluidly between both.</div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Supervised vs unsupervised</span>The two families you will learn</h2>
+      <div class="split">
+        <div class="fig"><img src="figures/L01_super_vs_unsuper.png" alt="The two families you will learn"><p class="cap">Left: unsupervised — we only see the points and must find the groups. Right: supervised — each point carries a known label and we learn the rule.</p></div>
+        <div class="side"><div class="card teal"><h4>How to tell them apart</h4><p><b>Is there a target variable Y?</b></p><p>✔ <b>Yes</b> → supervised (regression if Y is numeric, classification if categorical).</p><p>✘ <b>No</b> → unsupervised (clustering, dimension reduction).</p></div></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>The methods map of STAT3888</h2>
+      <table><tr><th>Unsupervised (Weeks 1–3)</th><th>Supervised (Weeks 4–7)</th></tr><tr><td>k-means, model-based &amp; hierarchical clustering</td><td>Logistic &amp; penalised logistic regression</td></tr><tr><td>Principal component analysis</td><td>Discriminant analysis, k-NN</td></tr><tr><td>Dimension reduction</td><td>Trees, random forests</td></tr><tr><td>Graphical / log-linear models</td><td>Neural networks, support vector machines</td></tr></table><div class="callout tip">Every method answers the same three questions: <b>what does it assume, how is it fit, and how do we know it worked?</b> Keep asking these.</div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">How we work</span>The data-analysis workflow</h2>
+      <div class="fig center"><img src="figures/L01_pipeline.png" alt="The data-analysis workflow"><p class="cap">You will iterate this loop for your nutrition project — real projects cycle back often.</p></div>
+    </section>
+
+    <section class="slide">
+      <h2>The joint project with NUTM3888</h2>
+      <div class="cols"><div class="col"><div class="card blue"><h4>The teams</h4><p>Statistics/Data Science students team with <b>Nutrition (Metabolic Cybernetics)</b> students to answer a real question from a <b>nutrition &amp; metabolomics</b> data set.</p></div></div><div class="col"><div class="card red"><h4>Your edge</h4><p>You bring the <b>statistical machine learning</b>. They bring the <b>domain question</b> and interpretation. Neither succeeds alone — this is interdisciplinary practice (GQ7).</p></div></div></div><div class="callout key">Data science is <b>inherently interdisciplinary</b>. The hardest part is rarely the algorithm — it is framing the right question and communicating the answer.</div>
+    </section>
+
+    <section class="slide">
+      <h2>How you are assessed</h2>
+      <table><tr><th>Component</th><th>Weight</th><th>When</th></tr><tr><td>Final written exam</td><td>35%</td><td>Exam period</td></tr><tr><td>Disciplinary assignment (individual)</td><td>15%</td><td>Week 11</td></tr><tr><td>Major project — presentation</td><td>15%</td><td>Week 12</td></tr><tr><td>Major project — manuscript</td><td>25%</td><td>Week 13</td></tr><tr><td>Contribution / reflection / peer review</td><td>10%</td><td>Week 13</td></tr></table><div class="callout warn">The project pitch (Week 6) and optional quiz (Week 9) are worth 0% but are <b>critical rehearsals</b> — treat them seriously.</div>
+    </section>
+
+    <section class="slide exercise">
+      <h2><span class="kicker">In-class exercise</span>Warm-up: classify the task</h2>
+      <div class="exbody"><p>For each scenario, decide <b>supervised</b> or <b>unsupervised</b>, and name the sub-type (regression / classification / clustering / dimension reduction):</p><ol><li>Predict a person's fasting glucose from 30 dietary intake variables.</li><li>Group 500 participants into dietary <i>patterns</i> with no pre-defined labels.</li><li>Flag whether a food diary entry is <i>plausible</i> or a data-entry error.</li><li>Compress 200 correlated nutrient measurements into a handful of indices.</li></ol></div>
+      <div class="hint"><b>Hint.</b> Ask first: <i>is there a target variable Y, and if so, is it numeric or categorical?</i></div>
+    </section>
+
+    <section class="slide">
+      <h2><span class="kicker">Summary</span>Key takeaways</h2>
+      <ul class="take"><li>ML learns <b>patterns from data</b>; it sits between classical inference and pure prediction.</li>
+<li><b>Supervised</b> = labelled Y (regression/classification); <b>unsupervised</b> = structure discovery.</li>
+<li>The <b>workflow</b> — clean → model → evaluate → communicate — is iterative, not linear.</li>
+<li>Your project is <b>interdisciplinary</b>: the statistics is necessary but not sufficient.</li></ul>
+      <div class="next"><b>Next lecture →</b> Lecture 02 — Data cleaning: the unglamorous 80% of every project.</div>
+    </section></div>
+<div class="nav"><span class="n">1 / 10</span> · ← → to navigate</div>
+
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;
+const nav=document.querySelector('.nav .n');
+function go(n){i=Math.max(0,Math.min(s.length-1,n));s[i].scrollIntoView({behavior:'smooth'});nav.textContent=(i+1)+' / '+s.length;}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(i+1)}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}});
+const io=new IntersectionObserver(es=>{es.forEach(x=>{if(x.isIntersecting){i=s.indexOf(x.target);nav.textContent=(i+1)+' / '+s.length;}})},{threshold:.5});
+s.forEach(x=>io.observe(x));
+</script>
+</body></html>
