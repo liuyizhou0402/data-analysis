@@ -199,6 +199,188 @@ def lecture01():
         ("**Ask on Ed** — if you're stuck, others are too", 0),
         ("**Understand** methods, don't just call functions — the exam tests this", 0),
     ], i())
+
+    d.section("Part 6", "Data, roles & a little history")
+    d.definition("Definition", "Statistical machine learning",
+                 "A set of methods that use **data and probability** to learn predictive or descriptive "
+                 "models, with explicit attention to **uncertainty and generalisation**.",
+                 i(), extra=["'Statistical' = we quantify uncertainty and assumptions",
+                             "'Machine learning' = the algorithm improves with data",
+                             "The blend is exactly what employers and researchers need"])
+    d.bullets("A little history", "How we got here", [
+        ("**1900s–50s** — regression, Fisher's discriminant, the foundations of statistics", 0),
+        ("**1960s–80s** — perceptrons, decision trees, early neural networks", 0),
+        ("**1990s–2000s** — SVMs, boosting, random forests; the statistical-learning synthesis", 0),
+        ("**2010s–now** — deep learning, big data, and ML everywhere", 0),
+    ], i())
+    d.table("Types of data", "Know what you're working with",
+            ["Kind", "Example (nutrition)", "Note"],
+            [["Continuous", "energy (kJ), BMI", "most ML assumes this"],
+             ["Count", "servings per day", "often skewed"],
+             ["Categorical", "sex, food group", "encode as factors"],
+             ["Ordinal", "Likert 1–5", "order matters"],
+             ["Text / other", "free-text notes", "needs special handling"]],
+            i(), col_widths=[2.4,4.6,4.5])
+    d.two_col("The team", "Roles in a data-science project",
+              left_head="You may play",
+              left=["**Data engineer** — clean & wrangle",
+                    "**Analyst / modeller** — fit & compare",
+                    "**Communicator** — explain results"],
+              right_head="Your partners bring",
+              right=["**Domain framing** — the real question",
+                     "**Interpretation** — is it plausible?",
+                     "**Impact** — what to do about it"],
+              idx=i())
+    d.checkpoint("A variable records 'breakfast: yes/no'. What kind is it?",
+        ["Continuous", "Ordinal", "Nominal categorical", "Count"], 2, i(),
+        explain="Yes/no is a two-level nominal (unordered) category — encode it as a factor / dummy.")
+
+    d.section("Part 7", "Generalisation, ethics & tools")
+    d.definition("Definition", "Overfitting",
+                 "**Overfitting** is when a model captures noise specific to the training data and so "
+                 "predicts new data poorly.",
+                 i(), extra=["Symptom: great training accuracy, poor test accuracy",
+                             "Cause: too much flexibility for too little data",
+                             "Cure: simpler models, regularisation, cross-validation"])
+    d.bullets("Train / validate / test", "The three-way split", [
+        ("**Training** set — fit the model", 0),
+        ("**Validation** set — tune settings and compare models", 0),
+        ("**Test** set — a final, untouched estimate of real-world performance", 0),
+        ("Cross-validation reuses data cleverly to do this reliably (Lecture 10)", 0),
+    ], i())
+    d.big_point("Golden rule", "Never let information from the test set influence training — "
+                "that is data leakage, and it makes results a lie.",
+                i(), sub="This single principle underlies honest machine learning.")
+    d.bullets("Using AI responsibly", "This unit's policy", [
+        ("Generative AI is **allowed** for open assessments (project, assignment)", 0),
+        ("It is **prohibited** in the supervised final exam", 0),
+        ("You must always **acknowledge** AI use — undisclosed use breaches academic integrity", 0),
+        ("Use it to **learn and draft**, not to replace understanding", 0),
+    ], i())
+    d.bullets("Ethics in nutrition ML", "Think before you model", [
+        ("Health data is **sensitive** — privacy and consent matter", 0),
+        ("Biased data → biased conclusions that can harm real people", 0),
+        ("A model that predicts well can still be **unfair** or **uninterpretable**", 0),
+        ("Always ask: *should* we, not just *can* we", 0),
+    ], i())
+    d.code("Your toolkit", "The R commands you'll live in", [
+        "library(tidyverse)   # wrangle & visualise",
+        "read_csv('diet.csv') |> glimpse()      # load & peek",
+        "diet |> summarise(across(where(is.numeric), mean, na.rm=TRUE))",
+        "diet |> ggplot(aes(fibre, glucose)) + geom_point() + geom_smooth()",
+        "",
+        "library(tidymodels) # split, model, resample, evaluate",
+    ], i())
+    d.checkpoint("A model scores 99% on training data but 62% on test data. This is a classic sign of…",
+        ["Underfitting", "Overfitting", "Data leakage in the test set", "A perfect model"], 1, i(),
+        explain="A large train-minus-test gap is the signature of overfitting: the model memorised "
+                "training noise that doesn't generalise.")
+
+    d.section("Part 8", "The project, up close")
+    d.steps("Project timeline", "How the semester unfolds", [
+        ("Weeks 1–3", "learn unsupervised methods; choose a research topic"),
+        ("Weeks 4–7", "learn supervised methods; form teams, draft the pitch"),
+        ("Week 6–7", "project pitch for early feedback (0% but vital)"),
+        ("Weeks 8–12", "analysis, manuscript, presentation"),
+        ("Week 13", "submit manuscript, reflection & peer review"),
+    ], i())
+    d.bullets("What makes a good question", "Framing the project", [
+        ("**Specific** — 'which dietary pattern predicts insulin resistance?' beats 'study diet'", 0),
+        ("**Answerable** with the data you have", 0),
+        ("**Interesting** to your nutrition partners", 0),
+        ("Matched to a **method** you're learning", 0),
+    ], i())
+    d.two_col("Teamwork", "Working across disciplines",
+              left_head="Do",
+              left=["Meet weekly; keep minutes",
+                    "Agree on roles early",
+                    "Explain your stats plainly",
+                    "Version-control shared code"],
+              right_head="Avoid",
+              right=["Siloing 'stats' vs 'nutrition'",
+                     "Last-minute integration",
+                     "Jargon without translation",
+                     "One person doing everything"],
+              idx=i())
+    d.bullets("Communicating results", "The skill that gets you hired", [
+        ("Lead with the **answer**, not the method", 0),
+        ("One **clear figure** beats a table of p-values", 0),
+        ("State **uncertainty** honestly", 0),
+        ("Tailor depth to the **audience** (GQ3, GQ7)", 0),
+    ], i())
+    d.exercise("Frame a project question", [
+        "Pick a plausible nutrition outcome (e.g. fasting glucose, BMI category).",
+        "Write a **specific, answerable** question about it.",
+        "Decide: is it supervised or unsupervised? Which method from the syllabus fits?",
+        "What would a convincing **result figure** look like?",
+    ], i(), hint="If there's a target Y it's supervised; match numeric Y → regression, categorical Y → "
+                 "classification.")
+    d.bullets("Glossary", "Words we'll use all semester", [
+        ("**Feature / predictor** — an input variable (a column)", 0),
+        ("**Label / target** — the output we predict (supervised only)", 0),
+        ("**Model** — the fitted rule mapping inputs to outputs", 0),
+        ("**Generalisation** — performance on unseen data", 0),
+    ], i())
+    d.checkpoint("Which best describes the goal of this unit's major project?",
+        ["Get the highest training accuracy", "Apply ML to answer a real nutrition question and "
+         "communicate it", "Use as many methods as possible", "Avoid using R"], 1, i(),
+        explain="The project is about applying appropriate methods to a genuine interdisciplinary "
+                "question and communicating the findings — not maximising a metric.")
+
+    d.section("Part 9", "The bigger picture")
+    d.two_col("A key trade-off", "Interpretability vs flexibility",
+              left_head="Interpretable models",
+              left=["Linear & logistic regression, trees",
+                    "Easy to explain **why**",
+                    "Preferred in health & policy",
+                    "May underfit complex patterns"],
+              right_head="Flexible models",
+              right=["Random forests, SVMs, neural nets",
+                     "Often more **accurate**",
+                     "Harder to explain ('black box')",
+                     "Risk overfitting without care"],
+              idx=i())
+    d.big_point("Choose deliberately", "More complex is not automatically better — the right model "
+                "balances accuracy, interpretability, data size and the question.",
+                i(), sub="In nutrition, being able to *explain* a finding often matters as much as "
+                         "predicting it.")
+    d.bullets("More examples: unsupervised", "Spot the structure task", [
+        ("Grouping foods by **nutrient profile** → clustering", 0),
+        ("Summarising 40 metabolites into a few axes → dimension reduction", 0),
+        ("Mapping which nutrients are **conditionally related** → graphical models", 0),
+        ("Finding unusual food diaries → anomaly detection", 0),
+    ], i())
+    d.bullets("More examples: supervised", "Spot the prediction task", [
+        ("Predict **body-fat %** from intake → regression", 0),
+        ("Classify **diabetic / not** → classification", 0),
+        ("Rank features driving an outcome → interpretable models", 0),
+        ("Forecast weight change over time → regression", 0),
+    ], i())
+    d.checkpoint("Grouping foods purely by their nutrient profiles, with no labels, is…",
+        ["Regression", "Classification", "Clustering", "Feature engineering"], 2, i(),
+        explain="No target variable + finding groups = clustering, an unsupervised task.")
+    d.bullets("Where to get help", "Support in this unit", [
+        ("**Ed forum** — post questions (anonymously if you prefer)", 0),
+        ("**Tutorials & computer labs** — hands-on practice", 0),
+        ("**Consultation** — the lecturer's office hours", 0),
+        ("Always include your **name and SID** in emails", 0),
+    ], i())
+    d.bullets("Assessment, up close", "Turning weights into a plan", [
+        ("The **project (65%)** is where most marks live — start early", 0),
+        ("The **exam (35%)** tests conceptual understanding, not coding", 0),
+        ("0%-weighted **pitch & quiz** are your safety rehearsals", 0),
+        ("Individual **contribution** is assessed — pull your weight", 0),
+    ], i())
+    d.bullets("Exam success", "How to prepare from Week 1", [
+        ("For each method learn: **assumptions, fitting, evaluation**", 0),
+        ("Practise **interpreting output**, not just producing it", 0),
+        ("Redo tutorial questions **without** the solutions", 0),
+        ("Explain each concept aloud as if teaching it", 0),
+    ], i())
+    d.big_point("Welcome aboard", "By Week 13 you'll take messy nutrition data and turn it into a "
+                "clear, defensible, machine-learning-driven answer.",
+                i(), sub="That is exactly what a professional data scientist does. Let's begin.")
+
     d.summary([
         "ML **learns patterns from data**; statistical ML keeps uncertainty and assumptions in view.",
         "**Supervised** = labelled Y (regression/classification); **unsupervised** = structure discovery.",
@@ -374,6 +556,209 @@ def lecture02():
         "Write the mutate()/filter() lines that would handle them.",
     ], i(), hint="Whitespace in a factor, a structural zero, an impossible negative, and an "
                  "implausible vitamin C value (RDI ≈ 45 mg).")
+
+    d.section("Part 6", "Duplicates, joins & structural checks")
+    d.bullets("Duplicates", "More common than you'd think", [
+        ("**Exact duplicates** — the same row entered twice (drop with `distinct()`)", 0),
+        ("**Near duplicates** — same person, tiny differences (needs a key to detect)", 0),
+        ("A hidden duplicate **doubles a participant's weight** in every analysis", 0),
+        ("Always check row counts before and after de-duplication", 0),
+    ], i())
+    d.definition("Definition", "Primary key",
+                 "A **primary key** is a column (or set) that uniquely identifies each row — e.g. a "
+                 "participant ID.",
+                 i(), extra=["Verify it's truly unique: `n_distinct(id) == nrow(data)`",
+                             "Keys let you safely **join** datasets (intake + labs)",
+                             "A duplicated key is a red flag to investigate"])
+    d.code("Joining", "Combining survey and lab tables", [
+        "combined <- intake %>%",
+        "  inner_join(labs, by = 'participant_id')   # keep matched rows",
+        "",
+        "# Sanity-check the join",
+        "nrow(intake); nrow(labs); nrow(combined)     # did rows explode or vanish?",
+        "combined %>% count(participant_id) %>% filter(n > 1)  # duplicates?",
+    ], i(), caption="A careless join can silently multiply or drop rows — always check counts.")
+    d.checkpoint("After an inner_join, your row count is HIGHER than either input table. Most likely…",
+        ["The join worked perfectly", "The join key is duplicated in one table",
+         "You lost data", "R is broken"], 1, i(),
+        explain="A one-to-many match on a non-unique key multiplies rows. Verify the key is unique "
+                "before joining.")
+
+    d.section("Part 7", "Feature engineering")
+    d.definition("Definition", "Feature engineering",
+                 "**Feature engineering** creates new, more informative variables from the raw data "
+                 "using domain knowledge.",
+                 i(), extra=["Often more impactful than the choice of model",
+                             "Encodes what experts know into the data",
+                             "Do it reproducibly, inside your pipeline"])
+    d.bullets("Examples", "Useful features for nutrition data", [
+        ("**Ratios** — protein-to-energy, sodium-to-potassium", 0),
+        ("**Indices** — a diet-quality score from several intakes", 0),
+        ("**Derived categories** — BMI bands from height & weight", 0),
+        ("**Per-kg** intakes — normalise by body weight", 0),
+    ], i())
+    d.two_col("Good vs risky", "Feature engineering judgement",
+              left_head="Good features",
+              left=["Grounded in **domain knowledge**",
+                    "Reduce noise or redundancy",
+                    "Interpretable to your partners"],
+              right_head="Watch out",
+              right=["Features built using the **outcome** → leakage",
+                     "Too many features → overfitting",
+                     "Opaque transforms → hard to explain"],
+              idx=i())
+    d.bullets("Encoding revisited", "Turning categories into numbers", [
+        ("**One-hot / dummy** — one 0/1 column per category level", 0),
+        ("**Ordinal** — integer scores when order is meaningful", 0),
+        ("**Frequency / target encoding** — powerful but leakage-prone; use with care", 0),
+        ("Group **rare levels** into 'other' to avoid tiny, noisy dummies", 0),
+    ], i())
+
+    d.section("Part 8", "EDA & a reproducible mindset")
+    d.definition("Definition", "Exploratory data analysis (EDA)",
+                 "**EDA** is the open-ended visual and numerical exploration of data to understand its "
+                 "structure before modelling.",
+                 i(), extra=["Histograms, boxplots, scatterplots, correlation heatmaps",
+                             "Reveals errors, skew, outliers and relationships",
+                             "Every project should start here"])
+    d.code("EDA toolkit", "First looks in R", [
+        "skimr::skim(diet)                 # per-variable summary",
+        "diet %>% ggplot(aes(energy_kj)) + geom_histogram()",
+        "diet %>% ggplot(aes(sex, bmi)) + geom_boxplot()",
+        "diet %>% select(where(is.numeric)) %>% cor(use='pairwise') %>%",
+        "  corrplot::corrplot()            # correlation heatmap",
+    ], i())
+    d.bullets("What EDA reveals", "Reading your plots", [
+        ("**Skew** → consider a log transform", 0),
+        ("**Bimodality** → possible subgroups (foreshadows clustering!)", 0),
+        ("**Strong correlations** → redundancy (foreshadows PCA!)", 0),
+        ("**Isolated points** → outliers to investigate", 0),
+    ], i())
+    d.big_point("The cleaning mindset", "Treat data cleaning as a documented, re-runnable pipeline — "
+                "not a one-off cleanup you can't reproduce.",
+                i(), sub="If you can't re-run it from raw data with one command, it isn't reproducible.")
+    d.steps("Cleaning checklist", "A repeatable order of operations", [
+        ("Load raw (read-only)", "never overwrite the original file"),
+        ("Fix structure", "tidy names, types, de-duplicate, join"),
+        ("Handle missing", "diagnose mechanism, then impute or drop"),
+        ("Handle outliers", "detect robustly, investigate, document"),
+        ("Transform", "scale, log, encode — inside a training-only recipe"),
+    ], i())
+    d.checkpoint("Which step must happen AFTER the train/test split to avoid leakage?",
+        ["Fixing column names", "De-duplicating rows", "Fitting the standardisation scaler",
+         "Parsing dates"], 2, i(),
+        explain="Scaling uses statistics (mean, SD) that must be learned from training data only, then "
+                "applied to test data — so it comes after the split.")
+    d.exercise("Design a cleaning pipeline", [
+        "You receive a raw nutrition survey (CSV) plus a separate lab-results table.",
+        "List, in order, the cleaning steps you'd apply from raw files to a modelling-ready table.",
+        "Mark which steps must go **after** the train/test split, and why.",
+        "Name the R functions you'd use at each step.",
+    ], i(), hint="Structural fixes and de-duplication can precede the split; imputation and scaling "
+                 "should be fit on training data only.")
+    d.bullets("Common mistakes recap", "Avoid these", [
+        ("Editing the **raw file** by hand", 0),
+        ("Imputing / scaling **before** splitting → leakage", 0),
+        ("Deleting outliers **without investigating**", 0),
+        ("Ignoring **duplicates** and non-unique keys", 0),
+    ], i())
+
+    d.section("Part 9", "Missing data, deeper")
+    d.bullets("Why the mechanism matters", "Consequences of getting it wrong", [
+        ("Assuming **MCAR** when it's **MNAR** biases every estimate", 0),
+        ("Under-reported high intakes (MNAR) make the diet look healthier than it is", 0),
+        ("You can **test** for MCAR (e.g. Little's test) but never fully rule out MNAR", 0),
+        ("Domain knowledge is essential — ask *why* is it missing?", 0),
+    ], i())
+    d.definition("Definition", "Multiple imputation",
+                 "**Multiple imputation** fills each gap several times to reflect uncertainty, analyses "
+                 "each completed dataset, then pools the results.",
+                 i(), extra=["Single imputation pretends we know the missing value — MI doesn't",
+                             "`mice` is the standard R implementation",
+                             "Pooling propagates imputation uncertainty into your estimates"])
+    d.code("Multiple imputation", "The mice workflow", [
+        "library(mice)",
+        "imp  <- mice(diet, m = 5, method = 'pmm', seed = 1)  # 5 imputations",
+        "fits <- with(imp, lm(glucose ~ fibre + energy_kj))   # analyse each",
+        "pool(fits)                                           # combine results",
+    ], i())
+    d.table("Decision guide", "Choosing a missing-data strategy",
+            ["% missing", "Mechanism", "Suggested approach"],
+            [["< 5%", "MCAR", "complete-case or simple imputation"],
+             ["5–30%", "MAR", "multiple imputation (mice)"],
+             ["> 30%", "any", "consider dropping the variable"],
+             ["any", "MNAR", "model the mechanism; consult domain experts"]],
+            i(), col_widths=[2.2,2.8,6.5])
+    d.checkpoint("Heavy eaters systematically under-report intake, so their high values are missing. "
+                 "This is…",
+        ["MCAR", "MAR", "MNAR", "Not missing data"], 2, i(),
+        explain="Missingness depends on the unobserved value itself (the true high intake) — that is "
+                "MNAR, the hardest case.")
+
+    d.section("Part 10", "Scaling, dates & text")
+    d.table("Scaling methods", "Beyond the z-score",
+            ["Method", "Formula idea", "Use when"],
+            [["Standardise (z)", "(x − mean) / SD", "roughly symmetric data"],
+             ["Min–max", "(x − min)/(max − min)", "need a [0,1] range"],
+             ["Robust", "(x − median)/IQR", "outliers remain"],
+             ["Log", "log(x) or log(x+1)", "right-skewed / multiplicative"]],
+            i(), col_widths=[2.8,4.2,4.5])
+    d.bullets("Dates & times", "A common source of pain", [
+        ("Parse strings to real **Date/POSIXct** objects (`lubridate`)", 0),
+        ("Derive features: **day of week**, month, season, time since baseline", 0),
+        ("Watch for **timezones** and inconsistent formats", 0),
+        ("Impossible dates (end before start) are logic-check flags", 0),
+    ], i())
+    d.bullets("Free text", "When numbers hide in words", [
+        ("'2 cups', 'a handful', '~200g' — inconsistent units to reconcile", 0),
+        ("Standardise case and whitespace; map synonyms to one label", 0),
+        ("Recode common responses; set genuinely free text aside", 0),
+        ("Document every recoding decision", 0),
+    ], i())
+    d.definition("Definition", "Recipe (tidymodels)",
+                 "A **recipe** is a reusable specification of preprocessing steps that is *fit on "
+                 "training data* and applied identically to new data.",
+                 i(), extra=["Prevents leakage by design — steps learn only from training folds",
+                             "Chains impute → scale → dummy → … in order",
+                             "Slots directly into a modelling `workflow()`"])
+    d.code("A leakage-safe recipe", "Preprocessing the right way", [
+        "library(tidymodels)",
+        "split <- initial_split(diet, prop = 0.8, strata = outcome)",
+        "",
+        "rec <- recipe(outcome ~ ., data = training(split)) %>%",
+        "  step_impute_median(all_numeric_predictors()) %>%",
+        "  step_normalize(all_numeric_predictors()) %>%   # scale (train stats)",
+        "  step_dummy(all_nominal_predictors())",
+        "",
+        "# rec is fit on training data, then applied to test data automatically",
+    ], i())
+    d.checkpoint("Why does putting scaling inside a tidymodels recipe prevent leakage?",
+        ["It runs faster", "The scaler learns statistics only from the training fold",
+         "It removes outliers", "It imputes automatically"], 1, i(),
+        explain="A recipe estimates its parameters (means, SDs) from training data only, then applies "
+                "the same transform to test data — no test information leaks in.")
+    d.exercise("Fix a leaky pipeline", [
+        "A colleague standardises the whole dataset, then splits into train/test and reports 95% accuracy.",
+        "Explain precisely where the leakage occurs.",
+        "Rewrite the workflow (in words or a recipe) so it's leakage-free.",
+        "Would you expect the honest accuracy to be higher or lower? Why?",
+    ], i(), hint="Standardising before the split lets the test set's statistics influence training; "
+                 "honest accuracy is usually lower.")
+    d.big_point("Cleaning is a first-class analysis", "How you clean shapes every result that follows "
+                "— it deserves the same rigor and documentation as your modelling.",
+                i(), sub="A reproducible, leakage-free pipeline is the mark of a professional.")
+    d.bullets("Documenting decisions", "Make your cleaning auditable", [
+        ("Keep a **data dictionary**: what each variable is, its units and valid range", 0),
+        ("Log every **exclusion** (how many rows, and why)", 0),
+        ("Comment non-obvious recodings in the script", 0),
+        ("Reviewers (and future-you) must be able to **reconstruct** the clean data", 0),
+    ], i())
+    d.bullets("Further reading", "To go deeper", [
+        ("Wickham & Grolemund, *R for Data Science* — wrangling & tidy data", 0),
+        ("van Buuren, *Flexible Imputation of Missing Data* (mice)", 0),
+        ("The **tidymodels** and **naniar** package documentation", 0),
+    ], i())
+
     d.summary([
         "Cleaning is **most** of the work — do it in a **script**, never by hand.",
         "Diagnose missingness first; the **mechanism (MCAR/MAR/MNAR)** dictates the fix.",
@@ -533,6 +918,194 @@ def lecture03():
         "Recompute after standardising (assume SD = 4000 kJ and 30 mg). What changes, and why?",
     ], i(), hint="Raw distances are dominated by energy because its numbers are ~100× larger than "
                  "vitamin C's.")
+
+    d.section("Part 6", "Distances, deeper")
+    d.formula("Generalising", "The Minkowski distance",
+              "d(x,y) = ( Σⱼ |xⱼ − yⱼ|ᵖ )^(1/p)",
+              ["**p = 2** → Euclidean (straight line)",
+               "**p = 1** → Manhattan (city-block, more robust)",
+               "**p → ∞** → Chebyshev (max coordinate difference)"],
+              i(), note="One formula, a family of distances — the exponent p tunes how differences add up.")
+    d.definition("Definition", "Dissimilarity vs similarity",
+                 "A **dissimilarity** grows as objects differ (like a distance); a **similarity** grows "
+                 "as they resemble each other (like a correlation).",
+                 i(), extra=["Clustering usually works from **dissimilarities**",
+                             "Similarity s and dissimilarity d often relate by d = 1 − s",
+                             "Correlation-based clustering compares **shapes**, not magnitudes"])
+    d.two_col("Metric choice", "Match the distance to the data",
+              left_head="Continuous data",
+              left=["Euclidean (after standardising)",
+                    "Manhattan for robustness",
+                    "Correlation for profiles"],
+              right_head="Other data",
+              right=["**Gower** for mixed types",
+                     "**Jaccard** for presence/absence",
+                     "**Hamming** for categorical strings"],
+              idx=i())
+    d.checkpoint("You want to cluster metabolite **profiles** by shape, ignoring overall magnitude. Best distance?",
+        ["Euclidean", "Manhattan", "Correlation-based", "Hamming"], 2, i(),
+        explain="Correlation-based dissimilarity compares the pattern/shape of profiles regardless of "
+                "their absolute level.")
+    d.bullets("Standardising, revisited", "Why it's the #1 clustering mistake", [
+        ("Distance-based methods are **dominated** by high-variance variables", 0),
+        ("Energy (~thousands) vs vitamin C (~tens) → energy wins by default", 0),
+        ("Standardising gives each variable an **equal vote**", 0),
+        ("Occasionally you *want* to weight variables — do it **deliberately**", 0),
+    ], i())
+
+    d.section("Part 7", "Validation & interpretation")
+    d.definition("Definition", "Silhouette width",
+                 "The **silhouette** of a point compares its average distance to its own cluster (a) "
+                 "with the nearest other cluster (b): s = (b − a)/max(a,b).",
+                 i(), extra=["s near +1 → well clustered; near 0 → on a boundary; < 0 → misassigned",
+                             "Average silhouette scores a whole clustering",
+                             "A model-free way to compare different k"])
+    d.table("Validation types", "Three ways to judge clusters",
+            ["Type", "Question", "Example"],
+            [["Internal", "compact & separated?", "silhouette, WSS/BSS"],
+             ["Stability", "reproducible?", "resampling, bootstrap"],
+             ["External", "match known groups?", "compare to held-out label"]],
+            i(), col_widths=[2.4,4.6,4.5])
+    d.bullets("Interpreting clusters", "Turning groups into insight", [
+        ("**Profile** each cluster by its variable means", 0),
+        ("**Name** it in domain terms ('high-fibre, low-sugar')", 0),
+        ("Check **sizes** — a tiny cluster may be outliers", 0),
+        ("Relate to a **held-out outcome** to argue relevance", 0),
+    ], i())
+    d.big_point("Clusters are hypotheses", "Clustering proposes structure; it does not prove it. "
+                "Always validate statistically and biologically before you believe it.",
+                i(), sub="A pattern in noise is still noise — the discipline is in the checking.")
+    d.bullets("Applications in nutrition", "Where clustering earns its keep", [
+        ("**Dietary patterns** from intake surveys", 0),
+        ("**Metabolic subtypes** from blood metabolites", 0),
+        ("**Food grouping** by nutrient composition", 0),
+        ("**Participant segmentation** for tailored advice", 0),
+    ], i())
+    d.checkpoint("A clustering has average silhouette 0.08. This suggests…",
+        ["Excellent, well-separated clusters", "Weak, overlapping structure",
+         "Perfectly nested clusters", "An error in the code"], 1, i(),
+        explain="Average silhouette near 0 means points sit close to the boundary between clusters — "
+                "the structure is weak.")
+    d.exercise("Plan a clustering study", [
+        "You have 30 standardised intake variables for 400 participants.",
+        "Which distance and which method family would you try first, and why?",
+        "How will you choose the number of clusters?",
+        "How will you convince a nutritionist the clusters are **real**, not noise?",
+    ], i(), hint="Standardised continuous data → Euclidean + k-means/Ward; choose k by silhouette; "
+                 "validate with stability and a held-out outcome.")
+    d.bullets("Looking ahead", "The methods to come", [
+        ("**k-means** (next) — fast partitioning", 0),
+        ("**GMM** — soft, probabilistic clusters", 0),
+        ("**Hierarchical** — a tree at every scale", 0),
+        ("Each makes different **assumptions** — choose to match your data", 0),
+    ], i())
+
+    d.section("Part 8", "The method families in detail")
+    d.definition("Definition", "Density-based clustering (DBSCAN)",
+                 "**DBSCAN** defines clusters as **dense regions** of points separated by sparser "
+                 "regions, and labels low-density points as noise.",
+                 i(), extra=["Finds **arbitrary shapes** — not just blobs",
+                             "Does **not** need k specified in advance",
+                             "Sensitive to its density parameters (eps, minPts)"])
+    d.bullets("More families", "Beyond the big three", [
+        ("**Spectral clustering** — cluster using a graph of similarities; great for complex shapes", 0),
+        ("**Fuzzy clustering** — soft memberships, like a simple GMM", 0),
+        ("**Self-organising maps** — neural-network-based clustering + visualisation", 0),
+        ("The right family depends on cluster **shape, size and density**", 0),
+    ], i())
+    d.table("Big picture", "Which family when?",
+            ["Family", "Needs k?", "Shapes", "Scales?"],
+            [["k-means", "yes", "round", "very well"],
+             ["GMM", "yes", "elliptical", "moderately"],
+             ["Hierarchical", "no", "any (linkage)", "poorly (O(n²))"],
+             ["DBSCAN", "no", "arbitrary", "well"]],
+            i(), col_widths=[2.6,1.8,3.6,3.5])
+    d.checkpoint("Your clusters are long, curved bands of varying density. Best first choice?",
+        ["k-means", "GMM with spherical covariance", "DBSCAN or spectral clustering",
+         "None can work"], 2, i(),
+        explain="Density-based (DBSCAN) and spectral methods handle arbitrary, curved shapes that "
+                "centroid-based methods carve up incorrectly.")
+    d.bullets("Curse of dimensionality", "Clustering's hidden enemy", [
+        ("In high dimensions, **all points become nearly equidistant**", 0),
+        ("Distance-based clustering then loses its power to discriminate", 0),
+        ("**Reduce dimensions first** (PCA — Lectures 7–8) or select features", 0),
+        ("Fewer, informative variables often cluster **better** than many noisy ones", 0),
+    ], i())
+    d.definition("Definition", "Clustering tendency",
+                 "**Clustering tendency** asks whether the data has any cluster structure *at all* "
+                 "before you try to find clusters.",
+                 i(), extra=["The **Hopkins statistic** tests for it (≈0.5 means random)",
+                             "Any algorithm will *return* clusters — even from noise",
+                             "Check tendency so you don't chase phantom groups"])
+
+    d.section("Part 9", "A worked example & consolidation")
+    d.formula("By hand", "Euclidean distance, two participants",
+              "d = √[ (8000−16000)² + (60−60)² ] = 8000",
+              ["On raw scales the energy gap of 8000 swamps everything",
+               "Vitamin C contributes **nothing** to the distance here",
+               "After standardising, both variables contribute on equal footing"],
+              i(), note="This is the single most important practical lesson: standardise first.")
+    d.bullets("The standardised version", "Same points, fair comparison", [
+        ("Energy gap: 8000 kJ ÷ 4000 SD = **2 SD units**", 0),
+        ("Vitamin C gap: 0 mg ÷ 30 SD = **0 SD units**", 0),
+        ("Now compare with pairs that differ in vitamin C — they finally 'count'", 0),
+        ("Standardising changed which points look **closest**", 0),
+    ], i())
+    d.two_col("Do & don't", "Clustering hygiene",
+              left_head="Do",
+              left=["Standardise first",
+                    "Check clustering tendency",
+                    "Try several methods & k",
+                    "Validate and name clusters"],
+              right_head="Don't",
+              right=["Cluster raw, unscaled data",
+                     "Trust one run blindly",
+                     "Over-interpret tiny clusters",
+                     "Confuse noise for structure"],
+              idx=i())
+    d.bullets("Case study", "Dietary patterns, end to end", [
+        ("Standardise 30 intake variables for 400 participants", 0),
+        ("Check the **Hopkins statistic** — is there structure?", 0),
+        ("Run k-means and Ward; compare with the **silhouette**", 0),
+        ("Profile & **name** the patterns; relate them to a health outcome", 0),
+    ], i())
+    d.checkpoint("Before clustering, the Hopkins statistic is ≈ 0.5. You should…",
+        ["Proceed — strong clusters exist", "Be cautious — the data may be essentially random",
+         "Use more clusters", "Standardise again"], 1, i(),
+        explain="A Hopkins statistic near 0.5 indicates the data is close to uniformly random — there "
+                "may be little real cluster structure to find.")
+    d.exercise("Choose distance and method", [
+        "For each scenario pick a distance and a method family, with a one-line justification:",
+        "(a) 400 participants, 25 standardised continuous intakes, expect round groups.",
+        "(b) Metabolite **profiles** where shape matters more than level.",
+        "(c) Data with curved, variable-density structure and unknown k.",
+    ], i(), hint="(a) Euclidean + k-means; (b) correlation + hierarchical; (c) DBSCAN/spectral.")
+    d.bullets("Key terms recap", "Own this vocabulary", [
+        ("**Distance / dissimilarity** — how far apart two objects are", 0),
+        ("**Within / between** variation — compactness vs separation", 0),
+        ("**Silhouette** — a validation score for clusterings", 0),
+        ("**Clustering tendency** — is there structure at all?", 0),
+    ], i())
+    d.code("R preview", "The clustering toolkit you'll use", [
+        "X <- scale(diet_numeric)                 # standardise",
+        "get_clust_tendency(X, n = 50)            # Hopkins statistic",
+        "fviz_nbclust(X, kmeans, method='silhouette')",
+        "km <- kmeans(X, 3, nstart = 25); hc <- hclust(dist(X), 'ward.D2')",
+    ], i())
+    d.big_point("The mindset", "Clustering is a conversation with your data, not a button you press "
+                "— you propose structure, then interrogate it.",
+                i(), sub="Distance, method and validation are all your choices to justify.")
+    d.checkpoint("What is the single most common practical mistake in distance-based clustering?",
+        ["Using too many colours", "Forgetting to standardise the variables",
+         "Choosing k = 2", "Using R"], 1, i(),
+        explain="Failing to standardise lets high-variance variables dominate the distance and hijack "
+                "the entire clustering.")
+    d.bullets("Further reading", "To go deeper", [
+        ("James et al., *An Introduction to Statistical Learning*, Ch. 12", 0),
+        ("Hastie et al., *The Elements of Statistical Learning*, Ch. 14", 0),
+        ("R: `factoextra`, `cluster` vignettes", 0),
+    ], i())
+
     d.summary([
         "Clustering finds **groups without labels** — exploratory and hypothesis-generating.",
         "A **distance measure** defines 'similar'; it is scale-sensitive, so **standardise** first.",
@@ -694,6 +1267,191 @@ def lecture04():
         "For your chosen k, profile the cluster means — can you give each cluster a nutrition **name**?",
     ], i(), hint="Naming clusters from their centroid profiles is exactly the deliverable your project "
                  "team will need.")
+
+    d.section("Part 6", "The mathematics, a little deeper")
+    d.formula("Why the mean?", "The centroid minimises squared distance",
+              "μₖ = argmin_c  Σ_{x∈Cₖ} ‖x − c‖²  =  mean(Cₖ)",
+              ["For squared Euclidean distance, the best single summary point is the **mean**",
+               "That's why the update step sets each centroid to its cluster's average",
+               "Use a different distance and the best 'centre' changes (e.g. medoid for k-medoids)"],
+              i())
+    d.definition("Definition", "k-medoids (PAM)",
+                 "**k-medoids** is like k-means but each cluster is represented by an actual data point "
+                 "(the medoid), not a mean.",
+                 i(), extra=["More **robust to outliers** than k-means",
+                             "Works with any distance, not just Euclidean",
+                             "Slower; implemented as `pam()` in R's cluster package"])
+    d.bullets("Why squared distance?", "Consequences of the objective", [
+        ("Squaring **penalises large deviations** heavily → sensitive to outliers", 0),
+        ("Makes the mean the optimal centre (nice math)", 0),
+        ("Biases toward **equal-size, spherical** clusters", 0),
+        ("If that's wrong for your data, choose another method", 0),
+    ], i())
+    d.checkpoint("Why does the k-means update step use the mean of each cluster?",
+        ["Tradition", "The mean minimises within-cluster squared distance",
+         "It's the fastest to compute", "To avoid outliers"], 1, i(),
+        explain="Given squared Euclidean distance, the point minimising total squared distance to a set "
+                "is exactly its mean — so the mean is the optimal centroid.")
+
+    d.section("Part 7", "Choosing k, in depth")
+    d.definition("Definition", "The gap statistic",
+                 "The **gap statistic** compares your clustering's within-SS to the within-SS expected "
+                 "under a null model with no clusters.",
+                 i(), extra=["Large gap = structure well beyond random",
+                             "Chooses k where the gap is largest (with a standard-error rule)",
+                             "`cluster::clusGap()` in R"])
+    d.table("Methods for k", "Four ways, compared",
+            ["Method", "Idea", "Note"],
+            [["Elbow", "where WSS flattens", "subjective"],
+             ["Silhouette", "separation quality", "clear peak, popular"],
+             ["Gap statistic", "vs random null", "principled, slower"],
+             ["Domain sense", "interpretable k", "breaks ties"]],
+            i(), col_widths=[2.6,4.4,4.5])
+    d.bullets("When methods disagree", "A practical protocol", [
+        ("Compute **all** the criteria — don't rely on one", 0),
+        ("Prefer a k that is **stable** across methods and resamples", 0),
+        ("Among near-ties, choose the **most interpretable** k", 0),
+        ("Report *how* you chose — reproducibility matters", 0),
+    ], i())
+    d.checkpoint("Adding more clusters ALWAYS reduces within-cluster SS. Why can't we just minimise WSS?",
+        ["WSS is hard to compute", "It would pick k = n (one point per cluster)",
+         "WSS ignores distance", "It only works for k = 2"], 1, i(),
+        explain="WSS keeps falling as k grows, hitting zero at k = n. So we need criteria (elbow, "
+                "silhouette, gap) that penalise complexity or reward separation.")
+
+    d.section("Part 8", "Practice, pitfalls & extensions")
+    d.two_col("Strengths & weaknesses", "k-means in balance",
+              left_head="Strengths",
+              left=["**Fast** and scales to big data",
+                    "Simple to implement & explain",
+                    "Works well on round, separated blobs"],
+              right_head="Weaknesses",
+              right=["Must **pre-specify k**",
+                     "Assumes spherical, equal-size clusters",
+                     "Sensitive to **scale, outliers, init**"],
+              idx=i())
+    d.bullets("Preprocessing checklist", "Before you run k-means", [
+        ("**Standardise** every variable", 0),
+        ("Handle **outliers** (they drag centroids)", 0),
+        ("Consider **PCA first** if there are many variables", 0),
+        ("Set a **seed** and use `nstart ≥ 25`", 0),
+    ], i())
+    d.bullets("Extensions", "The k-means family", [
+        ("**k-means++** — smarter initialisation", 0),
+        ("**Mini-batch k-means** — scales to millions of points", 0),
+        ("**k-medoids (PAM)** — robust, any distance", 0),
+        ("**Fuzzy c-means** — soft memberships (a bridge to GMM)", 0),
+    ], i())
+    d.big_point("The honest summary", "k-means is the fast, popular first thing to try — and the "
+                "method whose assumptions you must most actively check.",
+                i(), sub="When the blobs aren't round, reach for GMM or hierarchical clustering next.")
+    d.exercise("Diagnose a failure", [
+        "You run k-means (k = 2) on clearly crescent-shaped data and the clusters look wrong.",
+        "Explain, using k-means' assumptions, **why** it failed.",
+        "Which two alternative methods might succeed, and why?",
+        "What preprocessing, if any, would *not* have fixed this?",
+    ], i(), hint="k-means draws linear (Voronoi) boundaries and assumes convex blobs; scaling won't fix "
+                 "a non-convex shape.")
+    d.bullets("Further reading", "To go deeper", [
+        ("James et al., *An Introduction to Statistical Learning*, §12.4", 0),
+        ("Hastie et al., *The Elements of Statistical Learning*, §14.3", 0),
+        ("R: `cluster`, `factoextra` package vignettes", 0),
+    ], i())
+
+    d.section("Part 9", "K-means by hand")
+    d.bullets("Setup", "A tiny 1-D example", [
+        ("Points: 1, 2, 3, 10, 11, 12 — clearly two groups", 0),
+        ("We'll run k-means with k = 2 from a **bad** start to see it recover", 0),
+        ("Initial centroids: c₁ = 2, c₂ = 4", 0),
+    ], i())
+    d.steps("Iteration 1", "Assign, then update", [
+        ("Assign", "1,2,3 → c₁ (nearer 2); 10,11,12 → c₂ (nearer 4)"),
+        ("Update", "c₁ = mean(1,2,3) = 2; c₂ = mean(10,11,12) = 11"),
+        ("Reassign", "assignments unchanged → converged"),
+        ("Result", "clusters {1,2,3} and {10,11,12}, centroids 2 and 11"),
+    ], i(), note="Even from a poor c₂ = 4, one pass snaps to the right answer here.")
+    d.formula("Track the objective", "Within-cluster SS falls",
+              "WSS = Σ (x − μₖ)²  :  before ≫ after each step",
+              ["Start WSS is large (centroids misplaced)",
+               "Each assign/update step **cannot increase** WSS",
+               "Convergence = WSS stops changing"],
+              i())
+    d.bullets("Edge case", "What if a cluster goes empty?", [
+        ("A centroid can end up with **no points assigned**", 0),
+        ("Implementations **re-seed** it (e.g. to the farthest point)", 0),
+        ("More restarts make this rare", 0),
+        ("Another reason `nstart` matters", 0),
+    ], i())
+    d.checkpoint("In the worked example, what guaranteed k-means stopped after one full pass?",
+        ["It ran out of time", "The assignments didn't change between steps",
+         "k was too small", "The data was sorted"], 1, i(),
+        explain="k-means converges exactly when an iteration produces no change in assignments — the "
+                "objective can't improve further.")
+
+    d.section("Part 10", "Applications & wrap-up")
+    d.definition("Definition", "Colour quantisation",
+                 "**Colour quantisation** compresses an image by clustering its pixels' colours with "
+                 "k-means and keeping only k representative colours.",
+                 i(), extra=["Each pixel is a point in 3-D (R,G,B) space",
+                             "k-means finds k 'average' colours",
+                             "A vivid, everyday demonstration of clustering"])
+    d.bullets("Where k-means shows up", "Real uses", [
+        ("**Customer / patient segmentation**", 0),
+        ("**Image compression** (colour quantisation)", 0),
+        ("**Document / topic grouping** on embeddings", 0),
+        ("**Vector quantisation** in signal processing", 0),
+    ], i())
+    d.two_col("k-means vs GMM (preview)", "A taste of next week",
+              left_head="k-means",
+              left=["Hard labels", "Spherical, equal size", "Fast", "Distance-based"],
+              right_head="GMM",
+              right=["Soft probabilities", "Elliptical, varying size",
+                     "Slower (EM)", "Probability model"],
+              idx=i())
+    d.bullets("Exam pointers", "What's commonly tested", [
+        ("State the **objective** and the **two steps** of the algorithm", 0),
+        ("Explain **local optima** and the role of `nstart`", 0),
+        ("Choose k from an **elbow / silhouette** plot", 0),
+        ("Name the **assumptions** and a failure mode", 0),
+    ], i())
+    d.big_point("You can now cluster", "Standardise → choose k → run k-means with restarts → "
+                "validate → name the clusters. That's a complete, defensible workflow.",
+                i(), sub="Next we make the clusters soft and probabilistic with Gaussian mixtures.")
+    d.exercise("Consolidation", [
+        "State the k-means objective in one line.",
+        "Explain why k-means can give different answers on different runs, and the fix.",
+        "Given an elbow at k = 3 but a silhouette peak at k = 4, how would you decide?",
+        "Name one dataset shape where k-means fails and what you'd use instead.",
+    ], i(), hint="Use interpretability and stability to break elbow-vs-silhouette ties; non-convex "
+                 "shapes → DBSCAN/spectral.")
+    d.definition("Definition", "Inertia (within-cluster SS)",
+                 "**Inertia** is k-means' objective value — the total squared distance of points to "
+                 "their assigned centroids. Lower is tighter.",
+                 i(), extra=["Reported as `tot.withinss` in R / `inertia_` in Python",
+                             "Compare inertia only for the **same k** across restarts",
+                             "It always decreases as k increases — hence the elbow method"])
+    d.table("Cheat-sheet", "k-means at a glance",
+            ["Question", "Answer"],
+            [["Objective", "minimise within-cluster SS (inertia)"],
+             ["Algorithm", "Lloyd's: assign → update → repeat"],
+             ["Choose k", "elbow, silhouette, gap statistic"],
+             ["Guard against", "local optima (nstart), scale, outliers"],
+             ["Assumes", "round, comparable, convex clusters"]],
+            i(), col_widths=[3.0,8.5])
+    d.checkpoint("`tot.withinss` for k = 4 is lower than for k = 3. Does that prove k = 4 is better?",
+        ["Yes, lower is always better", "No — inertia always falls with k; use silhouette/elbow",
+         "Only if standardised", "Yes, if nstart is high"], 1, i(),
+        explain="Inertia decreases monotonically with k, so a lower value at higher k is expected and "
+                "proves nothing — judge with the elbow/silhouette instead.")
+    d.bullets("One-line recap", "Carry this out the door", [
+        ("**Standardise, restart, choose k with care, validate, name.**", 0),
+    ], i())
+    d.bullets("Further reading", "To go deeper", [
+        ("James et al., *An Introduction to Statistical Learning*, §12.4.1", 0),
+        ("Hastie et al., *The Elements of Statistical Learning*, §14.3.6", 0),
+        ("R: `stats::kmeans`, `cluster::pam`, `factoextra` vignettes", 0),
+    ], i())
+
     d.summary([
         "K-means minimises **within-cluster sum of squares** via assign–update iterations.",
         "It converges to a **local** optimum — always use many **restarts** / k-means++.",
