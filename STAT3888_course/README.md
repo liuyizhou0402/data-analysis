@@ -4,7 +4,7 @@ Full **60-minute PowerPoint (.pptx)** lectures for **STAT3888 (Statistical Machi
 Learning)**, University of Sydney, built to support the interdisciplinary NUTM3888
 nutrition project. Open the `.pptx` files directly in PowerPoint, Keynote or Google Slides.
 
-## Ready now (Lectures 01–08) — every deck 60+ slides
+## Ready now (Lectures 01–12) — every deck 60+ slides
 
 | File | Slides | Topic |
 |------|:------:|-------|
@@ -16,6 +16,10 @@ nutrition project. Open the `.pptx` files directly in PowerPoint, Keynote or Goo
 | `Lecture06_Hierarchical.pptx` | 60 | Hierarchical clustering |
 | `Lecture07_PCA_Background.pptx` | 60 | PCA background (linear algebra) |
 | `Lecture08_PCA.pptx` | 60 | Principal component analysis |
+| `Lecture09_DimReduction.pptx` | 60 | Dimension reduction (MDS, t-SNE, UMAP) |
+| `Lecture10_SupervisedIntro.pptx` | 60 | Introduction to supervised learning |
+| `Lecture11_LogisticRegression.pptx` | 60 | Logistic regression |
+| `Lecture12_PenalisedLogistic.pptx` | 60 | Penalised logistic (ridge/lasso/elastic net) |
 
 Each deck is a genuine 60-minute lecture (**60+ slides**): title, agenda, section
 dividers, definitions, concept build-up, **custom matplotlib figures**, formulae, R
@@ -48,9 +52,10 @@ pip install python-pptx matplotlib numpy scikit-learn scipy pillow
 python figs_01_04.py         # base figures (L1-4)
 python figs_pptx_01_04.py    # extra figures (L1-4)
 python figs_05_08.py         # figures for L5-8
+python figs_09_12.py         # figures for L9-12
 python build_pptx_01_04.py   # -> Lecture01..04 .pptx
 python build_pptx_05_06.py   # -> Lecture05..06 .pptx
 python build_pptx_07_08.py   # -> Lecture07..08 .pptx
 ```
 
-**Status:** Lectures 01–08 complete (all 60+ slides). Lectures 09–24 to follow in batches.
+**Status:** Lectures 01–12 complete (all 60+ slides). Lectures 13–24 to follow in batches.
