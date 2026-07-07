@@ -56,6 +56,8 @@ python figs_09_12.py         # figures for L9-12
 python build_pptx_01_04.py   # -> Lecture01..04 .pptx
 python build_pptx_05_06.py   # -> Lecture05..06 .pptx
 python build_pptx_07_08.py   # -> Lecture07..08 .pptx
+python build_pptx_09_10.py   # -> Lecture09..10 .pptx
+python build_pptx_11_12.py   # -> Lecture11..12 .pptx
 ```
 
 **Status:** Lectures 01–12 complete (all 60+ slides). Lectures 13–24 to follow in batches.
