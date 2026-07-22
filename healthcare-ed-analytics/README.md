@@ -19,6 +19,10 @@ health service (NEAT 4-hour target, LWBS, 28-day readmissions, patient flow).
 with all [**DAX measures**](dashboard/dax_measures.md) reproduces the same views
 as an interactive `.pbix`.*
 
+> 📖 **[Read the full 14-figure analysis report →](analysis/analysis_report.md)**
+> — every chart with written interpretation, from demand and the 4-hour target
+> through readmissions and high utilisers.
+
 ---
 
 ## 🔎 Three headline insights
@@ -44,7 +48,9 @@ Full analysis and four costed recommendations →
 healthcare-ed-analytics/
 ├── data/            synthetic data + reproducible generator
 ├── sql/             star-schema DDL + 7 business analysis queries
-├── analysis/        Python dashboard builder → real PNG output
+├── analysis/        14-figure analysis report + EDA & dashboard scripts
+│   ├── analysis_report.md   ← the full written walkthrough
+│   └── figures/             ← 14 rendered charts
 ├── dashboard/       dashboard image + Power BI build guide + DAX measures
 └── docs/            business recommendations & KPI scorecard
 ```
@@ -77,7 +83,8 @@ sqlite3 ed.db <<'EOF'
 EOF
 sqlite3 -header -column ed.db < sql/02_analysis.sql
 
-# 3. rebuild the dashboard
+# 3. regenerate the 14 analysis figures + the summary dashboard
+python analysis/eda.py
 python analysis/build_dashboard.py
 ```
 
