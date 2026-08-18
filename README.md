@@ -1,14 +1,41 @@
-# Data Analytics Portfolio — Health & Patient Flow
+# Data Analytics Portfolio
 
-**Yizhou Liu — Health Data Analyst (Sydney).** SQL · Python · Power BI · R.
+**Yizhou Liu — Data Analyst (Sydney).** SQL · Python · Tableau · Power BI · R.
 Each project runs end-to-end: **data → SQL → analysis → dashboard → recommendations.**
 
-> **Featured project:** an Emergency Department & Patient-Flow analysis on 54,837
-> synthetic ED presentations, modelling the metrics Australian health services
-> actually track (NEAT 4-hour target, triage performance, LWBS, 28-day
-> readmissions). Full project folder → **[`healthcare-ed-analytics/`](healthcare-ed-analytics)**
-> · [SQL](healthcare-ed-analytics/sql) · [Power BI guide + DAX](healthcare-ed-analytics/dashboard)
-> · [Recommendations](healthcare-ed-analytics/docs/business_recommendations.md)
+## Projects
+
+### 📈 [Advertising Revenue & Sales Performance](ads-revenue-analytics) — SQL · Tableau
+
+Business analysis of a digital advertising sales organisation: 340 advertisers,
+42 sales reps, 195,488 campaign-days over 18 months. Twelve SQL queries covering
+revenue diagnosis, cohort retention, rep efficiency and growth opportunity.
+
+**The finding:** revenue grew 9.9% while the account base *shrank 31%* — all
+growth was expansion on a contracting base, with a 34% decline in one segment
+hidden underneath the headline.
+
+[Project](ads-revenue-analytics) · [SQL](ads-revenue-analytics/sql/02_analysis.sql)
+· [Tableau guide](ads-revenue-analytics/dashboard/tableau_build_guide.md)
+· [Recommendations](ads-revenue-analytics/docs/business_recommendations.md)
+
+![Ads dashboard](ads-revenue-analytics/dashboard/ads_performance_dashboard.png)
+
+---
+
+### 🏥 [Emergency Department & Patient Flow](healthcare-ed-analytics) — SQL · Power BI
+
+54,837 synthetic ED presentations and 11,045 inpatient admissions, modelling the
+metrics Australian health services actually track: NEAT 4-hour target, triage
+performance, LWBS, 28-day readmissions.
+
+**The finding:** a blended 90% 4-hour compliance figure conceals 53% compliance
+for the sickest patients — the bottleneck is bed access, not triage.
+
+[Project](healthcare-ed-analytics) · [SQL](healthcare-ed-analytics/sql)
+· [Power BI guide + DAX](healthcare-ed-analytics/dashboard)
+· [Recommendations](healthcare-ed-analytics/docs/business_recommendations.md)
+· Full report ↓
 
 ---
 
@@ -161,17 +188,21 @@ Four costed recommendations with a KPI scorecard →
 
 | Path | What |
 |:-----|:-----|
-| [`healthcare-ed-analytics/`](healthcare-ed-analytics) | **Featured** — the full ED project (data, SQL, dashboard, docs) |
+| [`ads-revenue-analytics/`](ads-revenue-analytics) | Advertising revenue & sales performance (SQL, Tableau, docs) |
+| [`ads-revenue-analytics/sql/`](ads-revenue-analytics/sql) | Star-schema DDL + 12 business queries (CTEs, window functions, cohorts) |
+| [`ads-revenue-analytics/dashboard/`](ads-revenue-analytics/dashboard) | Dashboard image + Tableau build guide + calculated fields |
+| [`healthcare-ed-analytics/`](healthcare-ed-analytics) | The full ED project (data, SQL, dashboard, docs) |
 | [`healthcare-ed-analytics/sql/`](healthcare-ed-analytics/sql) | Star-schema DDL + 7 business queries (CTEs, window functions) |
 | [`healthcare-ed-analytics/dashboard/`](healthcare-ed-analytics/dashboard) | Dashboard image + Power BI build guide + DAX measures |
 | [`other/`](other) | Archived / unrelated files (thesis code, posters, older web page) |
 
-**Skills:** SQL (joins, CTEs, window functions, star-schema modelling) · Python
-(pandas, numpy, matplotlib) · BI (Power BI, DAX) · Statistics (R) · Australian
-healthcare metrics & patient-flow analysis.
+**Skills:** SQL (joins, CTEs, window functions, cohort analysis, star-schema
+modelling) · Python (pandas, numpy, matplotlib, DuckDB) · BI (Tableau, Power BI,
+DAX) · Statistics (R) · Business analysis: revenue diagnosis, retention, sales
+efficiency, funnel & unit economics.
 
 ---
 
-*All datasets in the featured project are synthetic and contain no real patient
-records — they exist to demonstrate the analytical workflow, not to describe any
-real health service.*
+*All datasets in this portfolio are synthetic and seed-reproducible. They exist
+to demonstrate the analytical workflow, not to describe any real organisation —
+no real patient records or commercial revenue data are used.*

@@ -1,0 +1,43 @@
+rep_id,rep_name,region,seniority,hire_date
+REP001,Aisha Evans,North America,Associate,2021-08-15
+REP002,Amara Duarte,Southeast Asia,Account Manager,2021-11-04
+REP003,Amara Lindqvist,Southeast Asia,Account Manager,2020-07-27
+REP004,Ben Almeida,North America,Account Manager,2022-11-24
+REP005,Ben Chen,Japan & Korea,Associate,2021-01-05
+REP006,Ben Moreau,Australia & NZ,Account Manager,2022-06-13
+REP007,Camila Garcia,Australia & NZ,Account Manager,2021-01-02
+REP008,Daniel Whitfield,Australia & NZ,Account Manager,2023-01-22
+REP009,Elena Haddad,Europe,Account Manager,2020-07-19
+REP010,Ethan Novak,Australia & NZ,Senior Account Manager,2023-03-27
+REP011,Farid Garcia,North America,Account Manager,2022-11-12
+REP012,Farid Jensen,North America,Senior Account Manager,2020-01-23
+REP013,Freya Hoffman,Europe,Senior Account Manager,2022-05-08
+REP014,Freya Moreau,North America,Account Manager,2020-09-18
+REP015,Freya Vargas,Australia & NZ,Associate,2023-01-22
+REP016,Gabriel Brennan,North America,Associate,2019-08-13
+REP017,Gabriel Hoffman,Southeast Asia,Account Manager,2021-02-04
+REP018,Grace Lindqvist,Europe,Account Manager,2022-05-31
+REP019,Isabel Lindqvist,Europe,Account Manager,2021-08-07
+REP020,Jason Nakamura,Europe,Associate,2022-06-11
+REP021,Jason Quintero,Southeast Asia,Account Manager,2021-02-03
+REP022,Jason Rossi,Australia & NZ,Associate,2022-07-09
+REP023,Jason Xu,North America,Senior Account Manager,2021-09-28
+REP024,Liam Zhang,Southeast Asia,Account Manager,2020-06-01
+REP025,Lucas Bennett,Europe,Associate,2019-12-15
+REP026,Mei Oyelaran,North America,Account Manager,2021-08-17
+REP027,Mei Quintero,North America,Associate,2025-07-19
+REP028,Noah Ibrahim,Europe,Associate,2025-07-10
+REP029,Olivia Lindqvist,North America,Senior Account Manager,2024-08-27
+REP030,Olivia Whitfield,Southeast Asia,Account Manager,2025-02-06
+REP031,Pedro Haddad,Southeast Asia,Account Manager,2024-08-06
+REP032,Qing Haddad,Southeast Asia,Account Manager,2025-04-01
+REP033,Ravi Ibrahim,Japan & Korea,Senior Account Manager,2024-12-04
+REP034,Tomas Quintero,North America,Account Manager,2024-10-18
+REP035,Viktor Grant,North America,Account Manager,2025-02-04
+REP036,Wendy Costa,Southeast Asia,Associate,2025-02-24
+REP037,Wendy Nakamura,Southeast Asia,Account Manager,2025-06-26
+REP038,Xin Moreno,Southeast Asia,Associate,2025-05-24
+REP039,Xin Nakamura,Australia & NZ,Account Manager,2024-08-29
+REP040,Yara Moreau,Europe,Account Manager,2024-11-25
+REP041,Yara Rossi,Southeast Asia,Account Manager,2025-02-11
+REP042,Zach Fischer,North America,Associate,2024-10-19

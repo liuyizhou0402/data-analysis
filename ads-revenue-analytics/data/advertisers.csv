@@ -1,0 +1,341 @@
+advertiser_id,advertiser_name,region,vertical,account_tier,signup_date,rep_id,churn_date
+ADV0001,Anvil Brands,Australia & NZ,Education,SMB,2025-02-27,REP039,2025-05-28
+ADV0002,Anvil Commerce,Europe,Finance & Fintech,Mid-Market,2025-09-23,REP020,
+ADV0003,Anvil Digital,Australia & NZ,Gaming,SMB,2025-04-19,REP039,
+ADV0004,Anvil Group,Australia & NZ,E-commerce & Retail,Mid-Market,2023-06-07,REP022,2024-12-28
+ADV0005,Anvil Holdings,North America,Travel & Hospitality,Mid-Market,2023-02-20,REP004,
+ADV0006,Anvil Interactive,Southeast Asia,Finance & Fintech,SMB,2025-02-24,REP024,2025-04-25
+ADV0007,Anvil Retail,Southeast Asia,Education,SMB,2023-01-13,REP017,2025-06-26
+ADV0008,Anvil Studios,North America,Travel & Hospitality,Enterprise,2023-12-17,REP004,
+ADV0009,Anvil Ventures,Southeast Asia,Beauty & Personal Care,SMB,2025-04-30,REP002,2025-05-30
+ADV0010,Aster Brands,Australia & NZ,Beauty & Personal Care,Mid-Market,2023-05-11,REP022,2025-11-23
+ADV0011,Aster Collective,Australia & NZ,Travel & Hospitality,SMB,2022-06-05,REP039,2024-08-30
+ADV0012,Aster Group,Europe,E-commerce & Retail,Enterprise,2024-02-11,REP028,
+ADV0013,Aster Holdings,Europe,Travel & Hospitality,SMB,2024-03-25,REP020,2025-03-28
+ADV0014,Aster Interactive,Australia & NZ,Food & Beverage,Enterprise,2024-12-13,REP022,
+ADV0015,Aster Labs,Japan & Korea,Beauty & Personal Care,SMB,2023-09-04,REP033,2024-11-28
+ADV0016,Aster Media,Southeast Asia,Education,SMB,2025-02-08,REP017,2025-03-10
+ADV0017,Aster Retail,Europe,Travel & Hospitality,Mid-Market,2025-09-11,REP040,
+ADV0018,Aster Works,Australia & NZ,Education,SMB,2023-10-05,REP039,2024-12-28
+ADV0019,Basalt Brands,Japan & Korea,E-commerce & Retail,SMB,2024-11-10,REP033,2025-11-05
+ADV0020,Basalt Co,Japan & Korea,Beauty & Personal Care,Mid-Market,2022-06-18,REP033,2024-08-30
+ADV0021,Basalt Digital,Australia & NZ,Food & Beverage,Enterprise,2023-01-13,REP006,
+ADV0022,Basalt Holdings,Southeast Asia,Gaming,SMB,2025-04-12,REP002,2025-12-08
+ADV0023,Basalt Labs,Southeast Asia,Food & Beverage,Mid-Market,2023-12-30,REP002,2024-08-30
+ADV0024,Basalt Partners,Australia & NZ,Travel & Hospitality,SMB,2024-09-18,REP039,2024-10-18
+ADV0025,Basalt Ventures,Australia & NZ,Gaming,Mid-Market,2023-10-22,REP006,2024-11-28
+ADV0026,Basalt Works,North America,Food & Beverage,Enterprise,2022-07-13,REP004,
+ADV0027,Beacon Co,Southeast Asia,E-commerce & Retail,SMB,2025-01-11,REP017,2025-07-10
+ADV0028,Beacon Commerce,Southeast Asia,Gaming,Mid-Market,2023-12-07,REP002,
+ADV0029,Beacon Digital,Japan & Korea,E-commerce & Retail,SMB,2022-05-26,REP005,2025-11-23
+ADV0030,Beacon Group,Japan & Korea,Education,Mid-Market,2025-10-01,REP033,
+ADV0031,Beacon Holdings,North America,Gaming,SMB,2025-02-25,REP012,2025-06-25
+ADV0032,Beacon Interactive,Japan & Korea,Beauty & Personal Care,Mid-Market,2023-11-09,REP033,2024-12-28
+ADV0033,Beacon Labs,Southeast Asia,E-commerce & Retail,Mid-Market,2022-05-13,REP031,
+ADV0034,Beacon Media,North America,Beauty & Personal Care,SMB,2023-03-20,REP035,2025-02-26
+ADV0035,Beacon Partners,Japan & Korea,Automotive,SMB,2024-10-22,REP033,2025-01-20
+ADV0036,Beacon Retail,Australia & NZ,Automotive,SMB,2022-11-27,REP007,2024-09-29
+ADV0037,Beacon Ventures,Japan & Korea,Gaming,SMB,2024-09-13,REP033,2025-11-07
+ADV0038,Beacon Works,North America,Finance & Fintech,SMB,2025-09-19,REP012,2025-11-18
+ADV0039,Cascade Brands,Southeast Asia,E-commerce & Retail,Enterprise,2022-01-20,REP002,
+ADV0040,Cascade Digital,Japan & Korea,Education,SMB,2023-08-17,REP005,2024-10-29
+ADV0041,Cascade Interactive,Europe,Beauty & Personal Care,Enterprise,2024-09-24,REP019,
+ADV0042,Cascade Labs,Australia & NZ,E-commerce & Retail,SMB,2025-09-17,REP039,
+ADV0043,Cascade Media,North America,Education,SMB,2022-03-31,REP035,2024-07-31
+ADV0044,Cascade Retail,Europe,Automotive,SMB,2025-04-14,REP040,2025-09-11
+ADV0045,Cascade Works,Japan & Korea,Food & Beverage,SMB,2023-07-14,REP005,2025-01-27
+ADV0046,Cedar Co,Japan & Korea,Food & Beverage,SMB,2022-12-21,REP005,2024-12-28
+ADV0047,Cedar Collective,North America,Finance & Fintech,Mid-Market,2023-09-24,REP035,2024-12-28
+ADV0048,Cedar Commerce,North America,Beauty & Personal Care,SMB,2025-07-09,REP035,2025-09-07
+ADV0049,Cedar Digital,Japan & Korea,Food & Beverage,Mid-Market,2024-05-10,REP005,
+ADV0050,Cedar Holdings,Japan & Korea,Education,Enterprise,2024-09-11,REP033,2024-10-11
+ADV0051,Cedar Interactive,Southeast Asia,Food & Beverage,SMB,2025-03-15,REP002,2025-06-13
+ADV0052,Cedar Media,North America,Gaming,SMB,2023-11-14,REP011,2024-12-28
+ADV0053,Cedar Studios,Australia & NZ,Food & Beverage,SMB,2022-10-29,REP010,2025-09-24
+ADV0054,Cedar Ventures,Southeast Asia,E-commerce & Retail,Mid-Market,2023-02-16,REP002,2025-05-27
+ADV0055,Cedar Works,Southeast Asia,Finance & Fintech,Mid-Market,2024-04-02,REP021,
+ADV0056,Cobalt Brands,North America,Gaming,Mid-Market,2024-10-09,REP035,
+ADV0057,Cobalt Co,North America,E-commerce & Retail,Mid-Market,2025-06-19,REP035,
+ADV0058,Cobalt Collective,Europe,Food & Beverage,Mid-Market,2025-04-11,REP018,
+ADV0059,Cobalt Commerce,Australia & NZ,Travel & Hospitality,Enterprise,2025-05-03,REP006,
+ADV0060,Cobalt Digital,Japan & Korea,Food & Beverage,Mid-Market,2025-07-12,REP005,2025-12-09
+ADV0061,Cobalt Group,North America,Finance & Fintech,Mid-Market,2024-11-08,REP001,2025-12-03
+ADV0062,Cobalt Partners,Japan & Korea,Gaming,SMB,2024-02-24,REP005,2024-08-30
+ADV0063,Cobalt Retail,Japan & Korea,Finance & Fintech,Mid-Market,2023-12-18,REP005,2025-03-28
+ADV0064,Cobalt Studios,Southeast Asia,Gaming,SMB,2024-12-17,REP037,
+ADV0065,Cobalt Ventures,Southeast Asia,E-commerce & Retail,SMB,2022-12-03,REP031,2024-07-31
+ADV0066,Cobalt Works,North America,Gaming,SMB,2022-04-17,REP012,
+ADV0067,Copper Commerce,North America,Beauty & Personal Care,Enterprise,2025-05-11,REP035,
+ADV0068,Copper Digital,North America,Finance & Fintech,SMB,2024-05-27,REP034,2025-06-26
+ADV0069,Copper Group,North America,Education,Mid-Market,2025-05-01,REP035,
+ADV0070,Copper Interactive,Australia & NZ,E-commerce & Retail,Mid-Market,2022-05-23,REP039,2025-02-26
+ADV0071,Copper Labs,Southeast Asia,Beauty & Personal Care,SMB,2024-09-09,REP024,
+ADV0072,Copper Partners,Japan & Korea,Gaming,SMB,2023-07-22,REP033,2024-08-30
+ADV0073,Copper Retail,Europe,Gaming,SMB,2022-08-15,REP020,2024-11-28
+ADV0074,Delta Brands,Japan & Korea,Beauty & Personal Care,SMB,2022-01-30,REP005,2024-07-31
+ADV0075,Delta Co,Southeast Asia,Gaming,Enterprise,2025-09-09,REP024,
+ADV0076,Delta Commerce,Europe,Finance & Fintech,SMB,2025-01-01,REP020,
+ADV0077,Delta Digital,Europe,Food & Beverage,SMB,2024-01-31,REP020,2025-01-27
+ADV0078,Delta Group,Southeast Asia,Gaming,SMB,2025-08-15,REP024,
+ADV0079,Delta Holdings,Japan & Korea,Beauty & Personal Care,SMB,2023-06-26,REP033,2024-09-29
+ADV0080,Delta Interactive,Southeast Asia,Food & Beverage,Enterprise,2025-09-24,REP002,
+ADV0081,Delta Media,Japan & Korea,Gaming,SMB,2022-04-26,REP005,
+ADV0082,Delta Partners,Southeast Asia,Gaming,SMB,2025-04-07,REP017,
+ADV0083,Delta Retail,Japan & Korea,Beauty & Personal Care,Enterprise,2022-11-01,REP005,2025-08-25
+ADV0084,Delta Ventures,Southeast Asia,Food & Beverage,SMB,2024-09-23,REP024,2024-10-23
+ADV0085,Delta Works,North America,Food & Beverage,SMB,2023-08-04,REP035,2024-10-29
+ADV0086,Drift Brands,Japan & Korea,Automotive,SMB,2023-06-03,REP033,
+ADV0087,Drift Co,Southeast Asia,Gaming,SMB,2024-09-09,REP002,2024-10-09
+ADV0088,Drift Digital,North America,Beauty & Personal Care,Mid-Market,2022-07-28,REP012,
+ADV0089,Drift Group,North America,E-commerce & Retail,SMB,2024-12-31,REP012,2025-07-29
+ADV0090,Drift Holdings,Japan & Korea,Gaming,Mid-Market,2022-06-06,REP033,2024-11-28
+ADV0091,Drift Interactive,Europe,E-commerce & Retail,Enterprise,2024-03-07,REP013,
+ADV0092,Drift Labs,Australia & NZ,E-commerce & Retail,Mid-Market,2024-03-11,REP007,
+ADV0093,Drift Media,Southeast Asia,Finance & Fintech,Mid-Market,2024-07-13,REP041,
+ADV0094,Drift Partners,Southeast Asia,Gaming,SMB,2022-04-22,REP002,2024-08-30
+ADV0095,Drift Retail,Southeast Asia,Beauty & Personal Care,Mid-Market,2024-03-10,REP024,
+ADV0096,Drift Studios,Europe,E-commerce & Retail,SMB,2025-06-13,REP040,2025-09-11
+ADV0097,Drift Ventures,Japan & Korea,E-commerce & Retail,Mid-Market,2023-06-04,REP033,2025-02-26
+ADV0098,Drift Works,Southeast Asia,Finance & Fintech,SMB,2023-10-14,REP021,2024-09-29
+ADV0099,Ember Brands,North America,Travel & Hospitality,Mid-Market,2024-03-07,REP011,
+ADV0100,Ember Co,Australia & NZ,Finance & Fintech,SMB,2025-04-19,REP007,2025-08-17
+ADV0101,Ember Collective,Australia & NZ,Gaming,SMB,2022-12-06,REP007,2025-11-23
+ADV0102,Ember Commerce,Southeast Asia,Education,SMB,2022-09-16,REP017,2024-08-30
+ADV0103,Ember Group,Europe,Travel & Hospitality,SMB,2025-03-14,REP040,2025-06-12
+ADV0104,Ember Holdings,Southeast Asia,Education,SMB,2024-12-15,REP002,2025-07-13
+ADV0105,Ember Interactive,Japan & Korea,E-commerce & Retail,SMB,2025-09-06,REP033,2025-12-05
+ADV0106,Ember Labs,North America,Gaming,Mid-Market,2022-02-09,REP011,
+ADV0107,Ember Media,North America,E-commerce & Retail,SMB,2024-08-31,REP034,
+ADV0108,Ember Retail,Europe,Gaming,SMB,2022-07-19,REP040,2024-12-28
+ADV0109,Ember Studios,Europe,Education,SMB,2024-11-28,REP025,2024-12-28
+ADV0110,Ember Ventures,Southeast Asia,Gaming,SMB,2024-02-07,REP002,
+ADV0111,Foundry Brands,North America,Finance & Fintech,Mid-Market,2025-08-19,REP035,
+ADV0112,Foundry Co,Europe,E-commerce & Retail,SMB,2025-07-31,REP040,2025-08-30
+ADV0113,Foundry Collective,North America,Travel & Hospitality,Enterprise,2023-09-30,REP035,
+ADV0114,Foundry Commerce,Japan & Korea,Beauty & Personal Care,SMB,2023-04-16,REP033,2025-12-23
+ADV0115,Foundry Holdings,Australia & NZ,E-commerce & Retail,Enterprise,2023-08-16,REP010,
+ADV0116,Foundry Labs,Europe,E-commerce & Retail,SMB,2022-03-25,REP020,2025-08-25
+ADV0117,Foundry Retail,North America,Gaming,SMB,2025-05-06,REP027,2025-06-05
+ADV0118,Foundry Ventures,Europe,Finance & Fintech,Mid-Market,2022-05-16,REP020,2025-10-24
+ADV0119,Foundry Works,Japan & Korea,Travel & Hospitality,SMB,2025-04-03,REP033,2025-07-02
+ADV0120,Halcyon Brands,Japan & Korea,Finance & Fintech,Mid-Market,2022-07-09,REP033,2024-12-28
+ADV0121,Halcyon Commerce,Australia & NZ,Gaming,Mid-Market,2022-03-06,REP006,2025-10-24
+ADV0122,Halcyon Digital,North America,E-commerce & Retail,SMB,2023-09-04,REP035,2024-08-30
+ADV0123,Halcyon Holdings,Europe,Finance & Fintech,SMB,2022-05-02,REP028,2025-06-26
+ADV0124,Halcyon Interactive,Southeast Asia,E-commerce & Retail,SMB,2023-08-18,REP017,2025-03-28
+ADV0125,Halcyon Labs,Southeast Asia,Gaming,Mid-Market,2024-09-25,REP024,2025-09-20
+ADV0126,Halcyon Media,Europe,Education,SMB,2022-05-07,REP020,2024-07-31
+ADV0127,Halcyon Retail,Australia & NZ,E-commerce & Retail,Mid-Market,2024-12-17,REP039,2025-05-16
+ADV0128,Halcyon Ventures,North America,Gaming,SMB,2023-02-12,REP011,
+ADV0129,Harbour Co,Australia & NZ,Food & Beverage,Mid-Market,2025-04-21,REP010,
+ADV0130,Harbour Collective,North America,Finance & Fintech,Mid-Market,2024-11-16,REP035,
+ADV0131,Harbour Group,North America,Automotive,SMB,2025-01-05,REP016,2025-04-05
+ADV0132,Harbour Holdings,Australia & NZ,Automotive,SMB,2023-10-26,REP039,2024-10-29
+ADV0133,Harbour Media,Southeast Asia,Food & Beverage,Mid-Market,2022-12-08,REP002,
+ADV0134,Harbour Retail,Southeast Asia,Gaming,SMB,2024-12-31,REP002,2025-03-01
+ADV0135,Harbour Works,Japan & Korea,Gaming,Mid-Market,2022-07-14,REP005,2024-09-29
+ADV0136,Juniper Brands,Southeast Asia,E-commerce & Retail,SMB,2025-07-25,REP002,2025-09-23
+ADV0137,Juniper Group,Australia & NZ,Food & Beverage,SMB,2022-12-05,REP007,2025-06-26
+ADV0138,Juniper Labs,Southeast Asia,Gaming,SMB,2024-01-02,REP002,2025-05-27
+ADV0139,Juniper Media,Europe,Food & Beverage,SMB,2024-09-21,REP028,2025-05-19
+ADV0140,Juniper Retail,Japan & Korea,E-commerce & Retail,SMB,2025-10-02,REP033,2025-11-01
+ADV0141,Juniper Studios,Japan & Korea,Gaming,Enterprise,2024-07-02,REP033,2025-03-29
+ADV0142,Juniper Works,Australia & NZ,E-commerce & Retail,SMB,2025-07-31,REP006,2025-11-28
+ADV0143,Kestrel Co,Southeast Asia,Gaming,SMB,2024-12-29,REP002,2025-06-27
+ADV0144,Kestrel Digital,Southeast Asia,E-commerce & Retail,Enterprise,2023-04-07,REP017,
+ADV0145,Kestrel Holdings,North America,Food & Beverage,Mid-Market,2025-02-08,REP014,
+ADV0146,Kestrel Interactive,Australia & NZ,E-commerce & Retail,Enterprise,2022-03-13,REP039,2025-04-27
+ADV0147,Kestrel Media,Southeast Asia,Gaming,SMB,2022-11-07,REP002,2024-08-30
+ADV0148,Kestrel Partners,Europe,Travel & Hospitality,Mid-Market,2025-04-26,REP009,
+ADV0149,Kestrel Studios,Europe,E-commerce & Retail,Mid-Market,2024-11-25,REP040,2025-01-24
+ADV0150,Lantern Brands,Japan & Korea,E-commerce & Retail,Mid-Market,2024-12-20,REP005,2025-02-18
+ADV0151,Lantern Commerce,Europe,Beauty & Personal Care,Mid-Market,2024-09-01,REP040,2025-03-30
+ADV0152,Lantern Group,Southeast Asia,E-commerce & Retail,SMB,2025-03-08,REP032,2025-09-04
+ADV0153,Lantern Interactive,Australia & NZ,E-commerce & Retail,Enterprise,2025-04-13,REP039,
+ADV0154,Lantern Labs,North America,Food & Beverage,Mid-Market,2024-09-01,REP001,
+ADV0155,Lantern Media,Japan & Korea,Automotive,SMB,2024-09-19,REP033,2024-10-19
+ADV0156,Lantern Studios,Europe,Travel & Hospitality,Mid-Market,2023-02-12,REP028,
+ADV0157,Lantern Works,North America,Finance & Fintech,SMB,2023-05-06,REP011,2025-03-28
+ADV0158,Lumen Brands,Australia & NZ,Beauty & Personal Care,SMB,2025-04-28,REP039,2025-09-25
+ADV0159,Lumen Co,Southeast Asia,E-commerce & Retail,Mid-Market,2022-07-11,REP002,2025-09-24
+ADV0160,Lumen Commerce,Southeast Asia,Travel & Hospitality,SMB,2022-05-04,REP031,2025-08-25
+ADV0161,Lumen Digital,North America,E-commerce & Retail,Mid-Market,2022-03-05,REP014,2025-08-25
+ADV0162,Lumen Holdings,Europe,Travel & Hospitality,Mid-Market,2025-09-16,REP013,
+ADV0163,Lumen Media,Australia & NZ,E-commerce & Retail,Mid-Market,2022-04-08,REP007,2025-06-26
+ADV0164,Lumen Partners,Australia & NZ,E-commerce & Retail,SMB,2023-11-02,REP015,2024-12-28
+ADV0165,Lumen Retail,Southeast Asia,Gaming,SMB,2022-10-31,REP002,2024-08-30
+ADV0166,Lumen Ventures,North America,Travel & Hospitality,Enterprise,2023-08-19,REP027,
+ADV0167,Lumen Works,Japan & Korea,Travel & Hospitality,SMB,2022-08-06,REP005,2024-07-31
+ADV0168,Lyra Collective,North America,Finance & Fintech,SMB,2025-03-01,REP034,
+ADV0169,Lyra Digital,Japan & Korea,Travel & Hospitality,Enterprise,2024-03-05,REP005,
+ADV0170,Lyra Group,Southeast Asia,Gaming,SMB,2022-07-05,REP002,2024-08-30
+ADV0171,Lyra Holdings,Australia & NZ,Food & Beverage,SMB,2025-01-17,REP006,2025-10-14
+ADV0172,Lyra Interactive,Southeast Asia,E-commerce & Retail,Mid-Market,2024-05-26,REP002,
+ADV0173,Lyra Labs,Europe,Gaming,Mid-Market,2022-06-23,REP013,
+ADV0174,Lyra Media,Europe,Education,Enterprise,2023-11-19,REP025,
+ADV0175,Lyra Retail,Australia & NZ,Beauty & Personal Care,SMB,2025-05-20,REP010,
+ADV0176,Lyra Studios,North America,E-commerce & Retail,Mid-Market,2025-06-06,REP035,
+ADV0177,Lyra Ventures,North America,Finance & Fintech,Mid-Market,2023-12-10,REP004,2025-04-27
+ADV0178,Lyra Works,Australia & NZ,Education,SMB,2024-07-05,REP006,2025-03-02
+ADV0179,Meridian Brands,Australia & NZ,Food & Beverage,Enterprise,2023-10-03,REP006,2025-02-26
+ADV0180,Meridian Collective,Southeast Asia,Gaming,Mid-Market,2022-10-01,REP031,2025-12-23
+ADV0181,Meridian Commerce,Japan & Korea,Gaming,Mid-Market,2025-05-06,REP033,
+ADV0182,Meridian Digital,Japan & Korea,Gaming,SMB,2024-07-28,REP033,2024-08-27
+ADV0183,Meridian Group,Southeast Asia,Gaming,SMB,2023-02-08,REP002,2025-08-25
+ADV0184,Meridian Holdings,North America,Gaming,SMB,2025-06-19,REP029,2025-12-16
+ADV0185,Meridian Interactive,North America,Beauty & Personal Care,SMB,2024-08-22,REP014,2025-12-15
+ADV0186,Meridian Partners,Japan & Korea,E-commerce & Retail,SMB,2023-08-02,REP033,2024-07-31
+ADV0187,Meridian Retail,North America,Beauty & Personal Care,SMB,2025-08-19,REP042,
+ADV0188,Meridian Studios,Australia & NZ,Finance & Fintech,Mid-Market,2022-12-31,REP039,2025-10-24
+ADV0189,Meridian Ventures,North America,E-commerce & Retail,Mid-Market,2025-02-03,REP012,
+ADV0190,Nimbus Brands,Japan & Korea,Beauty & Personal Care,Enterprise,2023-05-27,REP005,
+ADV0191,Nimbus Co,North America,Finance & Fintech,SMB,2024-04-03,REP011,
+ADV0192,Nimbus Collective,Japan & Korea,Gaming,SMB,2024-01-08,REP033,2024-08-30
+ADV0193,Nimbus Holdings,Australia & NZ,Travel & Hospitality,Enterprise,2022-05-16,REP015,
+ADV0194,Nimbus Retail,Southeast Asia,E-commerce & Retail,SMB,2024-02-11,REP002,2025-02-26
+ADV0195,Nimbus Studios,Europe,Finance & Fintech,SMB,2023-07-13,REP009,2024-08-30
+ADV0196,Nimbus Ventures,Southeast Asia,Finance & Fintech,SMB,2022-01-19,REP037,2025-10-24
+ADV0197,Nimbus Works,Southeast Asia,Beauty & Personal Care,SMB,2024-01-15,REP002,2024-10-29
+ADV0198,Northwind Co,North America,Food & Beverage,SMB,2024-10-22,REP035,2024-11-21
+ADV0199,Northwind Collective,North America,E-commerce & Retail,SMB,2024-12-23,REP011,
+ADV0200,Northwind Commerce,Southeast Asia,E-commerce & Retail,SMB,2025-08-20,REP017,
+ADV0201,Northwind Digital,Europe,Education,SMB,2023-11-06,REP040,2025-02-26
+ADV0202,Northwind Holdings,Europe,Automotive,Mid-Market,2022-01-16,REP040,
+ADV0203,Northwind Interactive,Southeast Asia,Travel & Hospitality,SMB,2022-07-06,REP002,2024-09-29
+ADV0204,Northwind Labs,Australia & NZ,Beauty & Personal Care,Mid-Market,2024-12-31,REP022,
+ADV0205,Northwind Partners,North America,Travel & Hospitality,Mid-Market,2022-11-04,REP035,2024-07-31
+ADV0206,Northwind Retail,Japan & Korea,E-commerce & Retail,Mid-Market,2025-04-12,REP033,
+ADV0207,Northwind Studios,Southeast Asia,E-commerce & Retail,Mid-Market,2024-12-31,REP017,
+ADV0208,Northwind Ventures,Southeast Asia,Gaming,Mid-Market,2025-04-30,REP002,
+ADV0209,Onward Brands,Australia & NZ,Food & Beverage,Mid-Market,2022-10-27,REP022,
+ADV0210,Onward Commerce,Southeast Asia,Automotive,SMB,2022-04-03,REP017,2024-10-29
+ADV0211,Onward Digital,Europe,Food & Beverage,SMB,2024-09-28,REP040,2025-05-26
+ADV0212,Onward Group,Southeast Asia,Gaming,Enterprise,2025-09-08,REP037,
+ADV0213,Onward Interactive,Southeast Asia,Travel & Hospitality,Mid-Market,2022-06-16,REP002,2025-02-26
+ADV0214,Onward Labs,Europe,E-commerce & Retail,SMB,2023-08-12,REP018,2024-10-29
+ADV0215,Onward Media,Japan & Korea,E-commerce & Retail,SMB,2023-03-18,REP033,2024-09-29
+ADV0216,Onward Partners,North America,Education,SMB,2022-10-31,REP014,
+ADV0217,Onward Ventures,Europe,Food & Beverage,SMB,2022-07-07,REP020,2025-01-27
+ADV0218,Onward Works,Japan & Korea,Food & Beverage,Mid-Market,2022-03-15,REP033,2025-05-27
+ADV0219,Onyx Brands,North America,Beauty & Personal Care,Enterprise,2025-03-05,REP035,
+ADV0220,Onyx Co,Europe,E-commerce & Retail,SMB,2023-05-11,REP025,
+ADV0221,Onyx Collective,Southeast Asia,Gaming,Mid-Market,2024-09-22,REP030,
+ADV0222,Onyx Group,North America,Finance & Fintech,SMB,2025-05-05,REP035,2025-06-04
+ADV0223,Onyx Interactive,North America,Travel & Hospitality,Mid-Market,2025-08-09,REP034,
+ADV0224,Onyx Studios,North America,Education,SMB,2024-05-23,REP035,2024-07-31
+ADV0225,Onyx Works,Japan & Korea,Travel & Hospitality,Mid-Market,2023-03-02,REP005,
+ADV0226,Orchid Brands,Japan & Korea,Gaming,Mid-Market,2025-05-25,REP033,2025-11-21
+ADV0227,Orchid Co,Europe,E-commerce & Retail,SMB,2024-10-05,REP025,
+ADV0228,Orchid Collective,North America,Beauty & Personal Care,Mid-Market,2024-02-19,REP034,
+ADV0229,Orchid Commerce,North America,E-commerce & Retail,Mid-Market,2025-04-20,REP012,
+ADV0230,Orchid Digital,Southeast Asia,E-commerce & Retail,Mid-Market,2024-12-24,REP002,2025-04-23
+ADV0231,Orchid Group,Europe,Travel & Hospitality,Mid-Market,2022-09-30,REP028,2024-11-28
+ADV0232,Orchid Holdings,Australia & NZ,E-commerce & Retail,SMB,2024-02-11,REP022,
+ADV0233,Orchid Interactive,Southeast Asia,E-commerce & Retail,SMB,2025-04-23,REP032,
+ADV0234,Orchid Labs,Australia & NZ,E-commerce & Retail,SMB,2022-04-22,REP010,2024-11-28
+ADV0235,Orchid Media,Japan & Korea,Travel & Hospitality,SMB,2025-05-12,REP033,2025-06-11
+ADV0236,Orchid Partners,Europe,E-commerce & Retail,Mid-Market,2024-08-09,REP018,
+ADV0237,Orchid Retail,Southeast Asia,Finance & Fintech,SMB,2025-01-29,REP032,
+ADV0238,Orchid Studios,North America,Food & Beverage,SMB,2023-06-06,REP035,2024-07-31
+ADV0239,Orchid Ventures,North America,Finance & Fintech,Mid-Market,2023-03-13,REP011,
+ADV0240,Orchid Works,Europe,Education,SMB,2024-03-16,REP020,2024-07-31
+ADV0241,Pinnacle Co,Japan & Korea,Gaming,SMB,2024-03-27,REP005,2025-04-27
+ADV0242,Pinnacle Collective,North America,Travel & Hospitality,SMB,2024-12-09,REP035,2025-03-09
+ADV0243,Pinnacle Digital,Japan & Korea,Education,SMB,2022-06-04,REP005,2024-11-28
+ADV0244,Pinnacle Holdings,Southeast Asia,Travel & Hospitality,SMB,2025-06-06,REP037,2025-08-05
+ADV0245,Pinnacle Interactive,Southeast Asia,Gaming,Mid-Market,2025-07-29,REP002,2025-08-28
+ADV0246,Pinnacle Labs,Southeast Asia,Gaming,Mid-Market,2025-07-04,REP002,2025-11-01
+ADV0247,Pinnacle Partners,Europe,Travel & Hospitality,SMB,2023-05-08,REP040,2025-12-23
+ADV0248,Pinnacle Retail,Southeast Asia,Travel & Hospitality,SMB,2023-10-24,REP002,2024-08-30
+ADV0249,Pinnacle Ventures,Southeast Asia,E-commerce & Retail,SMB,2023-06-12,REP002,2025-02-26
+ADV0250,Quartz Brands,Australia & NZ,E-commerce & Retail,SMB,2025-05-01,REP039,2025-07-30
+ADV0251,Quartz Collective,Japan & Korea,E-commerce & Retail,SMB,2024-11-28,REP005,2025-05-27
+ADV0252,Quartz Commerce,North America,Beauty & Personal Care,SMB,2025-07-12,REP042,2025-11-09
+ADV0253,Quartz Digital,Southeast Asia,Education,SMB,2025-05-15,REP024,2025-11-11
+ADV0254,Quartz Group,Australia & NZ,E-commerce & Retail,Mid-Market,2025-04-02,REP022,
+ADV0255,Quartz Holdings,Australia & NZ,E-commerce & Retail,SMB,2025-04-22,REP006,
+ADV0256,Quartz Interactive,North America,Education,Mid-Market,2024-05-06,REP012,2024-07-31
+ADV0257,Quartz Labs,Southeast Asia,E-commerce & Retail,Mid-Market,2025-05-08,REP002,2025-11-04
+ADV0258,Quartz Media,North America,Gaming,Mid-Market,2025-07-08,REP035,
+ADV0259,Quartz Partners,Australia & NZ,Finance & Fintech,SMB,2023-05-31,REP007,2024-09-29
+ADV0260,Quartz Retail,Japan & Korea,Food & Beverage,Enterprise,2024-01-07,REP005,
+ADV0261,Quartz Studios,Japan & Korea,Travel & Hospitality,Enterprise,2024-01-20,REP005,
+ADV0262,Ridge Co,North America,Beauty & Personal Care,SMB,2024-08-06,REP014,2025-05-03
+ADV0263,Ridge Collective,Australia & NZ,Travel & Hospitality,SMB,2024-02-15,REP006,
+ADV0264,Ridge Commerce,North America,E-commerce & Retail,Enterprise,2025-04-10,REP012,
+ADV0265,Ridge Digital,Southeast Asia,Beauty & Personal Care,SMB,2024-10-10,REP036,2024-12-09
+ADV0266,Ridge Group,Southeast Asia,Education,SMB,2022-07-24,REP002,2024-08-30
+ADV0267,Ridge Holdings,Europe,Finance & Fintech,Mid-Market,2023-02-09,REP028,
+ADV0268,Ridge Interactive,Australia & NZ,E-commerce & Retail,Mid-Market,2024-07-06,REP039,2025-09-29
+ADV0269,Ridge Partners,Australia & NZ,E-commerce & Retail,Mid-Market,2022-04-17,REP039,2025-06-26
+ADV0270,Ridge Studios,Japan & Korea,Travel & Hospitality,Mid-Market,2024-05-31,REP033,
+ADV0271,Ridge Ventures,Southeast Asia,Beauty & Personal Care,SMB,2023-06-27,REP036,2024-08-30
+ADV0272,Ridge Works,Europe,E-commerce & Retail,Mid-Market,2023-12-12,REP028,
+ADV0273,Sable Collective,Japan & Korea,Gaming,SMB,2023-06-23,REP033,2025-09-24
+ADV0274,Sable Commerce,Japan & Korea,Food & Beverage,Mid-Market,2025-04-25,REP005,2025-08-23
+ADV0275,Sable Group,North America,Travel & Hospitality,Mid-Market,2022-10-27,REP027,
+ADV0276,Sable Holdings,Southeast Asia,Gaming,Mid-Market,2023-04-19,REP002,
+ADV0277,Sable Labs,Southeast Asia,Education,SMB,2022-10-19,REP002,2024-09-29
+ADV0278,Sable Media,Southeast Asia,Travel & Hospitality,Enterprise,2022-02-06,REP002,
+ADV0279,Sable Partners,North America,E-commerce & Retail,SMB,2022-09-27,REP011,2024-11-28
+ADV0280,Sable Studios,Southeast Asia,Travel & Hospitality,SMB,2025-04-02,REP002,2025-05-02
+ADV0281,Sable Works,Southeast Asia,E-commerce & Retail,Enterprise,2022-02-09,REP002,2025-07-26
+ADV0282,Solstice Brands,Europe,E-commerce & Retail,Enterprise,2025-06-10,REP040,
+ADV0283,Solstice Co,North America,Finance & Fintech,SMB,2025-08-29,REP004,2025-11-27
+ADV0284,Solstice Collective,Southeast Asia,Gaming,Mid-Market,2025-07-24,REP017,
+ADV0285,Solstice Digital,Japan & Korea,E-commerce & Retail,SMB,2024-07-06,REP033,2024-12-03
+ADV0286,Solstice Group,Japan & Korea,E-commerce & Retail,Enterprise,2023-03-22,REP033,
+ADV0287,Solstice Holdings,Southeast Asia,Travel & Hospitality,Enterprise,2025-05-31,REP002,
+ADV0288,Solstice Labs,Japan & Korea,Gaming,Mid-Market,2022-08-17,REP033,2025-01-27
+ADV0289,Solstice Media,North America,Food & Beverage,Mid-Market,2022-11-10,REP034,
+ADV0290,Solstice Studios,Japan & Korea,E-commerce & Retail,SMB,2022-01-20,REP033,2024-09-29
+ADV0291,Solstice Works,North America,Finance & Fintech,SMB,2024-09-12,REP016,2025-01-10
+ADV0292,Summit Brands,Europe,Gaming,SMB,2023-01-05,REP040,
+ADV0293,Summit Co,Australia & NZ,Gaming,SMB,2024-02-19,REP008,2025-09-24
+ADV0294,Summit Collective,Japan & Korea,E-commerce & Retail,Enterprise,2025-06-20,REP033,
+ADV0295,Summit Group,North America,Automotive,SMB,2024-10-18,REP034,2025-11-12
+ADV0296,Summit Holdings,Europe,Education,SMB,2022-04-13,REP020,2024-09-29
+ADV0297,Summit Interactive,Southeast Asia,Travel & Hospitality,Mid-Market,2023-09-23,REP041,2025-06-26
+ADV0298,Summit Labs,Japan & Korea,Travel & Hospitality,Mid-Market,2025-05-13,REP033,2025-06-12
+ADV0299,Summit Media,North America,Gaming,SMB,2024-04-01,REP011,2024-07-31
+ADV0300,Summit Partners,Europe,Beauty & Personal Care,SMB,2025-03-18,REP025,2025-06-16
+ADV0301,Summit Retail,Southeast Asia,Finance & Fintech,Mid-Market,2022-07-04,REP002,2024-08-30
+ADV0302,Summit Studios,Europe,Gaming,Enterprise,2023-12-14,REP019,
+ADV0303,Summit Ventures,Southeast Asia,Finance & Fintech,SMB,2024-11-20,REP002,2024-12-20
+ADV0304,Summit Works,Southeast Asia,Finance & Fintech,SMB,2023-10-14,REP036,2025-04-27
+ADV0305,Terra Co,Australia & NZ,E-commerce & Retail,Mid-Market,2022-10-07,REP039,
+ADV0306,Terra Collective,Australia & NZ,E-commerce & Retail,SMB,2023-09-23,REP006,
+ADV0307,Terra Commerce,Australia & NZ,Travel & Hospitality,SMB,2024-03-24,REP006,2025-11-23
+ADV0308,Terra Digital,Southeast Asia,Gaming,SMB,2025-07-28,REP024,
+ADV0309,Terra Group,Europe,E-commerce & Retail,Mid-Market,2023-11-19,REP020,2025-05-27
+ADV0310,Terra Interactive,Southeast Asia,Beauty & Personal Care,SMB,2025-01-22,REP002,2025-11-18
+ADV0311,Terra Media,Japan & Korea,Finance & Fintech,SMB,2023-05-29,REP033,2024-11-28
+ADV0312,Terra Partners,Europe,Travel & Hospitality,Enterprise,2025-01-27,REP020,
+ADV0313,Terra Retail,Southeast Asia,Gaming,Enterprise,2023-09-10,REP021,
+ADV0314,Terra Works,Japan & Korea,Automotive,SMB,2025-05-23,REP033,2025-06-22
+ADV0315,Vector Digital,Europe,E-commerce & Retail,Mid-Market,2024-10-01,REP013,
+ADV0316,Vector Group,Japan & Korea,Travel & Hospitality,Mid-Market,2025-07-26,REP033,
+ADV0317,Vector Holdings,North America,Finance & Fintech,SMB,2022-03-15,REP042,2024-08-30
+ADV0318,Vector Interactive,Southeast Asia,Education,Mid-Market,2024-02-02,REP002,2025-05-27
+ADV0319,Vector Media,North America,E-commerce & Retail,SMB,2023-05-30,REP014,
+ADV0320,Vector Retail,Japan & Korea,E-commerce & Retail,SMB,2022-06-10,REP033,2024-08-30
+ADV0321,Vector Studios,North America,Beauty & Personal Care,SMB,2025-01-03,REP011,2025-04-03
+ADV0322,Vector Ventures,Europe,Finance & Fintech,Mid-Market,2025-07-24,REP028,
+ADV0323,Vertex Brands,Australia & NZ,E-commerce & Retail,SMB,2023-09-03,REP006,2024-07-31
+ADV0324,Vertex Commerce,Australia & NZ,Food & Beverage,SMB,2022-06-11,REP007,2024-07-31
+ADV0325,Vertex Digital,Japan & Korea,Finance & Fintech,SMB,2025-03-02,REP005,2025-09-28
+ADV0326,Vertex Holdings,North America,Gaming,SMB,2024-05-02,REP042,
+ADV0327,Vertex Labs,Europe,E-commerce & Retail,SMB,2023-01-06,REP028,2024-08-30
+ADV0328,Vertex Media,North America,Gaming,SMB,2025-03-02,REP004,2025-05-01
+ADV0329,Vertex Studios,Southeast Asia,Gaming,SMB,2025-02-13,REP024,2025-07-13
+ADV0330,Vertex Ventures,Japan & Korea,Gaming,SMB,2022-12-31,REP033,2024-12-28
+ADV0331,Vertex Works,Southeast Asia,E-commerce & Retail,Enterprise,2025-05-25,REP032,
+ADV0332,Zephyr Brands,Japan & Korea,Education,Mid-Market,2025-04-12,REP005,
+ADV0333,Zephyr Co,North America,Beauty & Personal Care,Enterprise,2025-04-14,REP035,
+ADV0334,Zephyr Commerce,Southeast Asia,Finance & Fintech,SMB,2025-08-10,REP021,
+ADV0335,Zephyr Group,North America,Food & Beverage,SMB,2024-01-26,REP001,2025-10-24
+ADV0336,Zephyr Interactive,North America,Automotive,SMB,2023-08-14,REP027,2025-03-28
+ADV0337,Zephyr Partners,Australia & NZ,E-commerce & Retail,SMB,2024-11-10,REP039,2025-01-09
+ADV0338,Zephyr Studios,Europe,Finance & Fintech,SMB,2024-04-06,REP019,2025-10-24
+ADV0339,Zephyr Ventures,Europe,Travel & Hospitality,Mid-Market,2022-12-03,REP040,
+ADV0340,Zephyr Works,Southeast Asia,Finance & Fintech,Enterprise,2023-07-15,REP024,2025-10-24

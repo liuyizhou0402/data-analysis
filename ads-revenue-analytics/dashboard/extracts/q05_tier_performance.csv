@@ -1,0 +1,4 @@
+account_tier,advertisers,revenue_usd,pct_of_revenue,revenue_per_advertiser,churned_accounts,churn_rate_pct
+Enterprise,42,410340619.0,72.5,9770015.0,7.0,16.3
+Mid-Market,103,136932728.0,24.2,1329444.0,48.0,44.4
+SMB,162,19051323.0,3.4,117601.0,156.0,82.5

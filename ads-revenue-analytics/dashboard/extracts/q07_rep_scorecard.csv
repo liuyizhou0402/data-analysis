@@ -1,0 +1,39 @@
+revenue_rank_overall,rep_name,region,seniority,hire_date,accounts_managed,revenue_usd,revenue_per_account,book_churn_pct,revenue_rank_in_region,pct_vs_region_median
+1,Amara Duarte,Southeast Asia,Account Manager,2021-11-04,45,90798464.0,2017744.0,77.8,1,1420.0
+2,Ben Chen,Japan & Korea,Associate,2021-01-05,25,59868998.0,2394760.0,68.0,1,36.0
+3,Freya Hoffman,Europe,Senior Account Manager,2022-05-08,4,51738433.0,12934608.0,0.0,1,482.0
+4,Xin Nakamura,Australia & NZ,Account Manager,2024-08-29,18,37328807.0,2073823.0,77.8,1,177.0
+5,Viktor Grant,North America,Account Manager,2025-02-04,15,33978942.0,2265263.0,52.2,1,1099.0
+6,Ravi Ibrahim,Japan & Korea,Senior Account Manager,2024-12-04,27,28439460.0,1053313.0,81.0,2,-36.0
+7,Isabel Lindqvist,Europe,Account Manager,2021-08-07,3,27572124.0,9190708.0,33.3,2,210.0
+8,Ben Almeida,North America,Account Manager,2022-11-24,6,26829518.0,4471586.0,50.0,2,846.0
+9,Ben Moreau,Australia & NZ,Account Manager,2022-06-13,13,23379168.0,1798398.0,61.5,2,74.0
+10,Farid Jensen,North America,Senior Account Manager,2020-01-23,9,21597373.0,2399708.0,44.4,3,662.0
+11,Liam Zhang,Southeast Asia,Account Manager,2020-06-01,11,20211534.0,1837412.0,54.5,2,238.0
+12,Ethan Novak,Australia & NZ,Senior Account Manager,2023-03-27,5,16377741.0,3275548.0,40.0,3,22.0
+13,Gabriel Hoffman,Southeast Asia,Account Manager,2021-02-04,11,13934336.0,1266758.0,54.5,3,133.0
+14,Jason Quintero,Southeast Asia,Account Manager,2021-02-03,4,13510174.0,3377544.0,25.0,4,126.0
+15,Jason Rossi,Australia & NZ,Associate,2022-07-09,7,13466254.0,1923751.0,28.6,4,0.0
+16,Lucas Bennett,Europe,Associate,2019-12-15,5,11841943.0,2368389.0,40.0,3,33.0
+17,Yara Moreau,Europe,Account Manager,2024-11-25,15,9215701.0,614380.0,66.7,4,4.0
+18,Qing Haddad,Southeast Asia,Account Manager,2025-04-01,4,9083718.0,2270930.0,25.0,5,52.0
+19,Jason Nakamura,Europe,Associate,2022-06-11,13,8558798.0,658369.0,76.9,5,-4.0
+20,Farid Garcia,North America,Account Manager,2022-11-12,11,7492566.0,681142.0,45.5,4,164.0
+21,Freya Vargas,Australia & NZ,Associate,2023-01-22,2,6873454.0,3436727.0,50.0,5,-49.0
+22,Noah Ibrahim,Europe,Associate,2025-07-10,5,5744714.0,1148943.0,44.4,6,-35.0
+23,Camila Garcia,Australia & NZ,Account Manager,2021-01-02,8,5018823.0,627353.0,87.5,6,-63.0
+24,Aisha Evans,North America,Associate,2021-08-15,3,4711896.0,1570632.0,66.7,5,66.0
+25,Pedro Haddad,Southeast Asia,Account Manager,2024-08-06,3,2864375.0,954792.0,75.0,6,-52.0
+26,Freya Moreau,North America,Account Manager,2020-09-18,6,2834897.0,472483.0,50.0,6,0.0
+27,Tomas Quintero,North America,Account Manager,2024-10-18,7,2793028.0,399004.0,28.6,7,-1.0
+28,Mei Quintero,North America,Associate,2025-07-19,2,2599853.0,1299927.0,50.0,8,-8.0
+29,Grace Lindqvist,Europe,Account Manager,2022-05-31,3,2309692.0,769897.0,33.3,7,-74.0
+30,Yara Rossi,Southeast Asia,Account Manager,2025-02-11,2,1324077.0,662038.0,50.0,7,-78.0
+31,Elena Haddad,Europe,Account Manager,2020-07-19,2,1322946.0,661473.0,50.0,8,-85.0
+32,Wendy Nakamura,Southeast Asia,Account Manager,2025-06-26,4,1200307.0,300077.0,50.0,8,-80.0
+33,Olivia Whitfield,Southeast Asia,Account Manager,2025-02-06,1,696782.0,696782.0,0.0,9,-88.0
+34,Zach Fischer,North America,Associate,2024-10-19,3,286402.0,95467.0,50.0,9,-90.0
+35,Daniel Whitfield,Australia & NZ,Account Manager,2023-01-22,1,227103.0,227103.0,100.0,7,-98.0
+36,Gabriel Brennan,North America,Associate,2019-08-13,2,153871.0,76935.0,100.0,10,-95.0
+37,Olivia Lindqvist,North America,Senior Account Manager,2024-08-27,1,118047.0,118047.0,100.0,11,-96.0
+38,Wendy Costa,Southeast Asia,Associate,2025-02-24,1,20352.0,20352.0,100.0,10,-100.0
