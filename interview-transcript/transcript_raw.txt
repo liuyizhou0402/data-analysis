@@ -1,0 +1,393 @@
+--- Part 1/5 ---
+
+0:03 - Speaker1 - I will approach this problem in four step
+
+0:07 - Speaker1 - Define the objective score, and segment the
+
+0:13 - Speaker1 - advertisers design different action sales actions and finally measure the impact.
+
+0:20 - Speaker1 - First, I will define first, I will define the objective. Since sales capacity is limited, the goal is
+
+0:36 - Speaker1 - I mean, you should look at the camera. Right?
+
+0:40 - Speaker1 - Not just look at the screen. But the camera.
+
+0:48 - Speaker1 - You can look at the camera. Yeah. First, I would like to
+
+0:55 - Speaker1 - first, I mean, first, I would like to define
+
+1:01 - Speaker1 - the objective
+
+1:18 - Speaker1 - First, I would like to define the objectives in sales capacity is limited. The goal is not simply to identify the advertisers that spend the most today. The goal
+
+1:35 - Speaker1 - the goal is to identify where a sales attention is most likely
+
+1:43 - Speaker1 - to generate
+
+2:18 - Speaker1 - I will approach this problem in four steps. Define the objective, score, and segment advertisers. Design, sales actions, and finally measure the impact. First, I will define the objective since sales capacity is limited, the goal is not simply to identify the advertisers that spend the most today.
+
+2:46 - Speaker1 - The goal is to identify
+
+2:57 - Speaker1 - and
+
+3:05 - Speaker1 - First, I
+
+3:12 - Speaker1 - I will apologize this promise. In eight full. Steps. Define the objective, score, and assessment. Of the prices. If I'm referring to sales action.
+
+3:23 - Speaker1 - Finally, measure the impact. First, I will define the objective thing. Sales capacity is limited.
+
+3:33 - Speaker1 - The goal is not to identify the advertisers that spend the most day.
+
+4:44 - Speaker1 - I will approach this problem in four steps.
+
+4:48 - Speaker1 - Define the objective score and segment the
+
+4:55 - Speaker1 - Define the objective score and segment the advertisers design different sales, actions.
+
+5:48 - Speaker1 - First, I will define the objective. Since sales capacity is limited.
+
+6:39 - Speaker1 - I'm interested in TETOL for three main reasons. First, TETOL operates in a highly dynamic business environment.
+
+7:31 - Speaker1 - First,
+
+7:32 - Speaker1 - mhmm.
+
+7:37 - Speaker1 - So this row is so this row is particularly attractive to me because it covers the full cycle of business analytics rather than focusing on technical side.
+
+9:22 - Speaker1 - Hi. I'm Enzo. I'm currently completing my master of digital health and data science at the University of Sydney. And my background sits at the intersection of data analytics a business insight, and stakeholder communication. At Johnson Johnson, I work with complex clinical and biological datasets. Using Python and statistical modeling to identify key drivers translate technical findings into insights for research and commercial stakeholders. I also cofounded an education startup where I view and monitor the accounts customer acquisition and sales funnel.
+
+10:02 - Speaker1 - By analyzing conversion performance and acquisition efficiency We improve lead to customer conversation conversion by around twenty percent and reduce CAC by approximately twenty five percent. More recently, I strengthened my BI skills. Through a Deloitte data project stimulation using Tableau. What attracts me to this GBS role is that it combines exactly what I enjoy most. Thank you. That's my brief introduction.
+
+11:05 - Speaker1 - Using I
+
+11:15 - Speaker1 - stakeholders. I will talk cofound data. An adequate
+
+11:20 - Speaker1 - and
+
+11:22 - Speaker1 - acquisition and
+
+11:24 - Speaker1 - for know by analyzing com bersome. Performance and acquisition. Efficiency. We
+
+11:32 - Speaker1 - customer
+
+11:44 - Speaker1 - stimulation. Using
+
+11:47 - Speaker1 - me. To this GBS role. Is there any exactly what I'm doing. Most. Thank you. That's my contraction.
+
+11:54 - Speaker1 - About it.
+
+11:59 - Speaker1 - I'm Ansel. I'm car completing my my master's
+
+12:11 - Speaker1 - Are you still I translate it?
+
+12:22 - Speaker1 - Yeah. Because you are translate Right? So that you can see.
+
+12:43 - Speaker1 - Okay. You make it larger.
+
+12:46 - Speaker1 - I mean, I want to make it larger.
+
+13:00 - Speaker1 - But can you make it larger? Because it seems like if you can make it larger, it will be better.
+
+13:59 - Speaker1 - You see exactly?
+
+14:08 - Speaker1 - But I can't hear that. I mean yes. You hear that? Because you want to chat lie,
+
+14:16 - Speaker1 - they're all good. Right?
+
+14:58 - Speaker1 - Yeah. But I think that you can, like, change it. Right?
+
+15:06 - Speaker1 - Yeah. But I think that you can change it.
+
+15:16 - Speaker1 - I think Yeah. It does. How it works.
+
+15:37 - Speaker1 - I think that works. Right? So that you can see exactly
+
+15:42 - Speaker1 - you can see yourself.
+
+15:44 - Speaker1 - Maybe I can see myself. Maybe not.
+
+16:47 - Speaker1 - I hope that you can build your own answer.
+
+16:55 - Speaker1 - That's really important if you can build your own answer.
+
+18:11 - Speaker1 - Yeah. It's it just
+
+18:20 - Speaker1 - Yeah.
+
+21:15 - Speaker1 - Way. Way. Way. Microphone is right.
+
+21:18 - Speaker1 - Microphone is is good.
+
+21:22 - Speaker1 - Microphone
+
+21:25 - Speaker1 - You can also, like, turn on the
+
+21:29 - Speaker1 - turn on the camera.
+
+21:36 - Speaker1 - I mean, I wait here.
+
+23:57 - Speaker1 - Yes. But, like, you can get really familiar with the self introduction and have a nice interview. With with the person who already work in the industry.
+
+24:16 - Speaker1 - Yeah. It doesn't look at these three angles. So that you can move on the questions.
+
+25:01 - Speaker1 - You want me to stop? This t a r n for actions. Eye, upper, upper, approach?
+
+25:14 - Speaker1 - I approached the question in
+
+25:17 - Speaker1 - steps.
+
+26:23 - Speaker1 - Well, so that you will know exactly
+
+26:26 - Speaker1 - and maybe the sign is great.
+
+--- Part 2/5 ---
+
+26:35 - Speaker1 - Right. Yeah. The the microphone. You can test the microphone.
+
+26:40 - Speaker1 - The microphone
+
+26:42 - Speaker1 - the microphone works. And the camera works.
+
+29:36 - Speaker1 - Hello? Hey. Enzo, is it? Yeah. I'm here, Enzo.
+
+29:41 - Speaker1 - Great. Great. Okay. I'm Viking here. Maybe we could kick start. A quick introduction of yourself. Okay. Hi there. So I'm Enzo. I'm currently completing my master of digital health and data science at University of Sydney, and my
+
+29:58 - Speaker1 - Of data analytics business business insight, and stakeholder communication And my previous work at Johnson and Johnson I work with complex clinical and biological datasets. I'm using I'm using Python and to identify key drivers and translate technical filings into business insights for and commercial stakeholders. I also cofounded an education startup.
+
+30:26 - Speaker1 - Where I view and monitor the customer acquisition and sales for now by analyzing the conversation conversion performance and acquisition efficiency we actually improved the lead to customer conversion by around twenty percent. And more recently, I strengthened my BI skills. Through a Deloitte data platform using Tableau. So what attracts me to this GBS role is that it actually combines exactly what I enjoy understanding the business performance and on identifying the key drivers behind the data and turn those insights into actions that help the commercial team to improve the efficiency that's a brief introduction of myself.
+
+31:08 - Speaker1 - So you were saying that you were with Johnson and Johnson looking into key drivers, is it? Oh, yeah. Yeah. Maybe you could share a specific example of how you are on what have you done there?
+
+31:22 - Speaker1 - You mean what I have done in Johnson Johnson? Yeah. You were saying that you are looking into drivers. Give me more I want to know more about that. Okay.
+
+31:35 - Speaker1 - So I like to share more about the work in Johnson and Johnson where I actually
+
+31:44 - Speaker1 - use the data to turn a ambiguous consumer problem into a more actionable product opportunity. So the situation is like was that the skin preaging I I mean, the definition was becoming increasingly relevant to younger consumers in China, but there was no clear data driven, definition of when preaching begins and which characteristics best represented in Chinese woman. So from a product development
+
+32:19 - Speaker1 - these made it really difficult to clearly, define the target consumer and relevant product benefits. So my task was, therefore, to turn this broad concept into something measurable And
+
+32:35 - Speaker1 - identify the key indicators that could support future
+
+32:42 - Speaker1 - product innovation. I approached the research and data project in three steps. First, I established the overall pattern. We actually analyze one hundred and sixty four, Chinese woman aged from eighteen to sixty, across a around two hundred, related variables.
+
+33:07 - Speaker1 - Including clinical assessments, instrumental measurements, lifestyle factors, etcetera. So rather than analyze the variable I actually look at how the overall skin profile change with the age. And one of our key finding was a clear turning point. Around age thirty happened in Chinese woman which gave us a more evident base, to define the early population And second, I moved from the over all pattern to the key drivers. So across in the full aging population, we identify forty one.
+
+33:45 - Speaker1 - Features. But when we focus specific on the age from eighteen to thirty, these narrow to only nine meaningful features. Like photoaging, fine lines, and sequence secretion among the strongest one. So we also use these filings to develop a quantitative skin preaging index. This allow us to move a a way I mean, vague consumer concept into a more measurable way. And third, I translate the analytical filing into business insights So we tell the stakeholder, like, we don't need to calculate or measure one hundred variables. We just could now define a distinct preaging consumer stage and detect nine variables and give them a score. So highlight a much more smaller set, measurable characteristic that could
+
+34:38 - Speaker1 - inform future, maybe could be used in future product development. So so the main impact was we transfer an ambiguous consumer problem into a measurable framework. Yeah. That's it.
+
+34:52 - Speaker1 - So you literally reduce the the dimensions to recognize the preaging. Yeah. It's multivariate. Yeah. We want we really want to know, like,
+
+35:03 - Speaker1 - what's the key driver for preaging for Chinese woman because before that, there's around one hundred, maybe two hundred arrivals that should be related to the aging but that's not but that's not the situation in in our study.
+
+35:19 - Speaker1 - Okay.
+
+35:21 - Speaker1 - Share more about the customer acquisition that you were saying earlier. So you were saying that you need you were doing you were you were doing something and then you increase the lead to customer by twenty percent. Ah, okay. So so yes, I did start a education start out when I study at Florida University. Because doing education was my interest at that time. So
+
+35:47 - Speaker1 - I actually approached the increase
+
+35:51 - Speaker1 - question in four step.
+
+35:54 - Speaker1 - Define the objective and segment
+
+35:59 - Speaker1 - a future segment of potential customers and design some different sales actions to them and finally measure the impact. First, I I, at that time, defined objective, like I want twenty percent increase. But the goal is like Okay. Let me just stop you for a while. I'm So to begin with, why do you go straight into customer acquisition?
+
+36:27 - Speaker1 - Oh,
+
+36:29 - Speaker1 - because for the start up, that's the most important thing that you have to client first, and then you have the company. After that.
+
+--- Part 3/5 ---
+
+36:36 - Speaker1 - Okay. So which means that when you just start up and then you don't have much clients with then what are the first thing you want to grow your business? You wanna grow your customer base first.
+
+36:47 - Speaker1 - Before, I didn't have much client. I didn't open a company.
+
+36:53 - Speaker1 - I I did Okay. So okay. Yeah. I did part is that your okay, which means that your start up is entirely new, so that's why you need to have that's why you need to do the customer acquisition.
+
+37:06 - Speaker1 - Yeah. Of course. Yes.
+
+37:09 - Speaker1 - Okay. Okay. Continue. So how you do that?
+
+37:14 - Speaker1 - Oh, okay.
+
+37:16 - Speaker1 - Yeah. Yeah.
+
+37:18 - Speaker1 - Yeah. So so the goal is to lie I want
+
+37:22 - Speaker1 - more
+
+37:24 - Speaker1 - low quality customer or I want high potential customer that who who will pay a lot for our products. So
+
+37:35 - Speaker1 - so second, I build a a prioritizations that really matters based on three dimension, like the customer value and the potential and the actionability. So value tells me, like, how important client today for for for of our company. Based on the current and historical spend. They they spend on me or or on my company. So second, dimension will be potential You okay. Wait.
+
+38:04 - Speaker1 - So okay. And you mentioned that you were doing customer acquisition Mhmm. Yeah. So then you you also do a segment on high and low value customers. So but high and low value is for existing customers. Right?
+
+38:20 - Speaker1 - Ah, yes. But yeah, I I totally agree with you. But I want to do the customer acquisition I use four platform. So I could live share deep share deep first. So I use three four three to four platform. Like the red notes and the WeChat group,
+
+38:41 - Speaker1 - and also the off campaign. And the last one will be
+
+38:45 - Speaker1 - have some cooperation with the university. So we do have four term. But
+
+38:52 - Speaker1 - okay. Let's go back to your earlier thing that you mentioned. You were doing customer acquisition. And you increased the lead to customer by twenty percent. So how you do the customer acquisition? Because just now you were saying you would you also did high and low value, but high and low value is for existing customers. So I wanted to know how do you increase your lead to customer by twenty percent.
+
+39:17 - Speaker1 - From customer acquisition?
+
+39:20 - Speaker1 - Yeah. So my logic mean, at that time, first, I try all the turnout. Right? I try notebook. I try TikTok. I tried WeChat group. And
+
+39:33 - Speaker1 - if I try that, I already have some customer information. Like do they want to chat? Do they just pay directly? And how much they pay? I already have the customer no, future customer information.
+
+39:49 - Speaker1 - When I explore when I get contact with them, Because I do in campaign, doing sales, promotion on these four platform.
+
+40:00 - Speaker1 - And then and then when I get the data, I found that the most useful
+
+40:08 - Speaker1 - the most useful one is WeChat group. Based on the data I based on the people how many people pay me from that turnover. So I put most of my resource and time to that platform. I think that that's a I think that's a prioritized that your time is limited and your resource is limited. So I choose WeChat group platform and use the WeChat group to do most of the campaign so that I also
+
+40:40 - Speaker1 - hire some
+
+40:42 - Speaker1 - part time student to also copy my WeChat group campaign SOP so that we get actually twenty percent increase by yeah. By most of by compared to before.
+
+40:57 - Speaker1 - So which means that you what you essentially, what you are doing is that you throw a try in different acquisition channel, like, note WeChat, and some other platform as well. Then you saw that WeChat has a bigger potential. So you still WeChat. Is that so?
+
+41:15 - Speaker1 - Yes. Yes. But but all the decision actually made by data because the team member want to see the data Otherwise, that that that would be a mess.
+
+41:25 - Speaker1 - Okay. But so would you which means that you can only see because which means that you don't it's not yeah. I mean, you did there isn't any deep dive or any deep analysis on that. So it's like just trying. Okay. So we try re we try to recheck we try another platform. Oh, WeChat is higher. So we just increase on WeChat. That's all.
+
+41:45 - Speaker1 - I think it doesn't work for Johnson and Johnson but it really works for startup company. Because you, yeah, you just need to move really fast. There's no time for a dive deeper. Yes. We could dive deeper. Like like, what what like what segment
+
+42:00 - Speaker1 - like, what what what kind of activity that really increased the client in in WeChat group? Like like, what did I like most? You can do more, analysis on that.
+
+42:13 - Speaker1 - Okay. So earlier on, you were saying that you also did a segmentation on high and low value customer. So how do you how do you segment that? Share the logic with me. Okay.
+
+42:26 - Speaker1 - So the logic is, like, I look at several dimension. Like, just I mentioned before, the current spend, the the the historical spend, on buying my product. So that's let's talk about
+
+42:45 - Speaker1 - the the value the value metrics. And then second, I want to talk is about potential. Right? So the potential actually tell me how much room there is to grow for for our company. So for example, I estimate maybe this customer has a gap between the potential budget and their current, buy and their current spend. So and the third dimension will be the action availability and tell me, like,
+
+43:16 - Speaker1 - is there an additional sales attention that could realistically change the outcome? So I look at these three signals. As, like, campaign activity,
+
+--- Part 4/5 ---
+
+43:28 - Speaker1 - product adoption, and recent engagement. So based on three dimension, I actually like, do the segmentation from tier one, tier two, tier three customers.
+
+43:40 - Speaker1 - And and third, I could at that time, I connect highly actionable customers they they will kind of receive high touch sales support. And for the median priority prioritized advertise advertisers, Jess will be contest, by our employee. And for the last one, low tide the low opportunity customers just, receive
+
+44:07 - Speaker1 - message. So finally, I just measure, like, whether
+
+44:13 - Speaker1 - whether the these three customers, and I put most of my time in the tier one customer. That's how I did that.
+
+44:22 - Speaker1 - Which means that you actually only have two dimension. Because the actionability is the result.
+
+44:31 - Speaker1 - But actionality can be measure. Can be measure. Yeah. It is a result, but it can be measure, like, use the data to predict the future buying or or selling as data.
+
+44:48 - Speaker1 - Okay. You were saying that you look into customer value. So customer value is the current spend. And this current spend is from how long?
+
+44:56 - Speaker1 - This current spend is
+
+44:59 - Speaker1 - analyzing within a month. Month by month.
+
+45:03 - Speaker1 - Why month by month? Because for the education industry, when I did the courses, also my employee did the courses, we actually received the money month by month.
+
+45:17 - Speaker1 - Okay. So if you look into month by month and how long period so the customer value is across how many months? Custom value is
+
+45:28 - Speaker1 - I mean, for the whole customer profile, it will be around six months. But at that time, I just only have the previous month's data. Right? So I I only, like, if it is it's the second month that I have only the first month data, then I analyze the first month data to predict the the the six month behavior.
+
+45:51 - Speaker1 - And your potential, how do you define the potential?
+
+45:58 - Speaker1 - That time, from my my potential
+
+46:02 - Speaker1 - can like, be measured as
+
+46:06 - Speaker1 - the current income for this family? And multiplies the
+
+46:13 - Speaker1 - multiplies the
+
+46:16 - Speaker1 - the span They already spend on buying the product.
+
+46:22 - Speaker1 - Also multiply
+
+46:25 - Speaker1 - how they are like, how they
+
+46:30 - Speaker1 - how frequently they get in touch with us. I mean, not not mathematically, but multiplies, but I just show us the the dimension.
+
+46:42 - Speaker1 - Like, if the cosmos
+
+46:44 - Speaker1 - like, ask us questions week by week, that it shows that it actually has a lot of a lot of
+
+46:53 - Speaker1 - a lot of desire to buy our product. So I will look at the frequency how how they contact with us, how they ask questions.
+
+47:04 - Speaker1 - Okay.
+
+47:06 - Speaker1 - You have any experience in doing weekly business review?
+
+47:12 - Speaker1 - Weekly business review.
+
+47:17 - Speaker1 - I think when I say, for instance for instance, you look into sales after you do a report on a weekly basis.
+
+47:27 - Speaker1 - Yeah. We will have a weekly meeting.
+
+47:31 - Speaker1 - When I did a start up. And when I was in Johnson and Johnson, we do have weekly analysis, but it maybe is not on sales. It's more on marketing.
+
+47:42 - Speaker1 - So if it's so what was the marketing KPI then?
+
+47:47 - Speaker1 - At at that time, because I was in the research and development team, so the KPI will be
+
+47:57 - Speaker1 - did you find some
+
+47:59 - Speaker1 - key features? And the second,
+
+48:04 - Speaker1 - the second is, like, how many
+
+48:08 - Speaker1 - how many product did you, like, search, or did you did a research on that? And the third will be
+
+48:17 - Speaker1 - does your model work or not? We will check the weekly week by week.
+
+48:25 - Speaker1 - Okay.
+
+48:27 - Speaker1 - Just to curious now, what's your passion like So
+
+48:31 - Speaker1 - will you be leaning towards business analytics in future? Or are you looking to be a data engineer? Or are you hoping to be a data scientist? Someday?
+
+48:46 - Speaker1 - Recently, I joined IIBA. It's actually a really famous BA industry group in Australia. So I will start from getting in touch with the BA. And for my future career, I will say that data scientist is really a good target. But now I I because I get in touch with junior or senior BA, I think their work is interesting, and I show a lot of passion on data analytics and also business analytics. So I just like start from, yeah, BA.
+
+49:19 - Speaker1 - Okay. So if assuming that you have learned all the technical capabilities, like your programming language, Python, your ML, data science, everything. So which means that technical capability isn't an issue. So what would you want to be?
+
+49:38 - Speaker1 - Business analytics, data engineer, data scientist?
+
+49:43 - Speaker1 - Business analytics. If I have all the skill sets, that I just learned, and I will choose business analytics because I really want to be a environment that have really a short feedback look and also can see my, analytics can change or maybe can influence the business outcome So that's why I think it's extremely important for me to see my work contribute to the company revenue, contribute to the company sales. So if I have a choice, that will be the first one visit analytics.
+
+50:15 - Speaker1 - With all the tech tech stuff I've I I learn.
+
+50:21 - Speaker1 - Okay. You have any questions for me? Yeah. Yeah. I do have two question because I checked on, like, the the.
+
+50:29 - Speaker1 - So I just want to know that, like, from a business perspective, so what are the biggest growth opportunities or challenges like the Sydney GBS team is currently focusing on?
+
+--- Part 5/5 ---
+
+50:44 - Speaker1 - Okay. So we have multiple products. So the key challenges is that to identify what is the group driver for each of the products. Then look into how can we, like, optimize the product performance, to drive revenue.
+
+50:59 - Speaker1 - So it's similar to to most of the industry where you actually look into, like, client acquisition you look into driving revenue and also preventing churn. Thank you. And if you if we just look at the most successful people on on your team, who are the most important, common traits or habits among them that makes them so exceptional compared to someone who just does what it is required of them.
+
+51:31 - Speaker1 - Typical business analyst would actually stop at the stage where they analyze the business and describe what happened. Last week. So what we want is we want someone to be able to not only diagnose not sorry. Not only describe, They have to be able to attribute For instance, you see that year on year growth is actually on the declining rate.
+
+51:54 - Speaker1 - So they should be able to actually point to us what is the exact key driver, which key client that caused that. Then not only that, they should be able to go in and do predictive analytics which is understand what are the key drivers, what can be done And, also, they should be the one who we is also doing prescriptive analytics where they talk to the key stakeholders As with this analysis, we can actually change some of these because we noticed that there's a pattern on the key clients where we can improve their revenue So actually a full loop.
+
+52:30 - Speaker1 - Of analysis is less about doing descriptive analysis Yeah. I think it's more like drill down and, like, like, a root cause analysis. Right?
+
+52:41 - Speaker1 - So it's not just root cause. Root cause is the most hygiene and most basic thing. You identify the root cause, you should be able to talk to the stakeholders like the product solution team and the other team to understand what are the opportunity that we can what are the other teams that they are doing to improve the situation Okay. So one more. So I just want to know if I just passed the interview and joined your team, what would success look like in the first thirty and ninety days?
+
+53:13 - Speaker1 - In the beginning, you'll be do you'll be
+
+53:16 - Speaker1 - in the first one or two weeks, you will need to ramp up the
+
+53:21 - Speaker1 - there's a tool called
+
+53:24 - Speaker1 - there's a tool called Think Cell.
+
+53:27 - Speaker1 - Where you'll be using it extensively to actually draw charts. For PowerPoint. Mhmm.
+
+53:34 - Speaker1 - Once your master get only then you'll be able to run the weekly business review.
+
+53:41 - Speaker1 - Then once you are are able to do your business review, that's when you should learn how to do attribution. Because once we are able to do the attribution, only then you'll able to do recourse analysis. Once you have the capability of root cause analysis, then should be looking into getting familiar into the products. Because once you get familiar with the products, that's when you can start conversation with the sales team the other teams to understand what are the opportunity, what other things that we can do better to improve the revenue.
+
+54:14 - Speaker1 - Okay. Thanks. Thanks. Thanks a lot. Yeah. I have no more questions on that.
+
+54:20 - Speaker1 - Okay. Thank you. Hey, Shah. We'll be in touch with you if you proceed to the next round. Thank you. Thank you.
