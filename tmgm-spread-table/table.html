@@ -1,0 +1,158 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root{
+    --bg1:#041331; --bg2:#0a2c66; --bg3:#03203f;
+    --line:#4d8fd6; --line-soft:#2f6bab;
+    --ink:#ffffff; --dim:#a9c8ea;
+    --green:#39e08a; --amber:#ffc44d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    width:1240px; height:1760px; position:relative; overflow:hidden;
+    font-family:"Noto Sans CJK SC","Noto Sans",sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(120% 80% at 50% -10%, #12509e 0%, transparent 55%),
+      radial-gradient(90% 60% at 10% 100%, #072a55 0%, transparent 60%),
+      linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 45%,var(--bg3) 100%);
+  }
+  /* faint circuit motif — drawn, not imported */
+  .circuit{position:absolute;inset:0;opacity:.16;pointer-events:none}
+  .circuit path,.circuit line{stroke:#7fc4ff;fill:none;stroke-width:1.4}
+  .circuit circle{fill:#7fc4ff}
+
+  .wrap{position:relative;padding:64px 60px 0}
+
+  .logoslot{
+    height:96px;border:2px dashed rgba(180,215,255,.45);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    color:rgba(190,220,255,.75);font-size:20px;letter-spacing:4px;margin-bottom:34px;
+  }
+  h1{font-size:60px;font-weight:900;letter-spacing:6px;text-align:center;line-height:1.1}
+  .sub{text-align:center;color:var(--dim);font-size:22px;letter-spacing:8px;margin-top:14px}
+  .rule{height:3px;margin:26px auto 34px;width:280px;
+        background:linear-gradient(90deg,transparent,var(--line),transparent)}
+
+  table{width:100%;border-collapse:collapse;table-layout:fixed}
+  th,td{border:2px solid var(--line);text-align:center;vertical-align:middle}
+  thead th{
+    padding:20px 6px;font-size:25px;font-weight:800;line-height:1.32;
+    background:rgba(255,255,255,.09);
+  }
+  thead th .u{display:block;font-size:18px;font-weight:600;color:var(--dim);margin-top:6px}
+  .acct{font-size:30px;font-weight:800;padding:14px 4px;line-height:1.25}
+  .acct .en{display:block;font-size:20px;color:var(--dim);font-weight:600;margin-top:4px}
+
+  /* stacked 点差 / 返佣 cell */
+  .split{padding:0}
+  .split div{padding:17px 4px;font-size:33px;font-weight:800;line-height:1.2}
+  .split div:first-child{border-bottom:2px solid var(--line-soft)}
+  .one{font-size:27px;font-weight:800;padding:14px 8px;line-height:1.32}
+
+  tbody tr:nth-child(odd) td{background:rgba(255,255,255,.035)}
+  tr.ecn td{color:var(--green)}
+  tr.ecn .acct{color:var(--green)}
+
+  .todo{color:var(--amber);font-size:22px;font-weight:800;letter-spacing:1px}
+  tr.blank td{background:rgba(255,196,77,.09)}
+  tr.blank .acct{color:var(--amber);font-size:24px}
+
+  .notes{margin-top:34px;font-size:23px;line-height:1.95;color:#e6f1ff;text-align:center}
+  .notes b{color:var(--green)}
+  .internal{
+    margin:26px 6px 0;padding:18px 24px;border:2px solid rgba(255,196,77,.55);
+    border-radius:10px;background:rgba(255,196,77,.10);
+    font-size:19px;line-height:1.7;color:#ffe6ad;
+  }
+  .internal .tag{font-weight:900;color:var(--amber);letter-spacing:2px}
+</style>
+
+<svg class="circuit" viewBox="0 0 1240 1760" preserveAspectRatio="none">
+  <path d="M0 120 H180 L230 70 H420"/><circle cx="424" cy="70" r="5"/>
+  <path d="M1240 190 H1030 L980 140 H840"/><circle cx="836" cy="140" r="5"/>
+  <path d="M0 1600 H160 L215 1655 H430"/><circle cx="434" cy="1655" r="5"/>
+  <path d="M1240 1530 H1060 L1000 1590 H820"/><circle cx="816" cy="1590" r="5"/>
+  <line x1="60" y1="0" x2="60" y2="90"/><line x1="1180" y1="1670" x2="1180" y2="1760"/>
+  <path d="M120 1720 H300"/><circle cx="304" cy="1720" r="5"/>
+</svg>
+
+<div class="wrap">
+  <div class="logoslot">此处放置官方 LOGO</div>
+
+  <h1>点差返佣表</h1>
+  <div class="sub">ACCOUNT COMPARISON</div>
+  <div class="rule"></div>
+
+  <table>
+    <colgroup>
+      <col style="width:19%"><col style="width:15%"><col style="width:14%">
+      <col style="width:19%"><col style="width:12%"><col style="width:21%">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>账户类型</th>
+        <th>黄金<span class="u">点差 / 返佣</span></th>
+        <th>原油<span class="u">点差 / 返佣</span></th>
+        <th>股指（亚洲）<span class="u">返佣</span></th>
+        <th>股票<span class="u">返佣</span></th>
+        <th>数字货币<span class="u">点差 / 返佣</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="acct">STD<span class="en">标准</span></td>
+        <td class="split"><div>32</div><div>20</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">100点 / 1000点</td>
+        <td class="one">2点</td>
+        <td class="split"><div class="todo">待填</div><div class="todo">待填</div></td>
+      </tr>
+      <tr>
+        <td class="acct">PM<span class="en">高级</span></td>
+        <td class="split"><div>27</div><div>15</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">40点 / 400点</td>
+        <td class="one">2点</td>
+        <td class="split"><div class="todo">待填</div><div class="todo">待填</div></td>
+      </tr>
+      <tr>
+        <td class="acct">Pro<span class="en">专业</span></td>
+        <td class="split"><div>22</div><div>10</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">15点 / 150点</td>
+        <td class="one">2点</td>
+        <td class="split"><div class="todo">待填</div><div class="todo">待填</div></td>
+      </tr>
+      <tr class="ecn">
+        <td class="acct">RAW07<span class="en">ECN</span></td>
+        <td class="split"><div>9（+5）</div><div>2~3.8</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">15点 / 150点</td>
+        <td class="one">2点</td>
+        <td class="split"><div class="todo">待填</div><div class="todo">待填</div></td>
+      </tr>
+      <tr class="blank">
+        <td class="acct">第 5 种账户<span class="en">名称待填</span></td>
+        <td class="split"><div class="todo">待填</div><div class="todo">待填</div></td>
+        <td class="split"><div class="todo">待填</div><div class="todo">待填</div></td>
+        <td class="one todo">待填</td>
+        <td class="one todo">待填</td>
+        <td class="split"><div class="todo">待填</div><div class="todo">待填</div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="notes">
+    1. 点差均为<b>浮动点差</b>，实际点差请以 TMGM 实盘为准<br>
+    2. 裸点 / ECN / Raw07 账户可参与 ECN 特别代理活动<br>
+    3. 想了解更多内容，请联系您的客户经理
+  </div>
+
+  <div class="internal">
+    <span class="tag">内部核对提示（对外发布前请删除本框）</span><br>
+    · 黄金一列的数值沿用原物料「贵金属」行，需确认是否等同 XAUUSD 口径<br>
+    · 数字货币整列、第 5 种账户整行均无官方数据来源，须查最新产品明细表后填入<br>
+    · 所有数值须标注为浮动或历史平均值，不得报成固定值；发布前送合规审核
+  </div>
+</div>
