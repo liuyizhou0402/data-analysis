@@ -1,0 +1,194 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root{
+    --bg:#0A0A0C; --panel:#121115;
+    --gold:#C9A96A; --gold-hi:#EBD6A4; --gold-dim:#7E6A42;
+    --hair:#2B2620; --hair-soft:#1E1A16;
+    --ink:#F4EFE6; --muted:#9A9184;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    width:1240px;height:1840px;position:relative;overflow:hidden;
+    font-family:"Noto Sans CJK SC",sans-serif;color:var(--ink);
+    background:
+      radial-gradient(90% 46% at 50% -6%, rgba(201,169,106,.17) 0%, transparent 62%),
+      radial-gradient(70% 40% at 50% 104%, rgba(201,169,106,.09) 0%, transparent 64%),
+      var(--bg);
+  }
+  .frame{position:absolute;inset:26px;border:1px solid rgba(201,169,106,.26);pointer-events:none}
+  .frame::before,.frame::after{
+    content:"";position:absolute;width:56px;height:56px;border:1px solid var(--gold);
+  }
+  .frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+  .frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+
+  .wrap{position:relative;padding:78px 74px 0}
+
+  .logoslot{
+    height:84px;border:1px dashed rgba(201,169,106,.42);
+    display:flex;align-items:center;justify-content:center;
+    color:rgba(201,169,106,.72);font-size:17px;letter-spacing:7px;margin-bottom:44px;
+  }
+
+  h1{
+    font-family:"Noto Serif CJK SC",serif;font-weight:900;
+    font-size:66px;letter-spacing:14px;text-align:center;line-height:1.08;
+    background:linear-gradient(180deg,#FBF0D6 0%,var(--gold) 52%,#9E824B 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{
+    text-align:center;color:var(--muted);font-size:16px;
+    letter-spacing:10px;margin-top:20px;text-transform:uppercase;
+  }
+  .orn{display:flex;align-items:center;justify-content:center;gap:14px;margin:28px 0 46px}
+  .orn i{display:block;width:150px;height:1px;
+        background:linear-gradient(90deg,transparent,var(--gold))}
+  .orn i:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
+  .orn b{width:6px;height:6px;transform:rotate(45deg);background:var(--gold)}
+
+  table{width:100%;border-collapse:collapse;table-layout:fixed}
+  td,th{text-align:center;vertical-align:middle}
+
+  thead th{
+    padding:0 6px 20px;font-size:23px;font-weight:700;color:var(--gold-hi);
+    letter-spacing:2px;font-family:"Noto Serif CJK SC",serif;
+    border-bottom:1px solid var(--gold);
+  }
+  thead th .u{
+    display:block;font-family:"Noto Sans CJK SC",sans-serif;
+    font-size:14px;font-weight:400;color:var(--muted);
+    letter-spacing:2px;margin-top:8px;
+  }
+
+  tbody tr{border-bottom:1px solid var(--hair)}
+  tbody tr:last-child{border-bottom:1px solid rgba(201,169,106,.45)}
+
+  .acct{
+    font-family:"Noto Serif CJK SC",serif;font-size:30px;font-weight:700;
+    letter-spacing:2px;padding:26px 4px;color:var(--ink);
+  }
+  .acct .en{
+    display:block;font-family:"Noto Sans CJK SC",sans-serif;
+    font-size:15px;font-weight:400;color:var(--muted);
+    letter-spacing:4px;margin-top:7px;
+  }
+
+  .split{padding:0}
+  .split div{padding:19px 4px;font-size:34px;font-weight:300;letter-spacing:1px}
+  .split div:first-child{border-bottom:1px solid var(--hair-soft)}
+  .split div:last-child{color:var(--gold);font-weight:400}
+  .one{font-size:25px;font-weight:300;letter-spacing:1px;padding:16px 8px;line-height:1.4}
+
+  tr.ecn{background:linear-gradient(90deg,
+        rgba(201,169,106,.05),rgba(201,169,106,.13),rgba(201,169,106,.05))}
+  tr.ecn .acct{color:var(--gold-hi)}
+  tr.ecn .split div,tr.ecn .one{color:var(--gold-hi)}
+  tr.ecn .split div:last-child{color:var(--gold)}
+
+  tr.blank .acct{color:var(--gold-dim)}
+  tr.blank .acct .en{color:var(--gold-dim)}
+  .todo{
+    display:inline-block;padding:5px 15px;font-size:16px;font-weight:400;
+    letter-spacing:3px;color:var(--gold);
+    border:1px solid rgba(201,169,106,.55);border-radius:2px;
+  }
+
+  .foot{margin-top:44px;text-align:center}
+  .foot .line{height:1px;margin:0 auto 26px;width:100%;
+        background:linear-gradient(90deg,transparent,rgba(201,169,106,.5),transparent)}
+  .foot p{font-size:19px;line-height:2.05;color:#CFC6B6;letter-spacing:1px}
+  .foot em{font-style:normal;color:var(--gold-hi)}
+
+  .internal{
+    margin:34px 2px 0;padding:18px 26px;
+    border:1px dashed rgba(201,169,106,.45);
+    font-size:16px;line-height:1.85;color:#B7A985;letter-spacing:.5px;
+  }
+  .internal .tag{font-weight:700;color:var(--gold);letter-spacing:3px}
+</style>
+
+<div class="frame"></div>
+
+<div class="wrap">
+  <div class="logoslot">此处放置官方 LOGO</div>
+
+  <h1>点差返佣表</h1>
+  <div class="sub">Spread &amp; Rebate Schedule</div>
+  <div class="orn"><i></i><b></b><i></i></div>
+
+  <table>
+    <colgroup>
+      <col style="width:19%"><col style="width:15%"><col style="width:14%">
+      <col style="width:19%"><col style="width:12%"><col style="width:21%">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>账户类型<span class="u">Account</span></th>
+        <th>黄金<span class="u">点差 / 返佣</span></th>
+        <th>原油<span class="u">点差 / 返佣</span></th>
+        <th>股指（亚洲）<span class="u">返佣</span></th>
+        <th>股票<span class="u">返佣</span></th>
+        <th>数字货币<span class="u">BTC / USD · 点差 / 返佣</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="acct">STD<span class="en">标准</span></td>
+        <td class="split"><div>32</div><div>20</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">100点 / 1000点</td>
+        <td class="one">2点</td>
+        <td class="split"><div><span class="todo">待填</span></div><div><span class="todo">待填</span></div></td>
+      </tr>
+      <tr>
+        <td class="acct">PM<span class="en">高级</span></td>
+        <td class="split"><div>27</div><div>15</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">40点 / 400点</td>
+        <td class="one">2点</td>
+        <td class="split"><div><span class="todo">待填</span></div><div><span class="todo">待填</span></div></td>
+      </tr>
+      <tr>
+        <td class="acct">Pro<span class="en">专业</span></td>
+        <td class="split"><div>22</div><div>10</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">15点 / 150点</td>
+        <td class="one">2点</td>
+        <td class="split"><div><span class="todo">待填</span></div><div><span class="todo">待填</span></div></td>
+      </tr>
+      <tr class="ecn">
+        <td class="acct">RAW07<span class="en">ECN</span></td>
+        <td class="split"><div>9（+5）</div><div>2~3.8</div></td>
+        <td class="split"><div>4</div><div>1.5</div></td>
+        <td class="one">15点 / 150点</td>
+        <td class="one">2点</td>
+        <td class="split"><div><span class="todo">待填</span></div><div><span class="todo">待填</span></div></td>
+      </tr>
+      <tr class="blank">
+        <td class="acct">第 5 种账户<span class="en">名称待填</span></td>
+        <td class="split"><div><span class="todo">待填</span></div><div><span class="todo">待填</span></div></td>
+        <td class="split"><div><span class="todo">待填</span></div><div><span class="todo">待填</span></div></td>
+        <td class="one"><span class="todo">待填</span></td>
+        <td class="one"><span class="todo">待填</span></td>
+        <td class="split"><div><span class="todo">待填</span></div><div><span class="todo">待填</span></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    <div class="line" style="margin-top:38px"></div>
+    <p>
+      一 · 点差均为<em>浮动点差</em>，实际点差请以 TMGM 实盘为准<br>
+      二 · 裸点 / ECN / Raw07 账户可参与 ECN 特别代理活动<br>
+      三 · 想了解更多内容，请联系您的客户经理
+    </p>
+  </div>
+
+  <div class="internal">
+    <span class="tag">内部核对提示 · 对外发布前请删除本框</span><br>
+    · 黄金一列沿用原物料「贵金属」行，需确认是否等同 XAUUSD 口径<br>
+    · 数字货币整列、第 5 种账户整行尚无官方数据，须查最新产品明细表后填入<br>
+    · 数值须标注为浮动或历史平均值，不得报成固定值；发布前送合规审核
+  </div>
+</div>
