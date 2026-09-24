@@ -3,6 +3,10 @@
 **Yizhou Liu — Data Analyst (Sydney).** SQL · Python · Tableau · Power BI · R.
 Each project runs end-to-end: **data → SQL → analysis → dashboard → recommendations.**
 
+📄 **Prefer a document?** Both projects are also written up as submission-ready PDFs in
+[`portfolio/`](portfolio) — [ED & Patient Flow](portfolio/ED_Patient_Flow_Analytics_Yizhou_Liu.pdf)
+(12 pp) and [Advertising Revenue](portfolio/Ads_Revenue_Analytics_Yizhou_Liu.pdf) (7 pp).
+
 ## Projects
 
 ### 📈 [Advertising Revenue & Sales Performance](ads-revenue-analytics) — SQL · Tableau
